@@ -18,15 +18,15 @@ import Embers from "./Embers";
    déjà en mouvement en coulisse, prend la place du premier par un long fondu
    que réchauffe une braise. Puis tout retombe, et le rideau se lève.
 
-   Le son vient des vidéos elles-mêmes. Elles démarrent muettes — aucun
-   navigateur ne les laisserait partir autrement — et se dévoilent au premier
-   geste du visiteur.
+   Le son vient des vidéos elles-mêmes, sans bouton ni réglage : on le
+   demande d'emblée. Chrome l'accorde aux sites déjà fréquentés ; ailleurs il
+   est refusé, et le premier geste du visiteur le lève alors — ce geste-là ne
+   ferme pas le rideau, pour ne pas emporter le son avec lui.
 
    Une fois par session, sur la page d'accueil seulement.
    ========================================================================== */
 
 const SEEN_KEY = "hb-intro-seen";
-const SOUND_KEY = "hb-sound";
 
 /* La conduite du film, en secondes */
 const PREROLL = 4.2; // le second plan se met en route, encore invisible
@@ -50,7 +50,6 @@ export default function Intro({ locale }: { locale: Locale }) {
   const [sound, setSound] = useState(false);
 
   const videos = useRef<(HTMLVideoElement | null)[]>([null, null]);
-  const soundButton = useRef<HTMLButtonElement>(null);
   // Le premier geste sert à dévoiler le son, pas à lever le rideau
   const armed = useRef(false);
 
@@ -120,16 +119,47 @@ export default function Intro({ locale }: { locale: Locale }) {
     };
   }, [onHome, close]);
 
-  /* --- Les deux plans tournent, l'image passe de l'un à l'autre --------- */
+  /* --- Le premier plan part, avec le son si on nous l'accorde ----------
+     On tente d'emblée le son. Chrome l'accorde aux sites que le visiteur
+     fréquente déjà ; sinon il refuse, et l'on repart en silence — le
+     premier geste lèvera alors le son.
+     --------------------------------------------------------------------- */
 
   useEffect(() => {
     if (!open) return;
-    videos.current.forEach((v, i) => {
-      if (!v) return;
-      // Le second ne démarre qu'au préroll ; ensuite les deux tournent
-      if (i === 0 || rolling) void v.play().catch(() => {});
-    });
-  }, [open, rolling]);
+    const first = videos.current[0];
+    if (!first) return;
+
+    let cancelled = false;
+    first.volume = 1;
+    first.muted = false;
+
+    void first
+      .play()
+      .then(() => {
+        if (!cancelled) setSound(true);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        first.muted = true;
+        void first.play().catch(() => {});
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
+
+  /* --- Le second plan se met en route en coulisse ----------------------- */
+
+  useEffect(() => {
+    if (!open || !rolling) return;
+    const second = videos.current[1];
+    if (!second) return;
+    second.volume = 0;
+    second.muted = !sound;
+    void second.play().catch(() => {});
+  }, [open, rolling, sound]);
 
   /* --- Le son suit l'image : il passe d'un plan à l'autre en fondu ----- */
 
@@ -141,11 +171,9 @@ export default function Intro({ locale }: { locale: Locale }) {
     const other = shot === 0 ? b : a;
     if (!target) return;
 
-    // Les deux pistes restent ouvertes ; c'est le volume qui bascule,
-    // sur la même durée que l'image. Couper net s'entendrait.
-    target.muted = !sound;
-    if (other) other.muted = !sound;
-
+    // Ici on ne touche qu'au volume : le silence est l'affaire des deux
+    // effets ci-dessus, et y revenir rallumerait puis rééteindrait les
+    // pistes à chaque rendu.
     const started = performance.now();
     const from = { t: target.volume, o: other?.volume ?? 0 };
     let frame = 0;
@@ -161,32 +189,20 @@ export default function Intro({ locale }: { locale: Locale }) {
     return () => cancelAnimationFrame(frame);
   }, [shot, open, sound]);
 
-  /* --- Le son -----------------------------------------------------------
-     La vidéo démarre muette : c'est la seule façon qu'un navigateur la
-     laisse partir seule. Le premier geste du visiteur la dévoile — et ce
-     geste-là ne lève pas le rideau, pour ne pas emporter le son avec lui.
+  /* --- Si le son nous a été refusé, le premier geste le lève ----------
+     Ce geste-là ne ferme pas le rideau : il serait dommage de lever le son
+     et de l'emporter du même mouvement.
      --------------------------------------------------------------------- */
 
   useEffect(() => {
     if (!open) return;
 
-    let muted = false;
-    try {
-      muted = localStorage.getItem(SOUND_KEY) === "off";
-    } catch {
-      /* ignore */
-    }
-    if (muted) return;
+    if (sound) return; // le navigateur nous l'a déjà accordé
 
     let done = false;
 
-    function reveal(e: Event) {
+    function reveal() {
       if (done) return;
-      // Le bouton de son parle pour lui-même : s'il est visé, on le laisse
-      // faire, sinon son clic allumerait puis éteindrait aussitôt.
-      const target = e.target as Node | null;
-      if (target && soundButton.current?.contains(target)) return;
-
       done = true;
       armed.current = true;
       // On démasque dans la foulée du geste : certains navigateurs
@@ -206,7 +222,7 @@ export default function Intro({ locale }: { locale: Locale }) {
     window.addEventListener("keydown", reveal, true);
     window.addEventListener("touchstart", reveal, true);
     return detach;
-  }, [open, unmute]);
+  }, [open, sound, unmute]);
 
   /* --- Échapper, et bloquer le défilement ------------------------------ */
 
@@ -220,18 +236,6 @@ export default function Intro({ locale }: { locale: Locale }) {
       document.body.style.overflow = "";
     };
   }, [open, close]);
-
-  const toggleSound = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const next = !sound;
-    unmute(next); // dans la foulée du clic, sans attendre le rendu
-    setSound(next);
-    try {
-      localStorage.setItem(SOUND_KEY, next ? "on" : "off");
-    } catch {
-      /* ignore */
-    }
-  };
 
   if (!onHome) return null;
 
@@ -415,64 +419,6 @@ export default function Intro({ locale }: { locale: Locale }) {
               aria-hidden
               className="h-px w-6 bg-gold transition-all duration-500 group-hover:w-11"
             />
-          </motion.button>
-
-          {/* ============================================================ */}
-          {/*  Le son                                                       */}
-          {/* ============================================================ */}
-          <motion.button
-            type="button"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.8 }}
-            ref={soundButton}
-            onClick={toggleSound}
-            aria-pressed={sound}
-            aria-label={sound ? t("soundOff") : t("soundOn")}
-            title={sound ? t("soundOff") : t("soundOn")}
-            className={`absolute end-6 top-[calc(5vh+1.25rem)] flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-400 ${
-              sound
-                ? "border-gold/60 text-gold"
-                : "animate-breathe border-gold/25 text-gold/60 hover:border-gold/60 hover:text-gold"
-            }`}
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden
-            >
-              <path
-                d="M4 9v6h4l5 4V5L8 9H4Z"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinejoin="round"
-              />
-              {sound ? (
-                <>
-                  <path
-                    d="M16.5 8.5a5 5 0 0 1 0 7"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M19.5 6a9 9 0 0 1 0 12"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                </>
-              ) : (
-                <path
-                  d="M17 10l4 4m0-4l-4 4"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
-              )}
-            </svg>
           </motion.button>
         </motion.div>
       )}
