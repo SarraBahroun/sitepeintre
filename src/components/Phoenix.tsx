@@ -1,217 +1,174 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
 /* =============================================================================
-   Le vol du phénix
+   Le passage du phénix
    -----------------------------------------------------------------------------
-   L'oiseau est de profil, tourné vers la droite. Il ne tourne plus en rond
-   autour du nom : il traverse l'écran entier, par une boucle large et creusée,
-   et revient. Ce qui fait un vol crédible, et non un décor qui glisse :
+   Il ne tourne plus en boucle. Il traverse le champ une seule fois, d'un bord
+   à l'autre, et s'en va. C'est la boucle qui trahissait le jouet pendu à son
+   fil : au cinéma, l'oiseau passe, et le plan continue sans lui.
 
-     · il regarde toujours où il va. Dès qu'il repart vers la gauche,
-       l'image se retourne ;
-     · il s'incline sur sa trajectoire — le nez suit la tangente, amorti,
-       comme un oiseau qui s'appuie sur l'air dans son virage ;
-     · il grandit en passant devant, s'éteint et rapetisse au loin ;
-     · ses ailes battent : la silhouette s'écrase et s'étire légèrement,
-       en retard d'un temps sur la montée, et le corps suit.
+   Trois emprunts à l'image filmée, qui font le plus gros du réalisme :
+
+     · le flou de vitesse. Net au sommet de sa course, là où il ralentit ;
+       filé aux deux bords, là où il entre et sort le plus vite ;
+     · la traîne. Trois doubles en retard de quelques centièmes, de plus en
+       plus pâles — ce que donne une pose longue sur un sujet lumineux ;
+     · la perspective. Il grandit en venant vers nous, décroît en s'éloignant,
+       et s'incline sur la pente de sa trajectoire.
    ========================================================================== */
 
 const RATIO = 721 / 1200;
-const BEAT = 0.9; // s — un battement d'aile
-const BEAT_TIMES = [0, 0.16, 0.34, 0.5, 0.76, 1];
-/** Descente brève et puissante, remontée longue : l'aile pousse puis se replace. */
-const BEAT_SQUASH = [1.06, 1.0, 0.9, 0.95, 1.03, 1.06];
-const BEAT_SKEW = [-2.2, -0.6, 2.6, 1.4, -1.2, -2.2];
 
-const BLOOM = "brightness(1.7) saturate(1.85)";
-const SHARP =
-  "brightness(1.08) saturate(1.28) drop-shadow(0 0 12px rgba(255,205,105,0.85)) drop-shadow(0 0 38px rgba(255,160,50,0.6)) drop-shadow(0 0 95px rgba(255,120,25,0.38))";
+/** Le passage, échantillonné. `t` va de 0 (hors champ) à 1 (hors champ). */
+const STEPS = 40;
 
-type Flight = {
-  x: number[];
-  y: number[];
+type Pass = {
+  x: string[];
+  y: string[];
   scale: number[];
   opacity: number[];
   rotate: number[];
-  scaleX: number[];
+  blur: string[];
   times: number[];
 };
 
-/**
- * Une boucle qui balaie tout l'écran. Pas un cercle : une courbe creusée,
- * plus large que haute, pour que l'oiseau passe loin des bords autant que
- * devant le nom.
- */
-function useFlight(w: number, h: number): Flight {
-  return useMemo(() => {
-    const steps = 160;
-    const rx = w * 0.4;
-    const ry = h * 0.33;
+function buildPass(): Pass {
+  const x: string[] = [];
+  const y: string[] = [];
+  const scale: number[] = [];
+  const opacity: number[] = [];
+  const rotate: number[] = [];
+  const blur: string[] = [];
+  const times: number[] = [];
 
-    const x: number[] = [];
-    const y: number[] = [];
-    const scale: number[] = [];
-    const opacity: number[] = [];
-    const scaleX: number[] = [];
-    const raw: number[] = [];
+  for (let i = 0; i <= STEPS; i++) {
+    const t = i / STEPS;
+    times.push(t);
 
-    for (let i = 0; i <= steps; i++) {
-      const a = (i / steps) * Math.PI * 2 + Math.PI / 2;
-      // Les harmoniques creusent la boucle : elle cesse d'être un rond
-      const px = Math.cos(a) * rx * (1 + 0.14 * Math.sin(3 * a));
-      const py = Math.sin(a) * ry * (1 + 0.2 * Math.cos(2 * a));
-      x.push(px);
-      y.push(py);
+    // Il entre vite, ralentit au milieu, repart vite : une sinusoïde
+    // sur la position donne exactement cela.
+    const eased = 0.5 - Math.cos(Math.PI * t) / 2;
+    const glide = t * 0.35 + eased * 0.65; // moitié linéaire, moitié ralentie
 
-      const front = (Math.sin(a) + 1) / 2; // 1 devant, 0 au loin
-      scale.push(0.42 + front * 0.58);
-      opacity.push(0.5 + front * 0.5);
-    }
+    x.push(`${-72 + glide * 144}vw`);
 
-    // La tangente, prise sur le point suivant : elle donne le cap
-    for (let i = 0; i <= steps; i++) {
-      const n = (i + 1) % (steps + 1) || 1;
-      const dx = x[n] - x[i];
-      const dy = y[n] - y[i];
-      const heading = (Math.atan2(dy, dx) * 180) / Math.PI;
-      // L'image regarde à droite : vers la gauche, on la retourne
-      const left = dx < 0;
-      scaleX.push(left ? -1 : 1);
-      raw.push(left ? heading - 180 : heading);
-    }
+    // Une arche : il monte, puis redescend en sortant
+    const arc = Math.sin(Math.PI * t);
+    y.push(`${14 - arc * 26}vh`);
 
-    // On déroule les angles : sans cela, un passage de 179 à -179
-    // ferait faire un tour complet à l'oiseau.
-    const rotate: number[] = [raw[0]];
-    for (let i = 1; i < raw.length; i++) {
-      let d = raw[i] - raw[i - 1];
-      while (d > 180) d -= 360;
-      while (d < -180) d += 360;
-      rotate.push(rotate[i - 1] + d);
-    }
-    // Amorti : un oiseau ne pointe pas à la verticale dans son virage
-    const base = rotate[0];
-    const damped = rotate.map((r) => base + (r - base) * 0.55);
+    // Au plus près à mi-course
+    scale.push(0.4 + arc * 0.6);
+    opacity.push(Math.min(1, Math.sin(Math.PI * t) * 2.4));
 
-    return {
-      x,
-      y,
-      scale,
-      opacity,
-      rotate: damped,
-      scaleX,
-      times: x.map((_, i) => i / steps),
-    };
-  }, [w, h]);
+    // Il s'incline sur la pente qu'il suit
+    const slope = Math.cos(Math.PI * t);
+    rotate.push(-slope * 11);
+
+    // Net là où il ralentit, filé là où il file
+    const speed = 1 - arc;
+    blur.push(`blur(${(speed * speed * 7).toFixed(2)}px)`);
+  }
+
+  return { x, y, scale, opacity, rotate, blur, times };
 }
 
+const PASS = buildPass();
+
+const BLOOM = "brightness(1.65) saturate(1.8)";
+const SHARP =
+  "brightness(1.06) saturate(1.26) drop-shadow(0 0 14px rgba(255,205,105,0.8)) drop-shadow(0 0 44px rgba(255,160,50,0.55)) drop-shadow(0 0 110px rgba(255,120,25,0.35))";
+
+/** Les doubles de la traîne : mêmes gestes, quelques centièmes plus tard. */
+const TRAIL = [
+  { delay: 0.16, opacity: 0.3, blur: 16 },
+  { delay: 0.09, opacity: 0.45, blur: 9 },
+  { delay: 0, opacity: 1, blur: 0 },
+];
+
 export default function Phoenix({
-  size = 300,
-  duration = 11,
-  className = "",
+  size = 420,
+  duration = 6.4,
+  delay = 1.1,
 }: {
-  /** Largeur de l'oiseau au plus près, en pixels. */
+  /** Largeur de l'oiseau à mi-course, en pixels. */
   size?: number;
-  /** Durée d'un tour complet, en secondes. */
+  /** Durée du passage, en secondes. */
   duration?: number;
-  className?: string;
+  /** Temps mort avant qu'il n'entre. */
+  delay?: number;
 }) {
-  const [box, setBox] = useState({ w: 1200, h: 700 });
-
-  useEffect(() => {
-    // Hors du rendu : mesurer puis poser l'état d'affilée ferait
-    // cascader les rendus.
-    const measure = () =>
-      setBox((b) => {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-        return b.w === w && b.h === h ? b : { w, h };
-      });
-    const id = requestAnimationFrame(measure);
-    window.addEventListener("resize", measure);
-    return () => {
-      cancelAnimationFrame(id);
-      window.removeEventListener("resize", measure);
-    };
-  }, []);
-
-  const flight = useFlight(box.w, box.h);
-  const loop = {
-    duration,
-    ease: "linear" as const,
-    repeat: Infinity,
-    times: flight.times,
-  };
-
   return (
     <div
       aria-hidden
-      className={`pointer-events-none absolute left-1/2 top-1/2 h-0 w-0 ${className}`}
+      className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      {/* Le trajet, et le cap */}
-      <motion.div
-        animate={{ x: flight.x, y: flight.y, rotate: flight.rotate }}
-        transition={loop}
-        style={{ willChange: "transform" }}
-      >
-        {/* La distance : il grandit devant, s'efface au loin */}
+      {TRAIL.map((ghost) => (
         <motion.div
-          animate={{ scale: flight.scale, opacity: flight.opacity }}
-          transition={loop}
+          key={ghost.delay}
+          initial={{ opacity: 0 }}
+          animate={{
+            x: PASS.x,
+            y: PASS.y,
+            rotate: PASS.rotate,
+            opacity: PASS.opacity.map((o) => o * ghost.opacity),
+          }}
+          transition={{
+            duration,
+            delay: delay + ghost.delay,
+            ease: "linear",
+            times: PASS.times,
+          }}
+          className="absolute left-1/2 top-1/2"
+          style={{ willChange: "transform, opacity" }}
         >
-          {/* Le sens de vol : vers la gauche, l'image se retourne */}
           <motion.div
-            animate={{ scaleX: flight.scaleX }}
-            transition={loop}
-            style={{ transformOrigin: "50% 50%" }}
+            initial={{ scale: PASS.scale[0] }}
+            animate={{ scale: PASS.scale, filter: PASS.blur }}
+            transition={{
+              duration,
+              delay: delay + ghost.delay,
+              ease: "linear",
+              times: PASS.times,
+            }}
+            style={{
+              width: size,
+              height: size * RATIO,
+              marginLeft: -size / 2,
+              marginTop: (-size * RATIO) / 2,
+            }}
           >
-            {/* Le battement : la silhouette s'écrase puis s'étire */}
-            <motion.div
-              animate={{ scaleY: BEAT_SQUASH, skewY: BEAT_SKEW }}
-              transition={{
-                duration: BEAT,
-                ease: [0.4, 0, 0.3, 1],
-                repeat: Infinity,
-                times: BEAT_TIMES,
-              }}
-              style={{
-                width: size,
-                height: size * RATIO,
-                marginLeft: -size / 2,
-                marginTop: (-size * RATIO) / 2,
-                transformOrigin: "62% 48%", // l'épaule, non le centre
-                willChange: "transform",
-              }}
+            <div
+              className="relative h-full w-full"
+              style={
+                ghost.blur ? { filter: `blur(${ghost.blur}px)` } : undefined
+              }
             >
-              <div className="relative h-full w-full">
-                <Image
-                  src="/images/oeuvres/phenix-profil.png"
-                  alt=""
-                  width={1200}
-                  height={721}
-                  priority
-                  aria-hidden
-                  className="absolute inset-0 h-full w-full scale-[1.06] opacity-70 blur-[20px]"
-                  style={{ filter: BLOOM }}
-                />
-                <Image
-                  src="/images/oeuvres/phenix-profil.png"
-                  alt=""
-                  width={1200}
-                  height={721}
-                  priority
-                  className="relative h-full w-full"
-                  style={{ filter: SHARP }}
-                />
-              </div>
-            </motion.div>
+              <Image
+                src="/images/oeuvres/phenix-profil.png"
+                alt=""
+                width={1200}
+                height={721}
+                priority
+                aria-hidden
+                className="absolute inset-0 h-full w-full scale-[1.08] opacity-70 blur-[22px]"
+                style={{ filter: BLOOM }}
+              />
+              <Image
+                src="/images/oeuvres/phenix-profil.png"
+                alt=""
+                width={1200}
+                height={721}
+                priority
+                className="relative h-full w-full"
+                style={{ filter: SHARP }}
+              />
+            </div>
           </motion.div>
         </motion.div>
-      </motion.div>
+      ))}
     </div>
   );
 }

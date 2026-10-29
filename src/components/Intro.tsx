@@ -10,7 +10,7 @@ import { site } from "@/data/site";
 import { playIntroSound, stopIntroSound } from "@/lib/sound";
 import { Monogram } from "./Logo";
 import Phoenix from "./Phoenix";
-import LightStreaks from "./LightStreaks";
+import Embers from "./Embers";
 
 /* =============================================================================
    Ouverture — le phénix tourne autour du nom
@@ -23,9 +23,10 @@ import LightStreaks from "./LightStreaks";
 const SEEN_KEY = "hb-intro-seen";
 const SOUND_KEY = "hb-sound";
 
-/* Le temps de laisser l'oiseau faire deux fois le tour de l'écran */
-const FLIGHT = 10.5; // s — un tour complet, voir Phoenix.tsx
-const AUTO_DISMISS = FLIGHT * 2 * 1000;
+/* Le rideau tient le temps que l'oiseau traverse, et un souffle de plus */
+const PASS_DELAY = 1.1; // s — avant qu'il n'entre
+const PASS_DURATION = 6.4; // s — sa traversée
+const AUTO_DISMISS = (PASS_DELAY + PASS_DURATION + 1.6) * 1000;
 
 export default function Intro({ locale }: { locale: Locale }) {
   const t = useTranslations("intro");
@@ -181,8 +182,11 @@ export default function Intro({ locale }: { locale: Locale }) {
             }}
           />
 
-          {/* --- Les traînées de lumière, qui donnent la vitesse --- */}
-          <LightStreaks />
+          {/* --- Les braises, qui montent derrière tout le reste --- */}
+          <Embers />
+
+          {/* --- Le phénix traverse le champ, une seule fois --- */}
+          <Phoenix size={430} duration={6.4} delay={1.1} />
 
           {/* --- Le théâtre : nom au centre, phénix en orbite --- */}
           <div className="relative flex flex-col items-center px-6 text-center">
@@ -228,13 +232,6 @@ export default function Intro({ locale }: { locale: Locale }) {
             >
               {t("motto")}
             </motion.p>
-
-            {/*
-              L'oiseau de feu. Il mène sa course lui-même : une boucle qui
-              balaie tout l'écran, le cap sur la tangente, l'image retournée
-              dès qu'il repart vers la gauche. Voir Phoenix.tsx.
-            */}
-            <Phoenix size={340} duration={10.5} className="-z-10" />
           </div>
 
           {/* --- Entrer --- */}

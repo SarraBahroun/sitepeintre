@@ -229,25 +229,27 @@ html[lang="ar"] .tracking-\[0\.2em\] {
   }
 }
 
-/* Une traînée de lumière qui file d'un bord à l'autre du champ */
-@keyframes streak {
+/* Une braise qui monte, dérive, et s'éteint */
+@keyframes ember {
   0% {
-    transform: translate3d(-60vw, 0, 0) rotate(var(--tilt, -12deg));
+    transform: translate3d(0, 0, 0) scale(0.6);
     opacity: 0;
   }
-  10%,
-  80% {
+  12% {
     opacity: 1;
   }
+  70% {
+    opacity: 0.85;
+  }
   100% {
-    transform: translate3d(160vw, 0, 0) rotate(var(--tilt, -12deg));
+    transform: translate3d(var(--drift, 0), -112vh, 0) scale(1);
     opacity: 0;
   }
 }
 
-.animate-streak {
-  animation-name: streak;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+.animate-ember {
+  animation-name: ember;
+  animation-timing-function: cubic-bezier(0.3, 0.1, 0.6, 1);
   animation-iteration-count: infinite;
   opacity: 0;
 }
@@ -291,7 +293,7 @@ html[lang="ar"] .tracking-\[0\.2em\] {
   .animate-canvas {
     animation: none !important;
   }
-  .animate-streak {
+  .animate-ember {
     display: none !important;
   }
   *,
