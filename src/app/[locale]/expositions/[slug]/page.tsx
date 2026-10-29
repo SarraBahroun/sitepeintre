@@ -93,10 +93,16 @@ export default async function ExpositionPage({
               fill
               priority
               sizes="100vw"
-              className="animate-canvas object-cover opacity-45"
+              className="animate-canvas object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-night via-night/82 to-night/55" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_60%,transparent_10%,color-mix(in_oklab,var(--color-night)_75%,transparent)_85%)]" />
+            {/*
+              Un voile léger, et un seul. Trois couches sombres empilées
+              rendaient l'en-tête presque noir : on ne voyait plus la forêt.
+              Le dégradé du bas raccorde la page, sans plus.
+            */}
+            <div className="absolute inset-0 bg-night/25" />
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-night via-night/70 to-transparent" />
+            <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-night via-night/55 to-transparent" />
           </div>
         )}
 
@@ -107,7 +113,10 @@ export default async function ExpositionPage({
               <span className={`ms-3 ${accentText}`}>{expo.numeral}</span>
             </p>
 
-            <h1 className="mt-5 font-display text-[clamp(2.6rem,8vw,6rem)] font-light leading-[0.98] text-ivory">
+            <h1
+              className="mt-5 font-display text-[clamp(2.6rem,8vw,6rem)] font-light leading-[0.98] text-ivory"
+              style={{ textShadow: "0 2px 30px rgba(5,11,9,0.85)" }}
+            >
               {tr(expo.title, locale)}
             </h1>
 
