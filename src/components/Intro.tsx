@@ -7,26 +7,32 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { site } from "@/data/site";
-import { playIntroSound, stopIntroSound } from "@/lib/sound";
 import { Monogram } from "./Logo";
-import Phoenix from "./Phoenix";
 import Embers from "./Embers";
 
 /* =============================================================================
-   Ouverture — le phénix tourne autour du nom
+   Ouverture — L'Embrasement
    -----------------------------------------------------------------------------
-   Un rideau plein écran, une fois par session, sur la page d'accueil
-   seulement. Il se lève tout seul au bout de quelques secondes, et à la
-   première touche ou au premier clic si l'on est pressé.
+   Un film, en deux plans. Le phénix brûle en fond ; par-dessus, le monogramme
+   paraît, puis le nom s'allume lettre à lettre. À mi-course une déflagration
+   emporte le premier plan et ouvre le second. Puis tout retombe, et le rideau
+   se lève sur le site.
+
+   Le son vient des vidéos elles-mêmes. Elles démarrent muettes — aucun
+   navigateur ne les laisserait partir autrement — et se dévoilent au premier
+   geste du visiteur.
+
+   Une fois par session, sur la page d'accueil seulement.
    ========================================================================== */
 
 const SEEN_KEY = "hb-intro-seen";
 const SOUND_KEY = "hb-sound";
 
-/* Le rideau tient le temps que l'oiseau traverse, et un souffle de plus */
-const PASS_DELAY = 1.1; // s — avant qu'il n'entre
-const PASS_DURATION = 6.4; // s — sa traversée
-const AUTO_DISMISS = (PASS_DELAY + PASS_DURATION + 1.6) * 1000;
+/* La conduite du film, en secondes */
+const CUT = 5.4; // la déflagration, et le changement de plan
+const END = 11.4; // le rideau se lève
+
+const SHOTS = ["/videos/phenix-1.mp4", "/videos/phenix-2.mp4"] as const;
 
 export default function Intro({ locale }: { locale: Locale }) {
   const t = useTranslations("intro");
@@ -34,33 +40,32 @@ export default function Intro({ locale }: { locale: Locale }) {
   const onHome = pathname === "/";
 
   const [open, setOpen] = useState(true);
+  const [shot, setShot] = useState(0);
+  const [flash, setFlash] = useState(false);
   const [sound, setSound] = useState(false);
-  // Le premier geste sert à lancer le son, pas à fermer le rideau
-  const armedRef = useRef(false);
 
-  const name = locale === "ar" ? site.nameAr : site.name;
-  const units = locale === "ar" ? name.split(" ") : Array.from(name);
+  const videos = useRef<(HTMLVideoElement | null)[]>([null, null]);
+  // Le premier geste sert à dévoiler le son, pas à lever le rideau
+  const armed = useRef(false);
 
-  /**
-   * Lève le rideau. Le tout premier geste du visiteur sert à lancer le son
-   * — on le laisse passer sans fermer. `force` ignore cette franchise :
-   * la minuterie, elle, doit toujours aboutir.
-   */
+  /* --- Lever le rideau ------------------------------------------------- */
+
   const close = useCallback((force = false) => {
-    if (!force && armedRef.current) {
-      armedRef.current = false;
+    if (!force && armed.current) {
+      armed.current = false;
       return;
     }
+    videos.current.forEach((v) => v?.pause());
     setOpen(false);
-    stopIntroSound();
     try {
       sessionStorage.setItem(SEEN_KEY, "1");
     } catch {
-      /* navigation privée : tant pis, le rideau reviendra */
+      /* navigation privée : le rideau reviendra, tant pis */
     }
   }, []);
 
-  /* --- Faut-il seulement l'afficher ? --- */
+  /* --- Faut-il seulement le jouer ? ------------------------------------ */
+
   useEffect(() => {
     let seen = false;
     try {
@@ -73,23 +78,46 @@ export default function Intro({ locale }: { locale: Locale }) {
     ).matches;
 
     if (seen || reduced || !onHome) {
-      // Différé d'une image : poser l'état en plein effet ferait
-      // cascader les rendus.
       const skip = requestAnimationFrame(() => setOpen(false));
       return () => cancelAnimationFrame(skip);
     }
 
-    const timer = window.setTimeout(() => close(true), AUTO_DISMISS);
-    return () => window.clearTimeout(timer);
+    const toFlash = window.setTimeout(() => setFlash(true), CUT * 1000 - 260);
+    const toCut = window.setTimeout(() => {
+      setShot(1);
+      setFlash(false);
+    }, CUT * 1000);
+    const toEnd = window.setTimeout(() => close(true), END * 1000);
+
+    return () => {
+      window.clearTimeout(toFlash);
+      window.clearTimeout(toCut);
+      window.clearTimeout(toEnd);
+    };
   }, [onHome, close]);
 
+  /* --- Le plan courant joue, l'autre se tait --------------------------- */
+
+  useEffect(() => {
+    if (!open) return;
+    videos.current.forEach((v, i) => {
+      if (!v) return;
+      if (i === shot) {
+        v.muted = !sound;
+        void v.play().catch(() => {});
+      } else {
+        v.pause();
+        v.muted = true;
+      }
+    });
+  }, [shot, open, sound]);
+
   /* --- Le son -----------------------------------------------------------
-     Les navigateurs refusent de jouer un son tant que le visiteur n'a rien
-     touché. On tente quand même : certains l'autorisent sur un site déjà
-     fréquenté. Si c'est refusé, le premier geste — clic, touche, doigt —
-     le déclenche. Ce premier geste-là ne lève pas le rideau, pour ne pas
-     emporter le son avec lui.
+     La vidéo démarre muette : c'est la seule façon qu'un navigateur la
+     laisse partir seule. Le premier geste du visiteur la dévoile — et ce
+     geste-là ne lève pas le rideau, pour ne pas emporter le son avec lui.
      --------------------------------------------------------------------- */
+
   useEffect(() => {
     if (!open) return;
 
@@ -102,35 +130,29 @@ export default function Intro({ locale }: { locale: Locale }) {
     if (muted) return;
 
     let done = false;
-    const detach = () => {
-      window.removeEventListener("pointerdown", onGesture, true);
-      window.removeEventListener("keydown", onGesture, true);
-      window.removeEventListener("touchstart", onGesture, true);
-    };
 
-    function onGesture() {
+    function reveal() {
       if (done) return;
       done = true;
-      armedRef.current = true; // ce geste a servi au son, pas à fermer
+      armed.current = true;
       setSound(true);
-      void playIntroSound();
       detach();
     }
 
-    void playIntroSound().then((result) => {
-      if (result === "blocked") return; // on attend le premier geste
-      done = true;
-      setSound(true);
-      detach();
-    });
+    function detach() {
+      window.removeEventListener("pointerdown", reveal, true);
+      window.removeEventListener("keydown", reveal, true);
+      window.removeEventListener("touchstart", reveal, true);
+    }
 
-    window.addEventListener("pointerdown", onGesture, true);
-    window.addEventListener("keydown", onGesture, true);
-    window.addEventListener("touchstart", onGesture, true);
+    window.addEventListener("pointerdown", reveal, true);
+    window.addEventListener("keydown", reveal, true);
+    window.addEventListener("touchstart", reveal, true);
     return detach;
   }, [open]);
 
-  /* --- Toute touche lève le rideau --- */
+  /* --- Échapper, et bloquer le défilement ------------------------------ */
+
   useEffect(() => {
     if (!open) return;
     const onKey = () => close();
@@ -142,9 +164,6 @@ export default function Intro({ locale }: { locale: Locale }) {
     };
   }, [open, close]);
 
-  /* --- Le son n'appartient qu'à l'ouverture : il s'arrête avec elle --- */
-  useEffect(() => stopIntroSound, []);
-
   const toggleSound = (e: React.MouseEvent) => {
     e.stopPropagation();
     const next = !sound;
@@ -154,53 +173,121 @@ export default function Intro({ locale }: { locale: Locale }) {
     } catch {
       /* ignore */
     }
-    if (next) void playIntroSound();
-    else stopIntroSound();
   };
 
   if (!onHome) return null;
+
+  const name = locale === "ar" ? site.nameAr : site.name;
+  const units = locale === "ar" ? name.split(" ") : Array.from(name);
 
   return (
     <AnimatePresence>
       {open && (
         <motion.div
           key="intro"
-          exit={{ opacity: 0, filter: "blur(14px)" }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0, scale: 1.06, filter: "blur(18px)" }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
           onClick={() => close()}
           role="dialog"
           aria-label={t("title")}
-          className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center overflow-hidden bg-night"
+          className="fixed inset-0 z-[100] cursor-pointer overflow-hidden bg-night"
         >
-          {/* --- La braise du fond --- */}
+          {/* ============================================================ */}
+          {/*  Le feu                                                       */}
+          {/* ============================================================ */}
+          {SHOTS.map((src, i) => (
+            <motion.div
+              key={src}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: i === shot ? 1 : 0 }}
+              transition={{ duration: i === 0 ? 1.1 : 0.5, ease: "easeOut" }}
+              className="absolute inset-0"
+            >
+              {/*
+                Les plans sont verticaux. Sur un écran large, les recadrer
+                couperait l'oiseau : on pose derrière une copie démesurée et
+                floutée, qui tient lieu de décor, et on garde par-dessus le
+                cadre entier, net.
+              */}
+              <video
+                aria-hidden
+                src={src}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                className="absolute inset-0 h-full w-full scale-125 object-cover opacity-45 blur-[70px]"
+              />
+              <video
+                ref={(el) => {
+                  videos.current[i] = el;
+                }}
+                src={src}
+                muted
+                playsInline
+                preload="auto"
+                className="absolute inset-0 h-full w-full object-contain"
+              />
+            </motion.div>
+          ))}
+
+          {/* Les voiles : le feu reste visible, le nom reste lisible */}
           <div
             aria-hidden
-            className="animate-breathe pointer-events-none absolute left-1/2 top-1/2 h-[82vmin] w-[82vmin] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[90px]"
-            style={{
-              background:
-                "radial-gradient(circle, color-mix(in oklab, var(--color-gold-deep) 30%, transparent) 0%, color-mix(in oklab, var(--color-glow-deep) 16%, transparent) 45%, transparent 70%)",
-            }}
+            className="absolute inset-0 bg-night/40 mix-blend-multiply"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-[radial-gradient(ellipse_58%_48%_at_50%_50%,transparent_16%,color-mix(in_oklab,var(--color-night)_86%,transparent)_88%)]"
           />
 
-          {/* --- Les braises, qui montent derrière tout le reste --- */}
+          {/* Les braises, par-dessus le feu */}
           <Embers />
 
-          {/* --- Le phénix traverse le champ, une seule fois --- */}
-          <Phoenix size={430} duration={6.4} delay={1.1} />
+          {/* Les barres du cadre : on est au cinéma */}
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-[5vh] bg-night"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-x-0 bottom-0 h-[5vh] bg-night"
+          />
 
-          {/* --- Le théâtre : nom au centre, phénix en orbite --- */}
-          <div className="relative flex flex-col items-center px-6 text-center">
-            {/* Le monogramme ouvre la marche */}
+          {/* ============================================================ */}
+          {/*  La déflagration, au changement de plan                       */}
+          {/* ============================================================ */}
+          <AnimatePresence>
+            {flash && (
+              <motion.div
+                aria-hidden
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 0.88, 0] }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.52, times: [0, 0.3, 1] }}
+                className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#fff3d6,var(--color-gold)_38%,transparent_72%)]"
+              />
+            )}
+          </AnimatePresence>
+
+          {/* ============================================================ */}
+          {/*  Le titre                                                     */}
+          {/* ============================================================ */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.6, rotate: -18 }}
+              initial={{ opacity: 0, scale: 0.55, rotate: -22 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: 1.3,
+                delay: 0.4,
+                ease: [0.22, 1, 0.36, 1],
+              }}
             >
-              <Monogram className="h-16 w-16 sm:h-20 sm:w-20" />
+              <Monogram className="h-16 w-16 drop-shadow-[0_0_26px_rgba(230,184,100,0.8)] sm:h-20 sm:w-20" />
             </motion.div>
 
-            {/* Le nom, lettre à lettre */}
-            <h1 className="mt-8 font-display text-[clamp(2.2rem,8vw,5.5rem)] font-light leading-[1.02] tracking-[0.05em] text-ivory">
+            <h1 className="mt-8 font-display text-[clamp(2.3rem,8.5vw,6rem)] font-light leading-[1.02] tracking-[0.06em] text-ivory">
               <span className="sr-only">{name}</span>
               <span
                 aria-hidden
@@ -209,60 +296,95 @@ export default function Intro({ locale }: { locale: Locale }) {
                 {units.map((unit, i) => (
                   <motion.span
                     key={`${unit}-${i}`}
-                    initial={{ opacity: 0, y: 34, filter: "blur(12px)" }}
-                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    initial={{
+                      opacity: 0,
+                      y: 40,
+                      filter: "blur(18px) brightness(3)",
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      filter: "blur(0px) brightness(1)",
+                    }}
                     transition={{
-                      duration: 0.95,
-                      delay: 0.55 + i * 0.05,
+                      duration: 1.1,
+                      delay: 1 + i * 0.07,
                       ease: [0.22, 1, 0.36, 1],
                     }}
                     className="inline-block"
+                    style={{
+                      textShadow:
+                        "0 0 24px rgba(255,205,110,0.45), 0 0 70px rgba(255,150,40,0.25)",
+                    }}
                   >
-                    {unit === " " ? " " : unit}
+                    {unit === " " ? " " : unit}
                   </motion.span>
                 ))}
               </span>
             </h1>
 
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={{ opacity: 1, scaleX: 1 }}
+              transition={{
+                duration: 1.4,
+                delay: 2.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="mt-8 h-px w-56 bg-gradient-to-r from-transparent via-gold to-transparent"
+              aria-hidden
+            />
+
             <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.5 }}
-              className="eyebrow mt-6"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.2, delay: 2.6 }}
+              className="eyebrow mt-6 text-gold/80"
             >
               {t("motto")}
             </motion.p>
           </div>
 
-          {/* --- Entrer --- */}
+          {/* ============================================================ */}
+          {/*  Entrer                                                       */}
+          {/* ============================================================ */}
           <motion.button
             type="button"
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 2.6 }}
-            onClick={() => close(true)}
-            className="group absolute bottom-16 inline-flex items-center gap-3.5 rounded-full border border-gold/30 px-7 py-3.5 transition-all duration-500 hover:border-gold/70 hover:bg-gold/10"
+            transition={{ duration: 0.9, delay: 6.4 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              close(true);
+            }}
+            className="group absolute inset-x-0 bottom-[9vh] mx-auto inline-flex w-fit items-center gap-3.5 rounded-full border border-gold/35 bg-night/40 px-8 py-3.5 backdrop-blur-md transition-all duration-500 hover:border-gold/80 hover:bg-gold/10"
           >
-            <span className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-gold">
+            <span className="text-[0.72rem] font-medium uppercase tracking-[0.26em] text-gold">
               {t("enter")}
             </span>
             <span
               aria-hidden
-              className="h-px w-6 bg-gold transition-all duration-500 group-hover:w-10"
+              className="h-px w-6 bg-gold transition-all duration-500 group-hover:w-11"
             />
           </motion.button>
 
-          {/* --- Le son --- */}
+          {/* ============================================================ */}
+          {/*  Le son                                                       */}
+          {/* ============================================================ */}
           <motion.button
             type="button"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 2.2 }}
+            transition={{ duration: 0.8, delay: 1.8 }}
             onClick={toggleSound}
             aria-pressed={sound}
             aria-label={sound ? t("soundOff") : t("soundOn")}
             title={sound ? t("soundOff") : t("soundOn")}
-            className="absolute end-7 top-7 flex h-11 w-11 items-center justify-center rounded-full border border-gold/25 text-gold/70 transition-all duration-400 hover:border-gold/60 hover:text-gold"
+            className={`absolute end-6 top-[calc(5vh+1.25rem)] flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-400 ${
+              sound
+                ? "border-gold/60 text-gold"
+                : "animate-breathe border-gold/25 text-gold/60 hover:border-gold/60 hover:text-gold"
+            }`}
           >
             <svg
               width="18"
