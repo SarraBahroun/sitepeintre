@@ -13,26 +13,34 @@ import Embers from "./Embers";
 /* =============================================================================
    Ouverture — L'Embrasement
    -----------------------------------------------------------------------------
-   Un film, en deux plans. Le phénix brûle en fond ; par-dessus, le monogramme
-   paraît, puis le nom s'allume lettre à lettre. À mi-course le second plan,
-   déjà en mouvement en coulisse, prend la place du premier par un long fondu
-   que réchauffe une braise. Puis tout retombe, et le rideau se lève.
+   Deux temps.
 
-   Le son vient des vidéos elles-mêmes, sans bouton ni réglage : on le
-   demande d'emblée. Chrome l'accorde aux sites déjà fréquentés ; ailleurs il
-   est refusé, et le premier geste du visiteur le lève alors — ce geste-là ne
-   ferme pas le rideau, pour ne pas emporter le son avec lui.
+   D'abord un carton : le monogramme, le nom qui s'allume lettre à lettre, la
+   devise, et une invite qui respire. Rien ne bouge encore.
+
+   Puis le film, au premier geste : le phénix brûle plein cadre, un second
+   plan prend la place du premier par un long fondu que réchauffe une braise,
+   et le rideau se lève sur le site.
+
+   Pourquoi ce carton. Aucun navigateur ne laisse un son partir seul — la
+   règle protège le visiteur, et rien ne la contourne. Mais un son demandé
+   DANS le geste du visiteur est toujours accordé. Le carton n'est donc pas
+   une porte à pousser : c'est ce qui garantit qu'on entende le feu dès la
+   première image, à chaque visite, sur n'importe quel navigateur.
 
    Une fois par session, sur la page d'accueil seulement.
    ========================================================================== */
 
 const SEEN_KEY = "hb-intro-seen";
 
-/* La conduite du film, en secondes */
+/* La conduite du film, en secondes — comptées à partir du geste */
 const PREROLL = 4.2; // le second plan se met en route, encore invisible
 const CUT = 5.0; // le fondu commence
 const DISSOLVE = 1.7; // sa durée — assez long pour que rien ne tranche
 const END = 10.4; // le rideau se lève, juste avant la fin du second plan
+
+/** Sans geste, le carton finit par céder — mais alors en silence. */
+const PATIENCE = 9000;
 
 const SHOTS = ["/videos/phenix-1.mp4", "/videos/phenix-2.mp4"] as const;
 
@@ -42,35 +50,17 @@ export default function Intro({ locale }: { locale: Locale }) {
   const onHome = pathname === "/";
 
   const [open, setOpen] = useState(true);
+  const [rolling, setRolling] = useState(false); // le film est lancé
   const [shot, setShot] = useState(0);
-  // Le second plan tourne-t-il déjà, en coulisse ?
-  const [rolling, setRolling] = useState(false);
-  // La chaleur qui enfle pendant le fondu
-  const [glow, setGlow] = useState(false);
-  const [sound, setSound] = useState(false);
+  const [second, setSecond] = useState(false); // le second plan tourne déjà
+  const [glow, setGlow] = useState(false); // la braise du passage
 
   const videos = useRef<(HTMLVideoElement | null)[]>([null, null]);
-  // Le premier geste sert à dévoiler le son, pas à lever le rideau
-  const armed = useRef(false);
-
-  /**
-   * Démasque ou masque les deux pistes sur-le-champ. À appeler depuis le
-   * geste lui-même : un démasquage différé au rendu suivant sort de la
-   * pile d'appel du geste, et plusieurs navigateurs le refusent.
-   */
-  const unmute = useCallback((on: boolean) => {
-    videos.current.forEach((v) => {
-      if (v) v.muted = !on;
-    });
-  }, []);
+  const started = useRef(false);
 
   /* --- Lever le rideau ------------------------------------------------- */
 
-  const close = useCallback((force = false) => {
-    if (!force && armed.current) {
-      armed.current = false;
-      return;
-    }
+  const close = useCallback(() => {
     videos.current.forEach((v) => v?.pause());
     setOpen(false);
     try {
@@ -80,7 +70,30 @@ export default function Intro({ locale }: { locale: Locale }) {
     }
   }, []);
 
-  /* --- Faut-il seulement le jouer ? ------------------------------------ */
+  /* --- Lancer le film, depuis le geste lui-même ------------------------
+     Tout se joue ici. `play()` est appelé dans la pile d'appel du geste,
+     piste sonore ouverte : c'est à cette condition, et à elle seule, que
+     le navigateur accorde le son.
+     --------------------------------------------------------------------- */
+
+  const start = useCallback((withSound: boolean) => {
+    if (started.current) return;
+    started.current = true;
+
+    const first = videos.current[0];
+    if (first) {
+      first.muted = !withSound;
+      first.volume = 1;
+      void first.play().catch(() => {
+        // Refusé malgré tout : on repart en silence plutôt que pas du tout
+        first.muted = true;
+        void first.play().catch(() => {});
+      });
+    }
+    setRolling(true);
+  }, []);
+
+  /* --- Faut-il seulement l'afficher ? ---------------------------------- */
 
   useEffect(() => {
     let seen = false;
@@ -97,10 +110,35 @@ export default function Intro({ locale }: { locale: Locale }) {
       const skip = requestAnimationFrame(() => setOpen(false));
       return () => cancelAnimationFrame(skip);
     }
+  }, [onHome]);
 
-    // Le second plan se met en route avant d'être visible : au moment du
-    // fondu il est déjà en mouvement, et les deux images se recouvrent.
-    const toPreroll = window.setTimeout(() => setRolling(true), PREROLL * 1000);
+  /* --- Le carton attend un geste, n'importe lequel ---------------------- */
+
+  useEffect(() => {
+    if (!open || rolling) return;
+
+    const go = () => start(true);
+    window.addEventListener("pointerdown", go);
+    window.addEventListener("keydown", go);
+    window.addEventListener("touchstart", go);
+
+    // Personne ne bouge : on finit par jouer, sans le son
+    const patience = window.setTimeout(() => start(false), PATIENCE);
+
+    return () => {
+      window.removeEventListener("pointerdown", go);
+      window.removeEventListener("keydown", go);
+      window.removeEventListener("touchstart", go);
+      window.clearTimeout(patience);
+    };
+  }, [open, rolling, start]);
+
+  /* --- La conduite du film, une fois lancé ------------------------------ */
+
+  useEffect(() => {
+    if (!rolling) return;
+
+    const toSecond = window.setTimeout(() => setSecond(true), PREROLL * 1000);
     const toCut = window.setTimeout(() => {
       setShot(1);
       setGlow(true);
@@ -109,126 +147,59 @@ export default function Intro({ locale }: { locale: Locale }) {
       () => setGlow(false),
       (CUT + DISSOLVE) * 1000,
     );
-    const toEnd = window.setTimeout(() => close(true), END * 1000);
+    const toEnd = window.setTimeout(close, END * 1000);
 
     return () => {
-      window.clearTimeout(toPreroll);
+      window.clearTimeout(toSecond);
       window.clearTimeout(toCut);
       window.clearTimeout(toCalm);
       window.clearTimeout(toEnd);
     };
-  }, [onHome, close]);
-
-  /* --- Le premier plan part, avec le son si on nous l'accorde ----------
-     On tente d'emblée le son. Chrome l'accorde aux sites que le visiteur
-     fréquente déjà ; sinon il refuse, et l'on repart en silence — le
-     premier geste lèvera alors le son.
-     --------------------------------------------------------------------- */
-
-  useEffect(() => {
-    if (!open) return;
-    const first = videos.current[0];
-    if (!first) return;
-
-    let cancelled = false;
-    first.volume = 1;
-    first.muted = false;
-
-    void first
-      .play()
-      .then(() => {
-        if (!cancelled) setSound(true);
-      })
-      .catch(() => {
-        if (cancelled) return;
-        first.muted = true;
-        void first.play().catch(() => {});
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [open]);
+  }, [rolling, close]);
 
   /* --- Le second plan se met en route en coulisse ----------------------- */
 
   useEffect(() => {
-    if (!open || !rolling) return;
-    const second = videos.current[1];
     if (!second) return;
-    second.volume = 0;
-    second.muted = !sound;
-    void second.play().catch(() => {});
-  }, [open, rolling, sound]);
+    const v = videos.current[1];
+    if (!v) return;
+    v.volume = 0; // il entrera par le fondu
+    v.muted = videos.current[0]?.muted ?? true;
+    void v.play().catch(() => {});
+  }, [second]);
 
-  /* --- Le son suit l'image : il passe d'un plan à l'autre en fondu ----- */
+  /* --- Le son suit l'image, et bascule à la même allure ----------------- */
 
   useEffect(() => {
-    if (!open) return;
+    if (!rolling) return;
 
     const [a, b] = videos.current;
     const target = shot === 0 ? a : b;
     const other = shot === 0 ? b : a;
     if (!target) return;
 
-    // Ici on ne touche qu'au volume : le silence est l'affaire des deux
-    // effets ci-dessus, et y revenir rallumerait puis rééteindrait les
-    // pistes à chaque rendu.
-    const started = performance.now();
+    const t0 = performance.now();
     const from = { t: target.volume, o: other?.volume ?? 0 };
     let frame = 0;
 
     const ramp = () => {
-      const k = Math.min((performance.now() - started) / (DISSOLVE * 1000), 1);
+      const k = Math.min((performance.now() - t0) / (DISSOLVE * 1000), 1);
       target.volume = from.t + (1 - from.t) * k;
       if (other) other.volume = from.o * (1 - k);
       if (k < 1) frame = requestAnimationFrame(ramp);
-      else if (other) other.pause();
+      else if (other && shot === 1) other.pause();
     };
     frame = requestAnimationFrame(ramp);
     return () => cancelAnimationFrame(frame);
-  }, [shot, open, sound]);
+  }, [shot, rolling]);
 
-  /* --- Si le son nous a été refusé, le premier geste le lève ----------
-     Ce geste-là ne ferme pas le rideau : il serait dommage de lever le son
-     et de l'emporter du même mouvement.
-     --------------------------------------------------------------------- */
+  /* --- Échapper, et bloquer le défilement ------------------------------- */
 
   useEffect(() => {
     if (!open) return;
-
-    if (sound) return; // le navigateur nous l'a déjà accordé
-
-    let done = false;
-
-    function reveal() {
-      if (done) return;
-      done = true;
-      armed.current = true;
-      // On démasque dans la foulée du geste : certains navigateurs
-      // refusent un démasquage qui arrive après coup.
-      unmute(true);
-      setSound(true);
-      detach();
-    }
-
-    function detach() {
-      window.removeEventListener("pointerdown", reveal, true);
-      window.removeEventListener("keydown", reveal, true);
-      window.removeEventListener("touchstart", reveal, true);
-    }
-
-    window.addEventListener("pointerdown", reveal, true);
-    window.addEventListener("keydown", reveal, true);
-    window.addEventListener("touchstart", reveal, true);
-    return detach;
-  }, [open, sound, unmute]);
-
-  /* --- Échapper, et bloquer le défilement ------------------------------ */
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = () => close();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
@@ -249,21 +220,21 @@ export default function Intro({ locale }: { locale: Locale }) {
           key="intro"
           exit={{ opacity: 0, scale: 1.06, filter: "blur(18px)" }}
           transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          onClick={() => close()}
+          onClick={() => (rolling ? close() : start(true))}
           role="dialog"
           aria-label={t("title")}
           className="fixed inset-0 z-[100] cursor-pointer overflow-hidden bg-night"
         >
           {/* ============================================================ */}
-          {/*  Le feu                                                       */}
+          {/*  Le feu — il ne paraît qu'une fois le film lancé              */}
           {/* ============================================================ */}
           {SHOTS.map((src, i) => (
             <motion.div
               key={src}
               initial={{ opacity: 0 }}
-              animate={{ opacity: i === shot ? 1 : 0 }}
+              animate={{ opacity: rolling && i === shot ? 1 : 0 }}
               transition={{
-                duration: i === 0 && shot === 0 ? 1.2 : DISSOLVE,
+                duration: i === 0 ? 1.2 : DISSOLVE,
                 ease: "easeInOut",
               }}
               className="absolute inset-0"
@@ -271,8 +242,7 @@ export default function Intro({ locale }: { locale: Locale }) {
               {/*
                 Les plans sont verticaux, l'écran ne l'est pas. On remplit
                 le cadre plutôt que d'y loger la vidéo entière : mieux vaut
-                perdre le haut et le bas que laisser des bords apparents de
-                part et d'autre. Le feu occupe tout le champ.
+                perdre le haut et le bas que laisser des bords apparents.
               */}
               <video
                 ref={(el) => {
@@ -297,7 +267,6 @@ export default function Intro({ locale }: { locale: Locale }) {
             className="absolute inset-0 bg-[radial-gradient(ellipse_58%_48%_at_50%_50%,transparent_16%,color-mix(in_oklab,var(--color-night)_86%,transparent)_88%)]"
           />
 
-          {/* Les braises, par-dessus le feu */}
           <Embers />
 
           {/* Les barres du cadre : on est au cinéma */}
@@ -310,12 +279,7 @@ export default function Intro({ locale }: { locale: Locale }) {
             className="absolute inset-x-0 bottom-0 h-[5vh] bg-night"
           />
 
-          {/* ============================================================ */}
-          {/*  La braise du passage                                         */}
-          {/*  Non plus un éclair qui tranche, mais une chaleur qui enfle   */}
-          {/*  pendant le fondu et retombe avec lui : elle lie les deux     */}
-          {/*  plans au lieu de les séparer.                                */}
-          {/* ============================================================ */}
+          {/* La braise du passage : elle lie les deux plans */}
           <motion.div
             aria-hidden
             initial={{ opacity: 0 }}
@@ -325,7 +289,7 @@ export default function Intro({ locale }: { locale: Locale }) {
           />
 
           {/* ============================================================ */}
-          {/*  Le titre                                                     */}
+          {/*  Le titre — du carton jusqu'à la fin du film                  */}
           {/* ============================================================ */}
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
             <motion.div
@@ -333,7 +297,7 @@ export default function Intro({ locale }: { locale: Locale }) {
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{
                 duration: 1.3,
-                delay: 0.4,
+                delay: 0.2,
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
@@ -361,7 +325,7 @@ export default function Intro({ locale }: { locale: Locale }) {
                     }}
                     transition={{
                       duration: 1.1,
-                      delay: 1 + i * 0.07,
+                      delay: 0.6 + i * 0.07,
                       ease: [0.22, 1, 0.36, 1],
                     }}
                     className="inline-block"
@@ -381,7 +345,7 @@ export default function Intro({ locale }: { locale: Locale }) {
               animate={{ opacity: 1, scaleX: 1 }}
               transition={{
                 duration: 1.4,
-                delay: 2.2,
+                delay: 1.6,
                 ease: [0.22, 1, 0.36, 1],
               }}
               className="mt-8 h-px w-56 bg-gradient-to-r from-transparent via-gold to-transparent"
@@ -391,7 +355,7 @@ export default function Intro({ locale }: { locale: Locale }) {
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, delay: 2.6 }}
+              transition={{ duration: 1.2, delay: 2 }}
               className="eyebrow mt-6 text-gold/80"
             >
               {t("motto")}
@@ -399,27 +363,41 @@ export default function Intro({ locale }: { locale: Locale }) {
           </div>
 
           {/* ============================================================ */}
-          {/*  Entrer                                                       */}
+          {/*  L'invite — elle ne vit que le temps du carton                */}
           {/* ============================================================ */}
-          <motion.button
-            type="button"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 6.4 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              close(true);
-            }}
-            className="group absolute inset-x-0 bottom-[9vh] mx-auto inline-flex w-fit items-center gap-3.5 rounded-full border border-gold/35 bg-night/40 px-8 py-3.5 backdrop-blur-md transition-all duration-500 hover:border-gold/80 hover:bg-gold/10"
-          >
-            <span className="text-[0.72rem] font-medium uppercase tracking-[0.26em] text-gold">
-              {t("enter")}
-            </span>
-            <span
-              aria-hidden
-              className="h-px w-6 bg-gold transition-all duration-500 group-hover:w-11"
-            />
-          </motion.button>
+          <AnimatePresence>
+            {!rolling && (
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.8, delay: 2.6 }}
+                className="absolute inset-x-0 bottom-[11vh] flex flex-col items-center gap-4"
+              >
+                <motion.span
+                  animate={{ opacity: [0.45, 1, 0.45] }}
+                  transition={{
+                    duration: 2.4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="text-[0.72rem] font-medium uppercase tracking-[0.3em] text-gold"
+                >
+                  {t("enter")}
+                </motion.span>
+                <motion.span
+                  aria-hidden
+                  animate={{ scaleX: [0.3, 1, 0.3], opacity: [0.3, 0.9, 0.3] }}
+                  transition={{
+                    duration: 2.4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="block h-px w-24 bg-gold"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       )}
     </AnimatePresence>
