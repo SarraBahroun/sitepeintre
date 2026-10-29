@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { site } from "@/data/site";
-import JungleScene from "./JungleScene";
+import HeroCanvas, { type HeroPlate } from "./HeroCanvas";
 
 /* =============================================================================
    Ouverture — le nom se lève lettre à lettre sur la jungle,
@@ -17,10 +17,13 @@ import JungleScene from "./JungleScene";
 export default function Hero({
   locale,
   firstExpoSlug,
+  plates,
 }: {
   locale: Locale;
   /** L'exposition vers laquelle mène « Entrer dans la jungle ». */
   firstExpoSlug: string;
+  /** Les toiles qui défilent en fond. */
+  plates: HeroPlate[];
 }) {
   const t = useTranslations("home");
   const tm = useTranslations("meta");
@@ -43,8 +46,8 @@ export default function Hero({
       ref={ref}
       className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-5 pt-28 pb-20 sm:px-8"
     >
-      {/* La jungle dessinée : fauve, oiseau et regards dans le sous-bois */}
-      <JungleScene />
+      {/* Les toiles elles-mêmes, plein cadre */}
+      <HeroCanvas plates={plates} />
 
       <motion.div
         style={{ y: titleY, opacity: titleOpacity }}

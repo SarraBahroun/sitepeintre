@@ -21,6 +21,23 @@ export const site = {
 };
 
 /* --------------------------------------------------------------------------
+   Les toiles du fond d'accueil
+   -----------------------------------------------------------------------------
+   Ce sont de vraies peintures, en fondu enchaîné derrière le nom. Pour en
+   ajouter une : déposer l'image dans public/images/oeuvres/ et ajouter une
+   ligne ici. `position` recadre si le sujet n'est pas au centre
+   ("center", "top", "50% 35%"…).
+   -------------------------------------------------------------------------- */
+
+export const heroPlates = [
+  { src: "/images/oeuvres/tigre.jpeg", position: "50% 42%" },
+  { src: "/images/oeuvres/flamant.jpeg", position: "50% 38%" },
+  // À venir, dès que les photos seront disponibles :
+  // { src: "/images/oeuvres/lion.jpeg", position: "center" },
+  // { src: "/images/oeuvres/phenix.jpeg", position: "center" },
+];
+
+/* --------------------------------------------------------------------------
    L'artiste
    -------------------------------------------------------------------------- */
 

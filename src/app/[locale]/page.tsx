@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { expositions } from "@/data/expositions";
-import { artist, courses, diversSections } from "@/data/site";
+import { artist, courses, diversSections, heroPlates } from "@/data/site";
 import { t as tr } from "@/data/types";
 
 import Hero from "@/components/Hero";
@@ -28,7 +28,11 @@ export default async function HomePage({
 
   return (
     <>
-      <Hero locale={locale} firstExpoSlug={firstExpo.slug} />
+      <Hero
+        locale={locale}
+        firstExpoSlug={firstExpo.slug}
+        plates={heroPlates}
+      />
 
       {/* ================================================================== */}
       {/*  L'artiste                                                          */}
