@@ -59,12 +59,12 @@ export default function Hero({
       */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[clamp(300px,46vh,460px)] w-[min(1000px,92vw)] -translate-x-1/2 -translate-y-[56%] backdrop-blur-[14px] backdrop-brightness-[0.82] backdrop-saturate-[1.1]"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[clamp(340px,52vh,520px)] w-[min(1120px,94vw)] -translate-x-1/2 -translate-y-[56%] backdrop-blur-[26px] backdrop-brightness-[0.76] backdrop-saturate-[1.12]"
         style={{
           maskImage:
-            "radial-gradient(ellipse 52% 50% at 50% 50%, #000 38%, transparent 74%)",
+            "radial-gradient(ellipse 54% 52% at 50% 50%, #000 42%, transparent 78%)",
           WebkitMaskImage:
-            "radial-gradient(ellipse 52% 50% at 50% 50%, #000 38%, transparent 74%)",
+            "radial-gradient(ellipse 54% 52% at 50% 50%, #000 42%, transparent 78%)",
         }}
       />
 
