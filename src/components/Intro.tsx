@@ -14,9 +14,9 @@ import Embers from "./Embers";
    Ouverture — L'Embrasement
    -----------------------------------------------------------------------------
    Un film, en deux plans. Le phénix brûle en fond ; par-dessus, le monogramme
-   paraît, puis le nom s'allume lettre à lettre. À mi-course une déflagration
-   emporte le premier plan et ouvre le second. Puis tout retombe, et le rideau
-   se lève sur le site.
+   paraît, puis le nom s'allume lettre à lettre. À mi-course le second plan,
+   déjà en mouvement en coulisse, prend la place du premier par un long fondu
+   que réchauffe une braise. Puis tout retombe, et le rideau se lève.
 
    Le son vient des vidéos elles-mêmes. Elles démarrent muettes — aucun
    navigateur ne les laisserait partir autrement — et se dévoilent au premier
@@ -29,10 +29,20 @@ const SEEN_KEY = "hb-intro-seen";
 const SOUND_KEY = "hb-sound";
 
 /* La conduite du film, en secondes */
-const CUT = 5.4; // la déflagration, et le changement de plan
-const END = 11.4; // le rideau se lève
+const PREROLL = 4.2; // le second plan se met en route, encore invisible
+const CUT = 5.0; // le fondu commence
+const DISSOLVE = 1.7; // sa durée — assez long pour que rien ne tranche
+const END = 10.4; // le rideau se lève, juste avant la fin du second plan
 
 const SHOTS = ["/videos/phenix-1.mp4", "/videos/phenix-2.mp4"] as const;
+
+/**
+ * Le cadre du film fond dans le décor au lieu de s'y coller.
+ * Sans ce masque, la vidéo verticale pose un rectangle net sur le flou,
+ * et l'on voit la découpe.
+ */
+const MELT =
+  "radial-gradient(ellipse 74% 88% at 50% 50%, #000 52%, rgba(0,0,0,0.75) 76%, transparent 100%)";
 
 export default function Intro({ locale }: { locale: Locale }) {
   const t = useTranslations("intro");
@@ -41,7 +51,10 @@ export default function Intro({ locale }: { locale: Locale }) {
 
   const [open, setOpen] = useState(true);
   const [shot, setShot] = useState(0);
-  const [flash, setFlash] = useState(false);
+  // Le second plan tourne-t-il déjà, en coulisse ?
+  const [rolling, setRolling] = useState(false);
+  // La chaleur qui enfle pendant le fondu
+  const [glow, setGlow] = useState(false);
   const [sound, setSound] = useState(false);
 
   const videos = useRef<(HTMLVideoElement | null)[]>([null, null]);
@@ -82,34 +95,66 @@ export default function Intro({ locale }: { locale: Locale }) {
       return () => cancelAnimationFrame(skip);
     }
 
-    const toFlash = window.setTimeout(() => setFlash(true), CUT * 1000 - 260);
+    // Le second plan se met en route avant d'être visible : au moment du
+    // fondu il est déjà en mouvement, et les deux images se recouvrent.
+    const toPreroll = window.setTimeout(() => setRolling(true), PREROLL * 1000);
     const toCut = window.setTimeout(() => {
       setShot(1);
-      setFlash(false);
+      setGlow(true);
     }, CUT * 1000);
+    const toCalm = window.setTimeout(
+      () => setGlow(false),
+      (CUT + DISSOLVE) * 1000,
+    );
     const toEnd = window.setTimeout(() => close(true), END * 1000);
 
     return () => {
-      window.clearTimeout(toFlash);
+      window.clearTimeout(toPreroll);
       window.clearTimeout(toCut);
+      window.clearTimeout(toCalm);
       window.clearTimeout(toEnd);
     };
   }, [onHome, close]);
 
-  /* --- Le plan courant joue, l'autre se tait --------------------------- */
+  /* --- Les deux plans tournent, l'image passe de l'un à l'autre --------- */
 
   useEffect(() => {
     if (!open) return;
     videos.current.forEach((v, i) => {
       if (!v) return;
-      if (i === shot) {
-        v.muted = !sound;
-        void v.play().catch(() => {});
-      } else {
-        v.pause();
-        v.muted = true;
-      }
+      // Le second ne démarre qu'au préroll ; ensuite les deux tournent
+      if (i === 0 || rolling) void v.play().catch(() => {});
     });
+  }, [open, rolling]);
+
+  /* --- Le son suit l'image : il passe d'un plan à l'autre en fondu ----- */
+
+  useEffect(() => {
+    if (!open) return;
+
+    const [a, b] = videos.current;
+    const target = shot === 0 ? a : b;
+    const other = shot === 0 ? b : a;
+    if (!target) return;
+
+    // Les deux pistes restent ouvertes ; c'est le volume qui bascule,
+    // sur la même durée que l'image. Couper net s'entendrait.
+    target.muted = !sound;
+    if (other) other.muted = !sound;
+
+    const started = performance.now();
+    const from = { t: target.volume, o: other?.volume ?? 0 };
+    let frame = 0;
+
+    const ramp = () => {
+      const k = Math.min((performance.now() - started) / (DISSOLVE * 1000), 1);
+      target.volume = from.t + (1 - from.t) * k;
+      if (other) other.volume = from.o * (1 - k);
+      if (k < 1) frame = requestAnimationFrame(ramp);
+      else if (other) other.pause();
+    };
+    frame = requestAnimationFrame(ramp);
+    return () => cancelAnimationFrame(frame);
   }, [shot, open, sound]);
 
   /* --- Le son -----------------------------------------------------------
@@ -200,14 +245,18 @@ export default function Intro({ locale }: { locale: Locale }) {
               key={src}
               initial={{ opacity: 0 }}
               animate={{ opacity: i === shot ? 1 : 0 }}
-              transition={{ duration: i === 0 ? 1.1 : 0.5, ease: "easeOut" }}
+              transition={{
+                duration: i === 0 && shot === 0 ? 1.2 : DISSOLVE,
+                ease: "easeInOut",
+              }}
               className="absolute inset-0"
             >
               {/*
                 Les plans sont verticaux. Sur un écran large, les recadrer
                 couperait l'oiseau : on pose derrière une copie démesurée et
                 floutée, qui tient lieu de décor, et on garde par-dessus le
-                cadre entier, net.
+                cadre entier, net — mais fondu dans le décor par un masque,
+                sinon la découpe se voit et la vidéo semble collée dessus.
               */}
               <video
                 aria-hidden
@@ -217,7 +266,7 @@ export default function Intro({ locale }: { locale: Locale }) {
                 loop
                 playsInline
                 preload="auto"
-                className="absolute inset-0 h-full w-full scale-125 object-cover opacity-45 blur-[70px]"
+                className="absolute inset-0 h-full w-full scale-150 object-cover opacity-60 blur-[90px]"
               />
               <video
                 ref={(el) => {
@@ -228,6 +277,7 @@ export default function Intro({ locale }: { locale: Locale }) {
                 playsInline
                 preload="auto"
                 className="absolute inset-0 h-full w-full object-contain"
+                style={{ maskImage: MELT, WebkitMaskImage: MELT }}
               />
             </motion.div>
           ))}
@@ -256,20 +306,18 @@ export default function Intro({ locale }: { locale: Locale }) {
           />
 
           {/* ============================================================ */}
-          {/*  La déflagration, au changement de plan                       */}
+          {/*  La braise du passage                                         */}
+          {/*  Non plus un éclair qui tranche, mais une chaleur qui enfle   */}
+          {/*  pendant le fondu et retombe avec lui : elle lie les deux     */}
+          {/*  plans au lieu de les séparer.                                */}
           {/* ============================================================ */}
-          <AnimatePresence>
-            {flash && (
-              <motion.div
-                aria-hidden
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 0.88, 0] }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.52, times: [0, 0.3, 1] }}
-                className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,#fff3d6,var(--color-gold)_38%,transparent_72%)]"
-              />
-            )}
-          </AnimatePresence>
+          <motion.div
+            aria-hidden
+            initial={{ opacity: 0 }}
+            animate={{ opacity: glow ? 0.42 : 0 }}
+            transition={{ duration: DISSOLVE * 0.8, ease: "easeInOut" }}
+            className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,color-mix(in_oklab,var(--color-gold)_55%,transparent),transparent_70%)]"
+          />
 
           {/* ============================================================ */}
           {/*  Le titre                                                     */}
