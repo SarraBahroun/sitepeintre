@@ -8,13 +8,14 @@
     "home": "Home",
     "artist": "The Artist",
     "expositions": "Exhibitions",
-    "jungle1": "The Jungle I",
-    "jungle2": "The Jungle II",
+    "jungle1": "La Jungle",
+    "jungle2": "La Jungle 2",
     "divers": "Other Works",
     "contact": "Contact",
     "menu": "Menu",
     "close": "Close",
-    "language": "Language"
+    "language": "Language",
+    "courses": "Painting lessons"
   },
   "home": {
     "enter": "Enter the jungle",
@@ -27,7 +28,12 @@
     "artistLead": "Behind the light.",
     "discover": "Discover",
     "seeAll": "See all",
-    "featuredTitle": "Selected works"
+    "featuredTitle": "Selected works",
+    "jungle1Lead": "The paintings of the first Jungle.",
+    "jungle2Lead": "The paintings of the second Jungle.",
+    "seeExposition": "View the exhibition",
+    "coursesTitle": "Painting lessons",
+    "coursesLead": "Learn to paint at the studio, from first strokes to finished canvas."
   },
   "artist": {
     "title": "The Artist",
@@ -67,7 +73,11 @@
       "sold": "Sold",
       "reserved": "Reserved",
       "notForSale": "Private collection"
-    }
+    },
+    "symbolism": "Symbolism & concept",
+    "about": "About the artwork",
+    "framing": "Framing",
+    "collection": "Collection"
   },
   "media": {
     "watch": "Watch",
@@ -91,16 +101,36 @@
     "formSubject": "Subject",
     "formMessage": "Message",
     "formSend": "Send",
-    "formNote": "The form will be connected soon."
+    "formNote": "The form will be connected soon.",
+    "saatchi": "Saatchi Art",
+    "courses": "Painting lessons"
   },
   "footer": {
     "rights": "All rights reserved.",
-    "madeIn": "Tunis"
+    "madeIn": "Nabeul, Tunisia"
   },
   "common": {
     "soon": "Soon",
     "comingSoon": "Content coming soon.",
     "notFound": "Page not found",
     "backHome": "Back home"
+  },
+  "courses": {
+    "title": "Painting lessons",
+    "formulasTitle": "The courses",
+    "practicalTitle": "Practical information",
+    "location": "Location",
+    "schedule": "Schedule",
+    "price": "Fee",
+    "registerTitle": "Register",
+    "registerLead": "Leave your details and your question — the artist replies directly.",
+    "formFormula": "Course of interest",
+    "formFormulaAny": "Not sure yet",
+    "formLevel": "Level",
+    "formLevelBeginner": "Beginner",
+    "formLevelIntermediate": "Intermediate",
+    "formLevelAdvanced": "Advanced",
+    "formQuestion": "Your question or message",
+    "formSend": "Send my request"
   }
 }

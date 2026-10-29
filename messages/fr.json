@@ -8,13 +8,14 @@
     "home": "Accueil",
     "artist": "L'artiste",
     "expositions": "Expositions",
-    "jungle1": "La Jungle I",
-    "jungle2": "La Jungle II",
+    "jungle1": "La Jungle",
+    "jungle2": "La Jungle 2",
     "divers": "Divers",
     "contact": "Contact",
     "menu": "Menu",
     "close": "Fermer",
-    "language": "Langue"
+    "language": "Langue",
+    "courses": "Cours de peinture"
   },
   "home": {
     "enter": "Entrer dans la jungle",
@@ -27,7 +28,12 @@
     "artistLead": "Derrière la lumière.",
     "discover": "Découvrir",
     "seeAll": "Voir tout",
-    "featuredTitle": "Œuvres choisies"
+    "featuredTitle": "Œuvres choisies",
+    "jungle1Lead": "Les toiles de la première Jungle.",
+    "jungle2Lead": "Les toiles de la seconde Jungle.",
+    "seeExposition": "Voir l'exposition",
+    "coursesTitle": "Cours de peinture",
+    "coursesLead": "Apprendre à peindre à l'atelier, des premiers gestes à la toile achevée."
   },
   "artist": {
     "title": "L'artiste",
@@ -67,7 +73,11 @@
       "sold": "Vendue",
       "reserved": "Réservée",
       "notForSale": "Collection privée"
-    }
+    },
+    "symbolism": "Symbolisme & concept",
+    "about": "À propos de l'œuvre",
+    "framing": "Encadrement",
+    "collection": "Collection"
   },
   "media": {
     "watch": "Regarder",
@@ -91,16 +101,36 @@
     "formSubject": "Sujet",
     "formMessage": "Message",
     "formSend": "Envoyer",
-    "formNote": "Le formulaire sera connecté prochainement."
+    "formNote": "Le formulaire sera connecté prochainement.",
+    "saatchi": "Saatchi Art",
+    "courses": "Cours de peinture"
   },
   "footer": {
     "rights": "Tous droits réservés.",
-    "madeIn": "Tunis"
+    "madeIn": "Nabeul, Tunisie"
   },
   "common": {
     "soon": "Bientôt",
     "comingSoon": "Contenu bientôt disponible.",
     "notFound": "Page introuvable",
     "backHome": "Retour à l'accueil"
+  },
+  "courses": {
+    "title": "Cours de peinture",
+    "formulasTitle": "Les formules",
+    "practicalTitle": "Infos pratiques",
+    "location": "Lieu",
+    "schedule": "Horaires",
+    "price": "Tarif",
+    "registerTitle": "S'inscrire",
+    "registerLead": "Laissez vos coordonnées et votre question : l'artiste vous répond directement.",
+    "formFormula": "Formule souhaitée",
+    "formFormulaAny": "Je ne sais pas encore",
+    "formLevel": "Niveau",
+    "formLevelBeginner": "Débutant",
+    "formLevelIntermediate": "Intermédiaire",
+    "formLevelAdvanced": "Avancé",
+    "formQuestion": "Votre question ou message",
+    "formSend": "Envoyer ma demande"
   }
 }

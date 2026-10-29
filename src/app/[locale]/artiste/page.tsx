@@ -44,7 +44,9 @@ export default async function ArtistPage({
 
   const bio = tRich(artist.bio, locale);
   const approach = tRich(artist.approach, locale);
+  const roles = tRich(artist.roles, locale);
   const statement = tr(artist.statement, locale);
+  const motto = tr(artist.motto, locale);
   const name = locale === "ar" ? site.nameAr : site.name;
 
   return (
@@ -59,13 +61,37 @@ export default async function ArtistPage({
             <h1 className="mt-6 font-display text-[clamp(2.6rem,7vw,5.5rem)] font-light leading-[1.02] text-ivory">
               {name}
             </h1>
+
+            {/* Les trois casquettes, séparées par un filet */}
+            {roles.length > 0 && (
+              <ul className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+                {roles.map((role, i) => (
+                  <li
+                    key={role}
+                    className="flex items-center gap-4 text-[0.78rem] uppercase tracking-[0.16em] text-sage"
+                  >
+                    {i > 0 && (
+                      <span aria-hidden className="h-3 w-px bg-glow/30" />
+                    )}
+                    {role}
+                  </li>
+                ))}
+              </ul>
+            )}
+
             <div className="rule-glow mt-9 w-40" aria-hidden />
+
+            {/* La devise de la série */}
+            <p className="mt-9 font-display text-[clamp(1.5rem,3.4vw,2.4rem)] font-light italic leading-tight text-glow halo">
+              {motto}
+            </p>
+
             {statement ? (
-              <p className="mt-9 max-w-xl font-display text-[clamp(1.15rem,2.3vw,1.6rem)] font-light italic leading-relaxed text-sage">
+              <p className="mt-6 max-w-xl text-[1rem] leading-[1.85] text-sage">
                 {statement}
               </p>
             ) : (
-              <p className="mt-9 max-w-xl text-sage-dim italic">
+              <p className="mt-6 max-w-xl text-sage-dim italic">
                 {tc("comingSoon")}
               </p>
             )}

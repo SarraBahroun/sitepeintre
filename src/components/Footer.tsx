@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { site } from "@/data/site";
+import { site, courses } from "@/data/site";
 import { expositions } from "@/data/expositions";
 import { t as tr } from "@/data/types";
 import { Monogram } from "./Logo";
@@ -25,6 +25,9 @@ export default async function Footer({ locale }: { locale: Locale }) {
       items: [
         { label: t("artist"), href: "/artiste" },
         { label: t("divers"), href: "/divers" },
+        ...(courses.enabled
+          ? [{ label: t("courses"), href: "/cours" }]
+          : []),
         { label: t("contact"), href: "/contact" },
       ],
     },
@@ -112,7 +115,9 @@ export default async function Footer({ locale }: { locale: Locale }) {
             © {year} {locale === "ar" ? site.nameAr : site.name}.{" "}
             {tf("rights")}
           </p>
-          <p>{tr(site.city, locale)}</p>
+          <p>
+            {tr(site.city, locale)}, {tr(site.country, locale)}
+          </p>
         </div>
       </div>
     </footer>

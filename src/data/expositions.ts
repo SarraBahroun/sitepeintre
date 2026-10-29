@@ -3,62 +3,100 @@ import type { Exposition } from "./types";
 /* =============================================================================
    LES EXPOSITIONS
    -----------------------------------------------------------------------------
-   Pour ajouter une œuvre : copiez un bloc de `artworks`, changez `id`, `image`
+   Convention de nommage des images, pour s'y retrouver :
+     • Jungle I  → tableau-1.jpeg, tableau-2.jpeg …   (les toiles)
+     • Jungle II → tableau-a.jpeg, tableau-b.jpeg …   (les toiles)
+     • tout fichier sans nom de tableau = photo d'exposition → `vernissage`
+
+   Pour ajouter une œuvre : copier un bloc de `artworks`, changer `id`, `image`
    et les textes. `status` accepte : "available" | "sold" | "reserved"
-   | "notForSale". Retirez `price` pour afficher « Prix sur demande ».
+   | "notForSale". Retirer `price` pour afficher « Prix sur demande ».
 
    Pour ajouter une vidéo : un bloc dans `media`. `youtubeId` est la partie
    après « v= » dans l'adresse YouTube. `kind` accepte : "video" | "radio"
    | "tv" | "interview".
    ========================================================================== */
 
+/** Série commune aux deux expositions. */
+const jungleSeries = {
+  fr: "The Jungle Series",
+  en: "The Jungle Series",
+  ar: "سلسلة قصة الغابة",
+};
+
+const oilOnCanvas = {
+  fr: "Huile sur toile",
+  en: "Oil on canvas",
+  ar: "زيت على قماش",
+};
+
 export const expositions: Exposition[] = [
   /* ---------------------------------------------------------------------- */
-  /*  LA JUNGLE I                                                            */
+  /*  LA JUNGLE I — 2023, Ennejma Ezzahra, Sidi Bou Saïd                     */
   /* ---------------------------------------------------------------------- */
   {
     slug: "jungle-1",
     numeral: "I",
     title: {
-      fr: "La Jungle I",
-      en: "The Jungle I",
-      ar: "الأدغال I",
+      fr: "La Jungle",
+      en: "La Jungle",
+      ar: "الغابة",
     },
     subtitle: {
-      fr: "Première incursion",
-      en: "First incursion",
-      ar: "التوغّل الأول",
+      fr: "La Jungle nous observe",
+      en: "The Jungle Watches Us",
+      ar: "الغابة تراقبنا",
     },
-    year: "",
-    dates: { fr: "", en: "", ar: "" },
-    venue: { fr: "", en: "", ar: "" },
-    city: { fr: "Tunis", en: "Tunis", ar: "تونس" },
+    year: "2023",
+    dates: { fr: "2023", en: "2023", ar: "2023" },
+    venue: {
+      fr: "Palais Ennejma Ezzahra",
+      en: "Ennejma Ezzahra Palace",
+      ar: "قصر النجمة الزهراء",
+    },
+    city: {
+      fr: "Sidi Bou Saïd",
+      en: "Sidi Bou Saïd",
+      ar: "سيدي بوسعيد",
+    },
     statement: {
+      // Paragraphe de présentation de l'exposition — à fournir.
       fr: [],
       en: [],
       ar: [],
     },
-    cover: "",
+    cover: "/images/jungle-1/tableau-1.jpeg",
     accent: "gold",
     artworks: [
-      // Exemple de fiche — dupliquez ce bloc pour chaque toile.
-      // {
-      //   id: "exemple",
-      //   image: "/images/jungle-1/j1-01.jpeg",
-      //   title: { fr: "Titre", en: "Title", ar: "العنوان" },
-      //   description: { fr: "", en: "", ar: "" },
-      //   technique: {
-      //     fr: "Acrylique sur toile",
-      //     en: "Acrylic on canvas",
-      //     ar: "أكريليك على قماش",
-      //   },
-      //   dimensions: "100 × 80 cm",
-      //   year: "2023",
-      //   price: 2400,
-      //   currency: "TND",
-      //   status: "available",
-      //   featured: true,
-      // },
+      {
+        id: "the-infinite-mystery",
+        image: "/images/jungle-1/tableau-1.jpeg",
+        title: {
+          fr: "The Infinite Mystery",
+          en: "The Infinite Mystery",
+          ar: "The Infinite Mystery",
+        },
+        collection: jungleSeries,
+        symbolism: {
+          fr: "Faisant partie de la collection « The Jungle Series », cette œuvre majeure incarne un symbole suprême de royauté et de mystère. Craint et profondément respecté pour sa puissance naturelle, le tigre s'impose comme le gardien majestueux et énigmatique d'une forêt vierge.",
+          en: "Part of « The Jungle Series », this magnificent piece embodies an emblem of ultimate royalty and mystery. Feared, deeply respected for its raw power, and exuding a quiet authority, the tiger stands as the regal and enigmatic guardian of the pristine forest.",
+          ar: "ضمن مجموعة «قصة الغابة»، تجسّد هذه اللوحة الاستثنائية رمزاً خالصاً للسيادة والملكية. إنه الحاكم الخفيّ للغابة؛ كائن غامض يُهاب ويُحترم لقوته الهادئة وهيبته الخالدة، ليقف كحارس ملكي يفرض حضوره بوقار وسكينة.",
+        },
+        description: {
+          fr: "« The Infinite Mystery » invite le spectateur au cœur d'un sanctuaire tropical à la fois serein et imposant. Peinte avec une maîtrise remarquable de l'huile sur toile, l'œuvre capture la présence souveraine du tigre au milieu d'un feuillage luxuriant et de dégradés de verts profonds. Avec ses dimensions généreuses et son cadre doré mat raffiné, cette création offre une élégance intemporelle et constitue une pièce maîtresse idéale pour les collections privées et les amateurs d'art.",
+          en: "« The Infinite Mystery » invites viewers into a serene yet commanding tropical sanctuary. Masterfully painted in rich oil on canvas, the artwork captures the majestic presence of the tiger amidst dense, atmospheric jungle foliage and deep green gradients. Measuring an impressive 140 × 110 cm, this creation is elegantly housed in a sophisticated matte gold frame, offering a refined touch of timeless elegance and a commanding focal point for private collections and art connoisseurs.",
+          ar: "تأخذنا لوحة «The Infinite Mystery» في رحلة بصرية عميقة إلى قلب الطبيعة الاستوائية الكثيفة. أُنجز العمل بألوان زيتية دقيقة ومتقنة تُبرز التفاصيل المعقّدة لفرو النمر وتدرّجات الخضرة الغنية بالعمق والجو الغامض. بحجمها الكبير وحضورها المهيب (140 × 110 سم)، وتكتمل فخامتها بإطار ذهبي مطفي راقٍ، لتشكّل قطعة فنية متحفية تُضفي هيبة وأناقة.",
+        },
+        technique: oilOnCanvas,
+        framing: {
+          fr: "Cadre doré mat",
+          en: "Matte gold frame",
+          ar: "إطار ذهبي مطفي",
+        },
+        dimensions: "140 × 110 cm",
+        status: "available",
+        featured: true,
+      },
     ],
     vernissage: [],
     media: [],
@@ -66,30 +104,31 @@ export const expositions: Exposition[] = [
   },
 
   /* ---------------------------------------------------------------------- */
-  /*  LA JUNGLE II                                                           */
+  /*  LA JUNGLE II — 2026, Galerie Jeelen, Nabeul                            */
   /* ---------------------------------------------------------------------- */
   {
     slug: "jungle-2",
     numeral: "II",
     title: {
-      fr: "La Jungle II",
-      en: "The Jungle II",
-      ar: "الأدغال II",
+      fr: "La Jungle 2",
+      en: "La Jungle 2",
+      ar: "الغابة 2",
     },
     subtitle: {
-      fr: "La lumière sous les feuilles",
-      en: "The light beneath the leaves",
-      ar: "الضوء تحت الأوراق",
+      fr: "La Jungle nous observe",
+      en: "The Jungle Watches Us",
+      ar: "الغابة تراقبنا",
     },
     year: "2026",
     dates: { fr: "Mai 2026", en: "May 2026", ar: "ماي 2026" },
     venue: {
-      fr: "Jeelen — Art & Events Home",
-      en: "Jeelen — Art & Events Home",
-      ar: "جيلان — دار الفعاليات والفنون",
+      fr: "Galerie Jeelen — Art & Events Home",
+      en: "Galerie Jeelen — Art & Events Home",
+      ar: "غاليري جيلان — دار الفعاليات والفنون",
     },
-    city: { fr: "Tunis", en: "Tunis", ar: "تونس" },
+    city: { fr: "Nabeul", en: "Nabeul", ar: "نابل" },
     statement: {
+      // Paragraphe de présentation de l'exposition — à fournir.
       fr: [],
       en: [],
       ar: [],
@@ -97,70 +136,32 @@ export const expositions: Exposition[] = [
     cover: "/images/jungle-2/j2-07.jpeg",
     accent: "glow",
     artworks: [
-      {
-        id: "fleur-de-lumiere",
-        image: "/images/jungle-2/j2-07.jpeg",
-        title: { fr: "", en: "", ar: "" },
-        description: { fr: "", en: "", ar: "" },
-        technique: {
-          fr: "Acrylique sur toile",
-          en: "Acrylic on canvas",
-          ar: "أكريليك على قماش",
-        },
-        dimensions: "",
-        year: "2026",
-        status: "available",
-        featured: true,
-      },
-      {
-        id: "le-chat",
-        image: "/images/jungle-2/j2-05.jpeg",
-        title: { fr: "", en: "", ar: "" },
-        description: { fr: "", en: "", ar: "" },
-        technique: {
-          fr: "Acrylique sur toile",
-          en: "Acrylic on canvas",
-          ar: "أكريليك على قماش",
-        },
-        dimensions: "",
-        year: "2026",
-        status: "available",
-        featured: true,
-      },
-      {
-        id: "accrochage-figuratif",
-        image: "/images/jungle-2/j2-04.jpeg",
-        title: { fr: "", en: "", ar: "" },
-        description: { fr: "", en: "", ar: "" },
-        technique: {
-          fr: "Acrylique sur toile",
-          en: "Acrylic on canvas",
-          ar: "أكريليك على قماش",
-        },
-        dimensions: "",
-        year: "2026",
-        status: "available",
-        featured: true,
-      },
-      {
-        id: "mur-des-felins",
-        image: "/images/jungle-2/j2-06.jpeg",
-        title: { fr: "", en: "", ar: "" },
-        description: { fr: "", en: "", ar: "" },
-        technique: {
-          fr: "Acrylique sur toile",
-          en: "Acrylic on canvas",
-          ar: "أكريليك على قماش",
-        },
-        dimensions: "",
-        year: "2026",
-        status: "available",
-      },
+      // Les toiles de La Jungle 2 viendront ici, nommées tableau-a, tableau-b…
+      // Modèle à copier :
+      // {
+      //   id: "tableau-a",
+      //   image: "/images/jungle-2/tableau-a.jpeg",
+      //   title: { fr: "", en: "", ar: "" },
+      //   collection: jungleSeries,
+      //   symbolism: { fr: "", en: "", ar: "" },
+      //   description: { fr: "", en: "", ar: "" },
+      //   technique: oilOnCanvas,
+      //   framing: { fr: "", en: "", ar: "" },
+      //   dimensions: "",
+      //   price: 0,
+      //   currency: "TND",
+      //   status: "available",
+      //   featured: true,
+      // },
     ],
     vernissage: [
       "/images/jungle-2/j2-01.jpeg",
       "/images/jungle-2/j2-02.jpeg",
       "/images/jungle-2/j2-03.jpeg",
+      "/images/jungle-2/j2-04.jpeg",
+      "/images/jungle-2/j2-05.jpeg",
+      "/images/jungle-2/j2-06.jpeg",
+      "/images/jungle-2/j2-07.jpeg",
       "/images/jungle-2/j2-08.jpeg",
       "/images/jungle-2/j2-09.jpeg",
       "/images/jungle-2/j2-10.jpeg",
@@ -178,10 +179,10 @@ export const expositions: Exposition[] = [
     ],
     media: [
       // {
-      //   id: "radio-mosaique",
+      //   id: "radio-xxx",
       //   kind: "radio",
       //   title: { fr: "", en: "", ar: "" },
-      //   outlet: "Mosaïque FM",
+      //   outlet: "",
       //   youtubeId: "",
       //   date: "2026-05",
       // },

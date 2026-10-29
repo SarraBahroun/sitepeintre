@@ -22,6 +22,7 @@ const links = [
   { href: "/expositions/jungle-1", key: "jungle1" },
   { href: "/expositions/jungle-2", key: "jungle2" },
   { href: "/divers", key: "divers" },
+  { href: "/cours", key: "courses" },
   { href: "/contact", key: "contact" },
 ] as const;
 

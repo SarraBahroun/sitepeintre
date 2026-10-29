@@ -8,13 +8,14 @@
     "home": "الرئيسية",
     "artist": "الفنانة",
     "expositions": "المعارض",
-    "jungle1": "الأدغال I",
-    "jungle2": "الأدغال II",
+    "jungle1": "الغابة",
+    "jungle2": "الغابة 2",
     "divers": "أعمال أخرى",
     "contact": "اتصال",
     "menu": "القائمة",
     "close": "إغلاق",
-    "language": "اللغة"
+    "language": "اللغة",
+    "courses": "دروس الرسم"
   },
   "home": {
     "enter": "ادخل إلى الأدغال",
@@ -27,7 +28,12 @@
     "artistLead": "خلف الضوء.",
     "discover": "اكتشف",
     "seeAll": "عرض الكل",
-    "featuredTitle": "أعمال مختارة"
+    "featuredTitle": "أعمال مختارة",
+    "jungle1Lead": "لوحات الغابة الأولى.",
+    "jungle2Lead": "لوحات الغابة الثانية.",
+    "seeExposition": "مشاهدة المعرض",
+    "coursesTitle": "دروس الرسم",
+    "coursesLead": "تعلّم الرسم بالمرسم، من أول خطّ إلى اللوحة المكتملة."
   },
   "artist": {
     "title": "الفنانة",
@@ -67,7 +73,11 @@
       "sold": "مباعة",
       "reserved": "محجوزة",
       "notForSale": "مجموعة خاصة"
-    }
+    },
+    "symbolism": "الرمزية والمفهوم",
+    "about": "عن اللوحة",
+    "framing": "الإطار",
+    "collection": "المجموعة"
   },
   "media": {
     "watch": "مشاهدة",
@@ -91,16 +101,36 @@
     "formSubject": "الموضوع",
     "formMessage": "الرسالة",
     "formSend": "إرسال",
-    "formNote": "سيتم ربط النموذج قريباً."
+    "formNote": "سيتم ربط النموذج قريباً.",
+    "saatchi": "Saatchi Art",
+    "courses": "دروس الرسم"
   },
   "footer": {
     "rights": "جميع الحقوق محفوظة.",
-    "madeIn": "تونس"
+    "madeIn": "نابل، تونس"
   },
   "common": {
     "soon": "قريباً",
     "comingSoon": "المحتوى متوفر قريباً.",
     "notFound": "الصفحة غير موجودة",
     "backHome": "العودة إلى الرئيسية"
+  },
+  "courses": {
+    "title": "دروس الرسم",
+    "formulasTitle": "الصيغ المتوفرة",
+    "practicalTitle": "معلومات عملية",
+    "location": "المكان",
+    "schedule": "التوقيت",
+    "price": "التعريفة",
+    "registerTitle": "التسجيل",
+    "registerLead": "اترك معلوماتك وسؤالك، وتجيبك الفنانة مباشرة.",
+    "formFormula": "الصيغة المرغوبة",
+    "formFormulaAny": "لم أقرّر بعد",
+    "formLevel": "المستوى",
+    "formLevelBeginner": "مبتدئ",
+    "formLevelIntermediate": "متوسط",
+    "formLevelAdvanced": "متقدّم",
+    "formQuestion": "سؤالك أو رسالتك",
+    "formSend": "إرسال الطلب"
   }
 }

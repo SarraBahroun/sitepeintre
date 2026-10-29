@@ -194,7 +194,12 @@ export default function ArtworkGallery({
                     status={current.status}
                     size="md"
                   />
-                  <h2 className="mt-5 font-display text-[clamp(1.7rem,3.2vw,2.5rem)] font-light leading-tight text-ivory">
+                  {tr(current.collection, locale) && (
+                    <p className="eyebrow mt-5">
+                      {tr(current.collection, locale)}
+                    </p>
+                  )}
+                  <h2 className="mt-3 font-display text-[clamp(1.7rem,3.2vw,2.5rem)] font-light leading-tight text-ivory">
                     {tr(current.title, locale) || (
                       <span className="text-sage-dim italic">
                         {locale === "ar" ? "بدون عنوان" : "Sans titre"}
@@ -204,10 +209,23 @@ export default function ArtworkGallery({
                   <div className="rule-glow mt-5 w-20" aria-hidden />
                 </div>
 
+                {/* Symbolisme — mis en exergue, c'est le propos de l'œuvre */}
+                {tr(current.symbolism, locale) && (
+                  <div className="border-s-2 border-gold/40 ps-5">
+                    <p className="eyebrow">{t("symbolism")}</p>
+                    <p className="mt-3 font-display text-[1.05rem] font-light italic leading-[1.8] text-ivory/90">
+                      {tr(current.symbolism, locale)}
+                    </p>
+                  </div>
+                )}
+
                 {tr(current.description, locale) && (
-                  <p className="text-[0.94rem] leading-[1.75] text-sage">
-                    {tr(current.description, locale)}
-                  </p>
+                  <div>
+                    <p className="eyebrow">{t("about")}</p>
+                    <p className="mt-3 text-[0.94rem] leading-[1.8] text-sage">
+                      {tr(current.description, locale)}
+                    </p>
+                  </div>
                 )}
 
                 <dl className="mt-1">
@@ -221,6 +239,12 @@ export default function ArtworkGallery({
                     <MetaRow
                       label={t("dimensions")}
                       value={current.dimensions}
+                    />
+                  )}
+                  {tr(current.framing, locale) && (
+                    <MetaRow
+                      label={t("framing")}
+                      value={tr(current.framing, locale)}
                     />
                   )}
                   {current.year && (

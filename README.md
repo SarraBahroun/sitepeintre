@@ -22,9 +22,24 @@ npm run build   # vérifie que tout compile et pré-génère les pages
 | Traduire un libellé d'interface           | `messages/fr.json` · `en.json` · `ar.json` |
 | Changer les couleurs ou les polices       | `src/app/globals.css` (bloc `@theme`)     |
 | Ajouter une photo                         | `public/images/…`                         |
+| Modifier les cours de peinture            | `src/data/site.ts` → `courses`            |
 
 Les photos d'origine, non redimensionnées, restent dans `_sources-originales/`
 (ignoré par git).
+
+---
+
+## Nommer les images
+
+Pour s'y retrouver entre les toiles et les photos de vernissage :
+
+| Dossier                  | Fichier                        | Devient            |
+| ------------------------ | ------------------------------ | ------------------ |
+| `public/images/jungle-1/` | `tableau-1.jpeg`, `tableau-2…` | une œuvre          |
+| `public/images/jungle-2/` | `tableau-a.jpeg`, `tableau-b…` | une œuvre          |
+| les deux                 | tout autre nom                 | photo d'exposition |
+
+Les photos d'exposition vont dans `vernissage`, les toiles dans `artworks`.
 
 ---
 
@@ -98,6 +113,19 @@ chaînage « exposition suivante » se mettent à jour tout seuls.
 
 Le menu de navigation est listé dans `src/components/Nav.tsx` (tableau `links`)
 — c'est le seul endroit à compléter à la main.
+
+---
+
+## Les cours de peinture
+
+Tout se règle dans `src/data/site.ts` → `courses` : les formules proposées,
+le lieu, les horaires et le tarif. Mettre `enabled: false` retire la page et
+son entrée de menu d'un seul coup.
+
+Le formulaire d'inscription ouvre pour l'instant la messagerie du visiteur avec
+une demande préremplie adressée à l'artiste. Pour recevoir les demandes
+directement sur le site, il faudra brancher un service d'envoi (Resend,
+Formspree…) — à faire au moment de la mise en ligne.
 
 ---
 

@@ -34,17 +34,30 @@ export default async function ContactPage({
   const t = await getTranslations("contact");
 
   const coordinates = [
-    site.email && { label: t("email"), value: site.email, href: `mailto:${site.email}` },
-    site.phone && { label: t("phone"), value: site.phone, href: `tel:${site.phone.replace(/\s/g, "")}` },
+    site.email && {
+      label: t("email"),
+      value: site.email,
+      href: `mailto:${site.email}`,
+    },
+    site.phone && {
+      label: t("phone"),
+      value: site.phoneDisplay,
+      href: `tel:${site.phone.replace(/\s/g, "")}`,
+    },
     {
       label: t("studio"),
-      value: tr(site.city, locale),
+      value: `${tr(site.city, locale)}, ${tr(site.country, locale)}`,
       href: undefined,
     },
     site.instagram && {
       label: "Instagram",
       value: site.instagramHandle,
       href: site.instagram,
+    },
+    site.saatchi && {
+      label: t("saatchi"),
+      value: "Saatchi Art",
+      href: site.saatchi,
     },
   ].filter(Boolean) as { label: string; value: string; href?: string }[];
 

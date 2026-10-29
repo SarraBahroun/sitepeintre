@@ -23,11 +23,17 @@ export type Artwork = {
   /** Chemin depuis /public, ex. "/images/jungle-2/j2-07.jpeg" */
   image: string;
   title: Localized;
-  /** Laisser les chaînes vides tant que le texte n'est pas écrit. */
+  /** Série à laquelle l'œuvre appartient, ex. « The Jungle Series ». */
+  collection?: Localized;
+  /** « À propos de l'œuvre » — laisser vide tant que le texte n'est pas écrit. */
   description: Localized;
-  /** Ex. "Acrylique sur toile" */
+  /** « Symbolisme & concept » — paragraphe séparé, affiché en exergue. */
+  symbolism?: Localized;
+  /** Ex. "Huile sur toile" */
   technique: Localized;
-  /** Ex. "100 × 80 cm" */
+  /** Ex. "Cadre doré mat" */
+  framing?: Localized;
+  /** Ex. "140 × 110 cm" */
   dimensions?: string;
   year?: string;
   /** Montant numérique. Omettre pour afficher « Prix sur demande ». */
