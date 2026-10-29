@@ -50,8 +50,20 @@ export default function Intro({ locale }: { locale: Locale }) {
   const [sound, setSound] = useState(false);
 
   const videos = useRef<(HTMLVideoElement | null)[]>([null, null]);
+  const soundButton = useRef<HTMLButtonElement>(null);
   // Le premier geste sert à dévoiler le son, pas à lever le rideau
   const armed = useRef(false);
+
+  /**
+   * Démasque ou masque les deux pistes sur-le-champ. À appeler depuis le
+   * geste lui-même : un démasquage différé au rendu suivant sort de la
+   * pile d'appel du geste, et plusieurs navigateurs le refusent.
+   */
+  const unmute = useCallback((on: boolean) => {
+    videos.current.forEach((v) => {
+      if (v) v.muted = !on;
+    });
+  }, []);
 
   /* --- Lever le rideau ------------------------------------------------- */
 
@@ -168,10 +180,18 @@ export default function Intro({ locale }: { locale: Locale }) {
 
     let done = false;
 
-    function reveal() {
+    function reveal(e: Event) {
       if (done) return;
+      // Le bouton de son parle pour lui-même : s'il est visé, on le laisse
+      // faire, sinon son clic allumerait puis éteindrait aussitôt.
+      const target = e.target as Node | null;
+      if (target && soundButton.current?.contains(target)) return;
+
       done = true;
       armed.current = true;
+      // On démasque dans la foulée du geste : certains navigateurs
+      // refusent un démasquage qui arrive après coup.
+      unmute(true);
       setSound(true);
       detach();
     }
@@ -186,7 +206,7 @@ export default function Intro({ locale }: { locale: Locale }) {
     window.addEventListener("keydown", reveal, true);
     window.addEventListener("touchstart", reveal, true);
     return detach;
-  }, [open]);
+  }, [open, unmute]);
 
   /* --- Échapper, et bloquer le défilement ------------------------------ */
 
@@ -204,6 +224,7 @@ export default function Intro({ locale }: { locale: Locale }) {
   const toggleSound = (e: React.MouseEvent) => {
     e.stopPropagation();
     const next = !sound;
+    unmute(next); // dans la foulée du clic, sans attendre le rendu
     setSound(next);
     try {
       localStorage.setItem(SOUND_KEY, next ? "on" : "off");
@@ -404,6 +425,7 @@ export default function Intro({ locale }: { locale: Locale }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1.8 }}
+            ref={soundButton}
             onClick={toggleSound}
             aria-pressed={sound}
             aria-label={sound ? t("soundOff") : t("soundOn")}
