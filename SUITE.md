@@ -1,55 +1,67 @@
 # Où nous en sommes
 
 Dernière séance : 29 octobre 2026.
-Le site tourne en local — `npm run dev`, puis http://localhost:3000 (redirige
-vers `/fr`). Rien n'est en ligne pour l'instant.
+`npm run dev`, puis http://localhost:3000 — la racine redirige vers `/fr`.
+Rien n'est en ligne pour l'instant.
 
 ---
 
 ## La prochaine chose à faire
 
-**Poser le logo retenu.** La variante **3** a été choisie : le monogramme HB
-de l'artiste tient lieu de nervure centrale à une plume de phénix, la hampe
-reste visible derrière, et la signature « Bahroun Hana » court dessous.
+**Écrire les textes des œuvres.** Les vingt-six toiles sont en place et
+s'affichent ; il leur manque la parole. Chaque fiche porte en commentaire le
+sujet qu'elle montre — « la coccinelle sur le trèfle », « le phénix d'or » —
+de sorte qu'on sait de quelle toile il s'agit sans rouvrir les images.
 
-Le dessin est prêt : `design/logo/plume-3.svg`.
-Il reste à remplacer le `Monogram` de `src/components/Logo.tsx`, qui porte
-encore l'ancienne marque — des initiales dans une feuille, que l'artiste
-n'aime pas.
+Pour chacune, dans `src/data/expositions.ts` :
 
-Attention en le posant :
+| Champ | Ce qu'il attend |
+| --- | --- |
+| `title` | le titre, dans les trois langues |
+| `symbolism` | ce que l'œuvre dit — affiché en exergue, filet doré |
+| `description` | ce que l'on voit, la facture, le format |
+| `dimensions` | `"140 × 110 cm"` |
+| `price` | un nombre ; retirer la ligne affiche « Prix sur demande » |
+| `status` | `available` · `sold` · `reserved` · `notForSale` |
 
-- le logo sert en petit (barre de navigation, favicon) autant qu'en grand
-  (ouverture, pied de page). La signature sous la plume devient illisible
-  en dessous de ~40 px : prévoir une variante sans elle pour les petites
-  tailles ;
-- les couleurs viennent des variables du thème, pas de valeurs en dur, pour
-  que la marque suive la palette ;
-- l'ouverture (`src/components/Intro.tsx`) et le pied de page utilisent tous
-  deux `Monogram` : les deux suivront d'eux-mêmes.
+*The Infinite Mystery* (La Jungle 1, le tigre) est déjà écrite : elle sert de
+modèle.
 
-Les autres pistes écartées restent dans `design/logo/` — la signature seule,
-l'œil de la jungle, la plume nue, le nom sans symbole — avec les planches de
-comparaison en JPEG.
+Vient ensuite le **texte de présentation de chaque exposition**
+(`statement`) — c'est lui qui raconte avant que l'on regarde.
+
+---
+
+## Ce qui est fait
+
+- **Structure** — six pages, trois langues, bascule RTL pour l'arabe.
+- **Ouverture** — carton puis film en deux plans, avec le son. Le carton
+  n'est pas une porte à pousser : aucun navigateur n'autorise un son à
+  partir seul, mais un son demandé dans le geste du visiteur l'est
+  toujours. Voir l'en-tête de `src/components/Intro.tsx`.
+- **Marque** — le monogramme HB, relevé de la signature des toiles, en
+  nervure d'une plume de phénix. Trois états selon la taille, et l'onglet
+  porte les lettres seules.
+- **Les toiles** — 17 pour La Jungle 1, 9 pour La Jungle 2, plus les 21
+  photographies de vernissage.
+- **Aucun recadrage** — chaque œuvre garde sa proportion, partout.
 
 ---
 
 ## Ce qui attend du contenu
 
-Tout le contenu éditorial vit dans `src/data/`. Les emplacements vides
-s'affichent proprement, le site ne casse pas. Voir `README.md` pour la
-marche à suivre.
-
 | Ce qui manque | Où cela se pose |
 | --- | --- |
-| Les toiles de La Jungle 2 (`tableau-a.jpeg`, `tableau-b.jpeg`…) | `public/images/jungle-2/` puis `src/data/expositions.ts` |
-| Les autres toiles de La Jungle (`tableau-2.jpeg`…) | `public/images/jungle-1/` puis `src/data/expositions.ts` |
+| Titres, symbolisme, descriptions, dimensions, prix | `src/data/expositions.ts` |
 | Le texte de présentation de chaque exposition | `src/data/expositions.ts` → `statement` |
-| Le prix de *The Infinite Mystery* | `src/data/expositions.ts` → `price` |
 | Les images de la rubrique Divers | `src/data/site.ts` → `diversSections` |
 | Les vidéos et passages radio | `src/data/expositions.ts` → `media` |
 | Le lien Saatchi Art | `src/data/site.ts` → `site.saatchi` |
 | Horaires et tarif des cours | `src/data/site.ts` → `courses.practical` |
+
+**Après avoir déposé des images dans `public/images/`, lancer
+`npm run images`** : le relevé des proportions se refait, et c'est lui qui
+permet d'afficher les œuvres entières.
 
 ---
 
@@ -60,8 +72,8 @@ lente, l'ouverture se fera attendre. Avec ffmpeg on descend autour de 2 Mo
 sans perte visible ; ffmpeg n'est pas installé sur cette machine.
 
 **Le formulaire des cours** ouvre la messagerie du visiteur avec une demande
-préremplie. Pour recevoir les demandes sur le site, il faudra brancher un
-service d'envoi — Resend, Formspree ou équivalent.
+préremplie. Pour recevoir les demandes sur le site, brancher un service
+d'envoi — Resend, Formspree ou équivalent.
 
 **`NEXT_PUBLIC_SITE_URL`** doit être renseigné au déploiement : les
 métadonnées Open Graph retombent sinon sur `localhost`.
@@ -71,5 +83,7 @@ métadonnées Open Graph retombent sinon sur `localhost`.
 ## Repères
 
 - Dépôt privé : https://github.com/SarraBahroun/sitepeintre
-- Les photos d'origine sont dans `_sources-originales/` (hors dépôt).
+- Les fichiers d'origine — photos, vidéos, pistes de logo — sont dans
+  `_sources-originales/`, hors dépôt.
+- Les dessins de marque retenus et écartés sont dans `design/logo/`.
 - `npm run lint` et `npm run build` passent sans rien signaler.
