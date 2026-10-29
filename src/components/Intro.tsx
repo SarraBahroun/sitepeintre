@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -10,6 +9,7 @@ import type { Locale } from "@/i18n/routing";
 import { site } from "@/data/site";
 import { playIntroSound, stopIntroSound } from "@/lib/sound";
 import { Monogram } from "./Logo";
+import Phoenix from "./Phoenix";
 
 /* =============================================================================
    Ouverture — le phénix tourne autour du nom
@@ -341,37 +341,10 @@ export default function Intro({ locale }: { locale: Locale }) {
                             opacity: { duration: ARRIVAL * 0.3 },
                           }
                     }
-                    className="absolute -left-[210px] -top-[118px]"
+                    className="absolute -left-[230px] -top-[137px]"
                   >
-                    {/*
-                    L'embrasement : une copie floutée et surexposée déborde
-                    sous l'oiseau net. C'est elle qui donne l'or fluorescent,
-                    la halo que l'image seule ne porte pas.
-                  */}
-                    <div className="relative w-[420px]">
-                      <Image
-                        src="/images/oeuvres/phenix.png"
-                        alt=""
-                        width={420}
-                        height={234}
-                        priority
-                        aria-hidden
-                        className="absolute inset-0 w-full scale-110 opacity-90 blur-[34px]"
-                        style={{ filter: "brightness(2.1) saturate(2.4)" }}
-                      />
-                      <Image
-                        src="/images/oeuvres/phenix.png"
-                        alt=""
-                        width={420}
-                        height={234}
-                        priority
-                        className="relative w-full"
-                        style={{
-                          filter:
-                            "brightness(1.22) saturate(1.7) drop-shadow(0 0 16px rgba(255,205,90,0.95)) drop-shadow(0 0 44px rgba(255,160,40,0.8)) drop-shadow(0 0 110px rgba(255,120,20,0.55))",
-                        }}
-                      />
-                    </div>
+                    {/* L'oiseau n'est pas une image : ses ailes battent. */}
+                    <Phoenix width={460} />
                   </motion.div>
                 </motion.div>
               )}
