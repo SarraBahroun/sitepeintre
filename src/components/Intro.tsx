@@ -21,57 +21,50 @@ import { Monogram } from "./Logo";
 
 const SEEN_KEY = "hb-intro-seen";
 const SOUND_KEY = "hb-sound";
-const LAP = 4.3; // s — un tour d'ellipse
-const ORBIT_DURATION = LAP * 2; // deux tours : un dans chaque sens
-const AUTO_DISMISS = ORBIT_DURATION * 1000 + 1400; // le temps des deux tours
+
+/* L'oiseau paraît en grand, se rapproche en diminuant, puis se met à tourner */
+const ARRIVAL = 2.6; // s — l'entrée
+const LAP = 5.2; // s — un tour d'ellipse
+const AUTO_DISMISS = (ARRIVAL + LAP * 2) * 1000; // deux tours, puis le rideau se lève
 
 /**
- * Deux tours d'ellipse, échantillonnés pour framer-motion : le premier dans
- * un sens, le second en sens inverse. Le demi-tour se fait en haut du
- * parcours, là où l'oiseau est le plus petit et le plus pâle — c'est là
- * qu'il se retourne sans qu'on y prenne garde.
+ * Un tour d'ellipse, échantillonné pour framer-motion, toujours dans le même
+ * sens : l'oiseau ne revient jamais sur ses pas. Il commence en haut, là où
+ * l'entrée l'a déposé.
  */
 function useOrbit(rx: number, ry: number) {
   return useMemo(() => {
-    const steps = 72;
+    const steps = 84;
     const x: number[] = [];
     const y: number[] = [];
-    const scale: number[] = [];
+    const depth: number[] = [];
     const opacity: number[] = [];
     const rotate: number[] = [];
 
     for (let i = 0; i <= steps; i++) {
-      const a = (i / steps) * Math.PI * 2 - Math.PI / 2;
+      // On part du bas de l'ellipse — là où l'entrée dépose l'oiseau,
+      // au plus près du spectateur.
+      const a = (i / steps) * Math.PI * 2 + Math.PI / 2;
       const sin = Math.sin(a);
+      const front = (sin + 1) / 2; // 1 devant, 0 derrière
+
       x.push(Math.cos(a) * rx);
       y.push(sin * ry);
-      // En bas de l'ellipse l'oiseau est « devant » : plus grand, plus net
-      scale.push(0.58 + ((sin + 1) / 2) * 0.5);
-      opacity.push(0.5 + ((sin + 1) / 2) * 0.5);
-      // Un léger roulis, comme un oiseau qui vire
-      rotate.push(Math.cos(a) * -13);
+      // Rapporté à 1 au départ : l'entrée peut s'y raccorder sans saut
+      depth.push(0.46 + front * 0.54);
+      opacity.push(0.46 + front * 0.54);
+      // Un roulis léger, comme un oiseau qui vire
+      rotate.push(Math.cos(a) * -14);
     }
 
-    // Le retour : le même parcours, parcouru à l'envers
-    const back = <T,>(a: T[]) => a.slice(0, -1).reverse();
-    const full = {
-      x: [...x, ...back(x)],
-      y: [...y, ...back(y)],
-      scale: [...scale, ...back(scale)],
-      opacity: [...opacity, ...back(opacity)],
-      // Le roulis s'inverse aussi : l'oiseau vire de l'autre bord
-      rotate: [...rotate, ...back(rotate).map((r) => -r)],
+    return {
+      x,
+      y,
+      depth,
+      opacity,
+      rotate,
+      times: x.map((_, i) => i / steps),
     };
-
-    // L'oiseau regarde devant lui : il se retourne au demi-tour
-    const scaleX = full.x.map((_, i) => (i <= steps ? 1 : -1));
-    // Le retournement prend deux pas, juste après le sommet
-    scaleX[steps] = 1;
-    scaleX[steps + 1] = -1;
-
-    const times = full.x.map((_, i) => i / (full.x.length - 1));
-
-    return { ...full, scaleX, times };
   }, [rx, ry]);
 }
 
@@ -83,6 +76,8 @@ export default function Intro({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(true);
   const [sound, setSound] = useState(false);
   const [rx, setRx] = useState(300);
+  // false : l'oiseau arrive. true : il a pris son orbite.
+  const [flying, setFlying] = useState(false);
 
   const orbit = useOrbit(rx, rx * 0.34);
   const name = locale === "ar" ? site.nameAr : site.name;
@@ -230,41 +225,72 @@ export default function Intro({ locale }: { locale: Locale }) {
               {t("motto")}
             </motion.p>
 
-            {/* L'oiseau de feu tourne autour de tout cela */}
-            <motion.div
+            {/*
+              L'oiseau de feu : il paraît d'abord en grand, droit devant, puis
+              se rapproche en diminuant jusqu'à prendre son orbite autour du
+              monogramme et du nom. Ensuite il tourne, toujours dans le même
+              sens — il ne revient jamais sur ses pas.
+
+              Deux calques imbriqués : le premier porte le trajet, le second
+              l'entrée. Ainsi l'orbite peut tourner sans fin sans rejouer
+              l'arrivée à chaque tour.
+            */}
+            <div
               aria-hidden
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.2, delay: 0.9 }}
-              className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-0 w-0"
+              className="pointer-events-none absolute left-1/2 top-[46%] -z-10 h-0 w-0"
             >
+              {/* Calque du trajet : l'arrivée l'amène au bas de l'ellipse,
+                  puis il tourne sans fin, toujours dans le même sens. */}
               <motion.div
-                animate={{
-                  x: orbit.x,
-                  y: orbit.y,
-                  scale: orbit.scale,
-                  scaleX: orbit.scaleX,
-                  opacity: orbit.opacity,
-                  rotate: orbit.rotate,
-                }}
-                transition={{
-                  duration: ORBIT_DURATION,
-                  ease: "linear",
-                  repeat: Infinity,
-                  times: orbit.times,
-                }}
-                className="absolute -left-[110px] -top-[76px]"
+                animate={
+                  flying
+                    ? { x: orbit.x, y: orbit.y, rotate: orbit.rotate }
+                    : { x: [0, orbit.x[0]], y: [0, orbit.y[0]], rotate: 0 }
+                }
+                transition={
+                  flying
+                    ? {
+                        duration: LAP,
+                        ease: "linear",
+                        repeat: Infinity,
+                        times: orbit.times,
+                      }
+                    : { duration: ARRIVAL, ease: [0.22, 1, 0.36, 1] }
+                }
+                onAnimationComplete={() => setFlying(true)}
               >
-                <Image
-                  src="/images/oeuvres/phenix.png"
-                  alt=""
-                  width={220}
-                  height={153}
-                  priority
-                  className="w-[220px] drop-shadow-[0_0_38px_rgba(230,184,100,0.55)]"
-                />
+                {/* Calque de la taille : l'oiseau paraît immense, se rapproche
+                    en diminuant, puis respire au rythme de son orbite. */}
+                <motion.div
+                  initial={{ scale: 3.6, opacity: 0 }}
+                  animate={
+                    flying
+                      ? { scale: orbit.depth, opacity: orbit.opacity }
+                      : { scale: 1, opacity: 1 }
+                  }
+                  transition={
+                    flying
+                      ? {
+                          duration: LAP,
+                          ease: "linear",
+                          repeat: Infinity,
+                          times: orbit.times,
+                        }
+                      : { duration: ARRIVAL, ease: [0.22, 1, 0.36, 1] }
+                  }
+                  className="absolute -left-[175px] -top-[98px]"
+                >
+                  <Image
+                    src="/images/oeuvres/phenix.png"
+                    alt=""
+                    width={350}
+                    height={195}
+                    priority
+                    className="w-[350px] drop-shadow-[0_0_52px_rgba(235,130,40,0.6)]"
+                  />
+                </motion.div>
               </motion.div>
-            </motion.div>
+            </div>
           </div>
 
           {/* --- Entrer --- */}
