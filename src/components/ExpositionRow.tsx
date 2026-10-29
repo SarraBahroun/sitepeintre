@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import type { Exposition } from "@/data/types";
 import { t as tr, formatPrice } from "@/data/types";
+import { dimensions } from "@/data/dimensions";
 import { StatusBadge } from "./ui";
 import Reveal, { RevealGroup, RevealItem } from "./Reveal";
 
@@ -125,8 +126,7 @@ export default async function ExpositionRow({
                     <Image
                       src={artwork.image}
                       alt={title || tr(expo.title, locale)}
-                      width={artwork.width ?? 1200}
-                      height={artwork.height ?? 1500}
+                      {...dimensions(artwork.image)}
                       sizes="(max-width: 640px) 50vw, 25vw"
                       className="h-auto w-full transition-transform duration-[1.2s] ease-[var(--ease-silk)] group-hover:scale-[1.04]"
                     />

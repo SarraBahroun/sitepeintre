@@ -98,13 +98,7 @@ export function ActionLink({
 }
 
 /** Paire étiquette / valeur des fiches d'œuvre et d'exposition. */
-export function MetaRow({
-  label,
-  value,
-}: {
-  label: string;
-  value: ReactNode;
-}) {
+export function MetaRow({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div className="flex items-baseline justify-between gap-6 border-b border-glow/10 py-3">
       <dt className="shrink-0 text-[0.68rem] font-medium uppercase tracking-[0.2em] text-sage-dim">

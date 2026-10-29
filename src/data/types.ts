@@ -22,13 +22,6 @@ export type Artwork = {
   id: string;
   /** Chemin depuis /public, ex. "/images/jungle-2/tableau-d.jpeg" */
   image: string;
-  /**
-   * Dimensions du fichier, relevées à l'installation. Elles donnent à
-   * chaque toile sa proportion exacte dans la grille : rien n'est rogné,
-   * et la page ne sursaute pas au chargement.
-   */
-  width?: number;
-  height?: number;
   title: Localized;
   /** Série à laquelle l'œuvre appartient, ex. « The Jungle Series ». */
   collection?: Localized;

@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 
 import type { Artwork } from "@/data/types";
 import { t as tr, formatPrice } from "@/data/types";
+import { dimensions } from "@/data/dimensions";
 import type { Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { MetaRow, StatusBadge } from "./ui";
@@ -104,8 +105,7 @@ export default function ArtworkGallery({
                 <Image
                   src={artwork.image}
                   alt={title || `Œuvre ${i + 1}`}
-                  width={artwork.width ?? 1200}
-                  height={artwork.height ?? 1500}
+                  {...dimensions(artwork.image)}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="h-auto w-full transition-transform duration-[1.1s] ease-[var(--ease-silk)] group-hover:scale-[1.04]"
                 />

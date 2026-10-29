@@ -75,8 +75,6 @@ export const expositions: Exposition[] = [
       {
         id: "the-infinite-mystery",
         image: "/images/jungle-1/tableau-01.jpeg",
-        width: 1280,
-        height: 914,
         title: {
           fr: "The Infinite Mystery",
           en: "The Infinite Mystery",
@@ -107,8 +105,6 @@ export const expositions: Exposition[] = [
         // l'oiseau de paradis
         id: "oiseau-de-paradis",
         image: "/images/jungle-1/tableau-02.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -121,8 +117,6 @@ export const expositions: Exposition[] = [
         // le cheval blanc sous le porche
         id: "cheval-blanc",
         image: "/images/jungle-1/tableau-03.jpeg",
-        width: 1080,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -135,8 +129,6 @@ export const expositions: Exposition[] = [
         // l'éléphant en sous-bois
         id: "elephant",
         image: "/images/jungle-1/tableau-04.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -149,8 +141,6 @@ export const expositions: Exposition[] = [
         // le cheval bai
         id: "cheval-bai",
         image: "/images/jungle-1/tableau-05.jpeg",
-        width: 1280,
-        height: 913,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -163,8 +153,6 @@ export const expositions: Exposition[] = [
         // les danseuses-paons
         id: "danseuses-paon",
         image: "/images/jungle-1/tableau-06.jpeg",
-        width: 1063,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -177,8 +165,6 @@ export const expositions: Exposition[] = [
         // le tigre blanc sous la neige
         id: "tigre-blanc",
         image: "/images/jungle-1/tableau-07.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -191,8 +177,6 @@ export const expositions: Exposition[] = [
         // l'ara sur sa branche
         id: "ara",
         image: "/images/jungle-1/tableau-08.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -205,8 +189,6 @@ export const expositions: Exposition[] = [
         // la coccinelle sur le trèfle
         id: "coccinelle",
         image: "/images/jungle-1/tableau-09.jpeg",
-        width: 1280,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -219,8 +201,6 @@ export const expositions: Exposition[] = [
         // le lion de lumière
         id: "lion-de-lumiere",
         image: "/images/jungle-1/tableau-10.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -233,8 +213,6 @@ export const expositions: Exposition[] = [
         // les colombes
         id: "colombes",
         image: "/images/jungle-1/tableau-11.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -247,8 +225,6 @@ export const expositions: Exposition[] = [
         // le flamant rose
         id: "flamant-rose",
         image: "/images/jungle-1/tableau-12.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -261,8 +237,6 @@ export const expositions: Exposition[] = [
         // le poisson doré
         id: "poisson-dore",
         image: "/images/jungle-1/tableau-13.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -275,8 +249,6 @@ export const expositions: Exposition[] = [
         // le paon et les magnolias
         id: "paon",
         image: "/images/jungle-1/tableau-14.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -289,8 +261,6 @@ export const expositions: Exposition[] = [
         // le tigre blanc, second état
         id: "tigre-blanc-ii",
         image: "/images/jungle-1/tableau-15.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -303,8 +273,6 @@ export const expositions: Exposition[] = [
         // le monarque sur la fleur rouge
         id: "monarque",
         image: "/images/jungle-1/tableau-16.jpeg",
-        width: 913,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -317,8 +285,6 @@ export const expositions: Exposition[] = [
         // le léopard sur son rocher
         id: "leopard",
         image: "/images/jungle-1/tableau-17.jpeg",
-        width: 1280,
-        height: 913,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -371,8 +337,6 @@ export const expositions: Exposition[] = [
         // le cheval blanc sous l'arcade
         id: "cheval-arcade",
         image: "/images/jungle-2/tableau-a.jpeg",
-        width: 1076,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -385,8 +349,6 @@ export const expositions: Exposition[] = [
         // le corail rouge
         id: "corail",
         image: "/images/jungle-2/tableau-b.jpeg",
-        width: 1280,
-        height: 1097,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -399,8 +361,6 @@ export const expositions: Exposition[] = [
         // le tigre de lumière
         id: "tigre-de-lumiere",
         image: "/images/jungle-2/tableau-c.jpeg",
-        width: 996,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -413,8 +373,6 @@ export const expositions: Exposition[] = [
         // le phénix d'or
         id: "phenix",
         image: "/images/jungle-2/tableau-d.jpeg",
-        width: 1267,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -428,8 +386,6 @@ export const expositions: Exposition[] = [
         // le flamant rose
         id: "flamant-rose",
         image: "/images/jungle-2/tableau-e.jpeg",
-        width: 1031,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -442,8 +398,6 @@ export const expositions: Exposition[] = [
         // l'aigle
         id: "aigle",
         image: "/images/jungle-2/tableau-f.jpeg",
-        width: 1056,
-        height: 1280,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -456,8 +410,6 @@ export const expositions: Exposition[] = [
         // la fleur iridescente
         id: "fleur-iridescente",
         image: "/images/jungle-2/tableau-g.jpeg",
-        width: 990,
-        height: 1236,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -470,8 +422,6 @@ export const expositions: Exposition[] = [
         // l'oasis et les dromadaires
         id: "oasis",
         image: "/images/jungle-2/tableau-h.jpeg",
-        width: 1269,
-        height: 1160,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },
@@ -484,8 +434,6 @@ export const expositions: Exposition[] = [
         // le chat de lumière
         id: "chat-de-lumiere",
         image: "/images/jungle-2/tableau-i.jpeg",
-        width: 966,
-        height: 1267,
         title: { fr: "", en: "", ar: "" },
         collection: jungleSeries,
         symbolism: { fr: "", en: "", ar: "" },

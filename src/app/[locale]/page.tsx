@@ -5,6 +5,7 @@ import type { Locale } from "@/i18n/routing";
 import { expositions } from "@/data/expositions";
 import { artist, courses, diversSections, heroPlates } from "@/data/site";
 import { t as tr } from "@/data/types";
+import { dimensions } from "@/data/dimensions";
 
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
@@ -38,7 +39,7 @@ export default async function HomePage({
       <Section className="py-24 sm:py-32">
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1fr] lg:gap-20">
           <Reveal>
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-sm">
+            <div className="relative mx-auto w-full max-w-sm">
               <div
                 aria-hidden
                 className="absolute -inset-4 rounded-sm border border-glow/15"
@@ -46,9 +47,9 @@ export default async function HomePage({
               <Image
                 src={artist.portrait}
                 alt=""
-                fill
+                {...dimensions(artist.portrait)}
                 sizes="(max-width: 1024px) 80vw, 35vw"
-                className="rounded-sm object-cover"
+                className="h-auto w-full rounded-sm"
               />
               <div
                 aria-hidden

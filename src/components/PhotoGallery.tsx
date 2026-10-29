@@ -5,6 +5,8 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
+import { dimensions } from "@/data/dimensions";
+
 /* =============================================================================
    Photographies du vernissage — mosaïque en colonnes, visionneuse au clic.
    ========================================================================== */
@@ -66,10 +68,9 @@ export default function PhotoGallery({
             <Image
               src={src}
               alt={`${label} — ${i + 1}`}
-              width={800}
-              height={600}
+              {...dimensions(src)}
               sizes="(max-width: 768px) 50vw, 25vw"
-              className="h-auto w-full object-cover transition-transform duration-[1.1s] ease-[var(--ease-silk)] group-hover:scale-[1.05]"
+              className="h-auto w-full transition-transform duration-[1.1s] ease-[var(--ease-silk)] group-hover:scale-[1.04]"
             />
             <span className="absolute inset-0 bg-night/35 transition-opacity duration-500 group-hover:opacity-0" />
           </motion.button>

@@ -212,7 +212,13 @@ function Monstera({
       {/* fenestrations */}
       <g fill="var(--color-night)">
         <ellipse cx="100" cy="60" rx="7" ry="26" />
-        <ellipse cx="132" cy="92" rx="6" ry="30" transform="rotate(22 132 92)" />
+        <ellipse
+          cx="132"
+          cy="92"
+          rx="6"
+          ry="30"
+          transform="rotate(22 132 92)"
+        />
         <ellipse cx="68" cy="92" rx="6" ry="30" transform="rotate(-22 68 92)" />
         <ellipse
           cx="146"

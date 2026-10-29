@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing, type Locale } from "@/i18n/routing";
 import { artist, site } from "@/data/site";
 import { t as tr, tRich } from "@/data/types";
+import { dimensions } from "@/data/dimensions";
 
 import Reveal from "@/components/Reveal";
 import {
@@ -98,7 +99,7 @@ export default async function ArtistPage({
           </Reveal>
 
           <Reveal delay={0.14}>
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
+            <div className="relative mx-auto w-full max-w-md">
               <div
                 aria-hidden
                 className="absolute -inset-5 rounded-sm border border-glow/15"
@@ -107,13 +108,14 @@ export default async function ArtistPage({
                 aria-hidden
                 className="absolute -inset-5 -z-10 rounded-sm bg-glow/5 blur-3xl"
               />
+              {/* Le portrait garde sa proportion : on ne recadre pas un visage */}
               <Image
                 src={artist.portrait}
                 alt={name}
-                fill
+                {...dimensions(artist.portrait)}
                 priority
                 sizes="(max-width: 1024px) 85vw, 40vw"
-                className="rounded-sm object-cover"
+                className="h-auto w-full rounded-sm"
               />
             </div>
           </Reveal>
@@ -207,9 +209,7 @@ export default async function ArtistPage({
                     aria-hidden
                     className="absolute -start-[2.1rem] top-2 h-2 w-2 rounded-full bg-glow shadow-[0_0_14px_var(--color-glow)]"
                   />
-                  <p className="font-display text-xl text-gold">
-                    {entry.year}
-                  </p>
+                  <p className="font-display text-xl text-gold">{entry.year}</p>
                   <p className="mt-1.5 text-[0.98rem] text-ivory">
                     {tr(entry.label, locale)}
                   </p>
@@ -230,16 +230,16 @@ export default async function ArtistPage({
       {/* ================================================================== */}
       {artist.gallery.length > 0 && (
         <Section className="py-20">
-          <div className="grid gap-5 sm:grid-cols-2">
+          <div className="grid items-start gap-5 sm:grid-cols-2">
             {artist.gallery.map((src, i) => (
               <Reveal key={src} delay={i * 0.1}>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-glow/10">
+                <div className="overflow-hidden rounded-sm border border-glow/10">
                   <Image
                     src={src}
                     alt=""
-                    fill
+                    {...dimensions(src)}
                     sizes="(max-width: 640px) 100vw, 50vw"
-                    className="object-cover transition-transform duration-[1.2s] ease-[var(--ease-silk)] hover:scale-105"
+                    className="h-auto w-full transition-transform duration-[1.2s] ease-[var(--ease-silk)] hover:scale-[1.04]"
                   />
                 </div>
               </Reveal>

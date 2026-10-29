@@ -61,7 +61,13 @@ export default function CourseForm({ locale }: { locale: Locale }) {
           <label htmlFor="c-name" className="eyebrow block">
             {tc("formName")}
           </label>
-          <input id="c-name" name="name" type="text" required className={fieldClass} />
+          <input
+            id="c-name"
+            name="name"
+            type="text"
+            required
+            className={fieldClass}
+          />
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2">
@@ -81,7 +87,12 @@ export default function CourseForm({ locale }: { locale: Locale }) {
             <label htmlFor="c-phone" className="eyebrow block">
               {tc("phone")}
             </label>
-            <input id="c-phone" name="phone" type="tel" className={fieldClass} />
+            <input
+              id="c-phone"
+              name="phone"
+              type="tel"
+              className={fieldClass}
+            />
           </div>
         </div>
 

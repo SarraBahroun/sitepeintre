@@ -3,7 +3,12 @@
 import { useParams } from "next/navigation";
 import { useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/navigation";
-import { locales, localeShort, localeLabels, type Locale } from "@/i18n/routing";
+import {
+  locales,
+  localeShort,
+  localeLabels,
+  type Locale,
+} from "@/i18n/routing";
 
 /* =============================================================================
    Bascule de langue — garde la page courante, change seulement le préfixe.

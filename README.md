@@ -6,7 +6,12 @@ Tailwind v4 et Framer Motion.
 ```bash
 npm run dev     # http://localhost:3000  → redirige vers /fr
 npm run build   # vérifie que tout compile et pré-génère les pages
+npm run images  # relève les dimensions après avoir ajouté des images
 ```
+
+> **Après avoir déposé une image dans `public/images/`, lancer `npm run images`.**
+> Les proportions de chaque fichier sont relevées là, et c'est ce qui permet
+> d'afficher les œuvres entières au lieu de les recadrer.
 
 ---
 

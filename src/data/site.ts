@@ -50,11 +50,7 @@ export const artist = {
 
   /** Les trois casquettes, affichées en ligne sous le nom. */
   roles: {
-    fr: [
-      "Artiste plasticienne tunisienne",
-      "Peintre",
-      "Directrice artistique",
-    ],
+    fr: ["Artiste plasticienne tunisienne", "Peintre", "Directrice artistique"],
     en: ["Tunisian Visual Artist", "Painter", "Art Director"],
     ar: ["فنانة تشكيلية تونسية", "رسامة", "مديرة فنية"],
   } as LocalizedRich,
