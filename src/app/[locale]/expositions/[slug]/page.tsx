@@ -67,6 +67,8 @@ export default async function ExpositionPage({
   const { previous, next } = getSiblingExpositions(slug);
 
   const statement = tRich(expo.statement, locale);
+  // Le fond de page : la jungle commune, ou la vignette à défaut
+  const backdrop = expo.backdrop ?? expo.cover;
   const accentText =
     expo.accent === "gold"
       ? "text-gold"
@@ -80,17 +82,21 @@ export default async function ExpositionPage({
       {/*  En-tête                                                            */}
       {/* ================================================================== */}
       <header className="relative flex min-h-[72svh] items-end overflow-hidden pt-32">
-        {expo.cover && (
+        {backdrop && (
           <div aria-hidden className="absolute inset-0 -z-10">
+            {/* La jungle de nuit, commune aux deux expositions : elles
+                appartiennent à la même forêt. Elle dérive lentement, comme
+                en page d'accueil. */}
             <Image
-              src={expo.cover}
+              src={backdrop}
               alt=""
               fill
               priority
               sizes="100vw"
-              className="object-cover opacity-30"
+              className="animate-canvas object-cover opacity-45"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-night via-night/80 to-night/60" />
+            <div className="absolute inset-0 bg-gradient-to-t from-night via-night/82 to-night/55" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_60%,transparent_10%,color-mix(in_oklab,var(--color-night)_75%,transparent)_85%)]" />
           </div>
         )}
 

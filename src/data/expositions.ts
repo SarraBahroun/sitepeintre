@@ -17,6 +17,9 @@ import type { Exposition } from "./types";
    | "tv" | "interview".
    ========================================================================== */
 
+/** Le fond de nuit commun aux pages d'exposition. */
+const JUNGLE = "/images/oeuvres/animaux.jpeg";
+
 /** Série commune aux deux expositions. */
 const jungleSeries = {
   fr: "The Jungle Series",
@@ -38,9 +41,9 @@ export const expositions: Exposition[] = [
     slug: "jungle-1",
     numeral: "I",
     title: {
-      fr: "La Jungle",
-      en: "La Jungle",
-      ar: "الغابة",
+      fr: "La Jungle 1",
+      en: "La Jungle 1",
+      ar: "الغابة 1",
     },
     subtitle: {
       fr: "La Jungle nous observe",
@@ -66,6 +69,7 @@ export const expositions: Exposition[] = [
       ar: [],
     },
     cover: "/images/jungle-1/tableau-1.jpeg",
+    backdrop: JUNGLE,
     accent: "gold",
     artworks: [
       {
@@ -134,6 +138,7 @@ export const expositions: Exposition[] = [
       ar: [],
     },
     cover: "/images/jungle-2/j2-07.jpeg",
+    backdrop: JUNGLE,
     accent: "glow",
     artworks: [
       // Les toiles de La Jungle 2 viendront ici, nommées tableau-a, tableau-b…

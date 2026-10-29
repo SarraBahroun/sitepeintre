@@ -79,8 +79,14 @@ export type Exposition = {
   city: Localized;
   /** Texte de présentation, un élément par paragraphe. */
   statement: LocalizedRich;
-  /** Image d'en-tête de la page. */
+  /** Vignette de l'exposition : une toile, pour les cartes et le partage. */
   cover: string;
+  /**
+   * Fond de l'en-tête de page. La jungle de nuit par défaut, commune aux
+   * deux expositions : elle les tient ensemble, là où une toile en
+   * particulier n'engagerait qu'elle-même.
+   */
+  backdrop?: string;
   /** Teinte dominante de l'exposition, pour les halos et les filets. */
   accent: "glow" | "gold" | "iris";
   artworks: Artwork[];
