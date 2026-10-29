@@ -1,13 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { site } from "@/data/site";
+import JungleScene from "./JungleScene";
 
 /* =============================================================================
    Ouverture — le nom se lève lettre à lettre sur la jungle,
@@ -16,10 +16,11 @@ import { site } from "@/data/site";
 
 export default function Hero({
   locale,
-  image,
+  firstExpoSlug,
 }: {
   locale: Locale;
-  image?: string;
+  /** L'exposition vers laquelle mène « Entrer dans la jungle ». */
+  firstExpoSlug: string;
 }) {
   const t = useTranslations("home");
   const tm = useTranslations("meta");
@@ -32,8 +33,6 @@ export default function Hero({
 
   const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "38%"]);
   const titleOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-  const plateY = useTransform(scrollYProgress, [0, 1], ["0%", "-14%"]);
-  const plateScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
 
   const name = locale === "ar" ? site.nameAr : site.name;
   // En arabe le mot reste entier ; en latin on anime lettre à lettre.
@@ -44,25 +43,8 @@ export default function Hero({
       ref={ref}
       className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-5 pt-28 pb-20 sm:px-8"
     >
-      {/* L'œuvre d'ouverture, en retrait */}
-      {image && (
-        <motion.div
-          style={{ y: plateY, scale: plateScale }}
-          className="pointer-events-none absolute inset-0 -z-10"
-        >
-          <div className="absolute left-1/2 top-1/2 h-[min(78vh,780px)] w-[min(78vh,780px)] -translate-x-1/2 -translate-y-1/2">
-            <Image
-              src={image}
-              alt=""
-              fill
-              priority
-              sizes="80vw"
-              className="object-contain opacity-[0.22] blur-[1px]"
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_32%,var(--color-night)_74%)]" />
-          </div>
-        </motion.div>
-      )}
+      {/* La jungle dessinée : fauve, oiseau et regards dans le sous-bois */}
+      <JungleScene />
 
       <motion.div
         style={{ y: titleY, opacity: titleOpacity }}
@@ -113,7 +95,7 @@ export default function Hero({
           className="mt-10"
         >
           <Link
-            href="/expositions/jungle-2"
+            href={`/expositions/${firstExpoSlug}`}
             className="group inline-flex items-center gap-4 rounded-full border border-glow/25 bg-night/40 px-8 py-4 backdrop-blur-md transition-all duration-500 ease-[var(--ease-silk)] hover:border-glow/60 hover:bg-glow/10"
           >
             <span className="text-[0.76rem] font-medium uppercase tracking-[0.22em] text-glow">

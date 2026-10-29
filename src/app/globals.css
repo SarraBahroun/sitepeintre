@@ -229,6 +229,34 @@ html[lang="ar"] .tracking-\[0\.2em\] {
   }
 }
 
+/* Un regard qui s'allume dans le sous-bois, et cligne de temps en temps */
+@keyframes watch {
+  0%,
+  40% {
+    opacity: 0;
+  }
+  48%,
+  86% {
+    opacity: 0.9;
+  }
+  88%,
+  90% {
+    opacity: 0.04;
+  }
+  92%,
+  96% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-watch {
+  animation: watch 13s ease-in-out infinite;
+  opacity: 0;
+}
+
 .animate-sway {
   animation: sway 11s var(--ease-leaf) infinite;
   transform-origin: top center;
@@ -248,6 +276,11 @@ html[lang="ar"] .tracking-\[0\.2em\] {
   .animate-drift,
   .animate-breathe {
     animation: none !important;
+  }
+  /* le regard reste allumé, mais ne clignote plus */
+  .animate-watch {
+    animation: none !important;
+    opacity: 0.8;
   }
   *,
   *::before,

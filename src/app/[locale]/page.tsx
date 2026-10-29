@@ -24,42 +24,11 @@ export default async function HomePage({
   const t = await getTranslations("home");
   const te = await getTranslations("expo");
   const tn = await getTranslations("nav");
-  const heroImage = expositions.find((e) => e.cover)?.cover;
+  const firstExpo = expositions[0];
 
   return (
     <>
-      <Hero locale={locale} image={heroImage} />
-
-      {/* ================================================================== */}
-      {/*  Les expositions                                                    */}
-      {/* ================================================================== */}
-      <Section id="expositions" className="py-24 sm:py-32">
-        <Reveal>
-          <SectionHeading
-            eyebrow={tn("expositions")}
-            title={t("expositionsTitle")}
-            lead={t("expositionsLead")}
-          />
-        </Reveal>
-
-        {/* Un bandeau par exposition : ses toiles, puis la flèche vers sa page */}
-        <div className="mt-10 divide-y divide-glow/10">
-          {expositions.map((expo) => (
-            <ExpositionRow
-              key={expo.slug}
-              expo={expo}
-              locale={locale}
-              lead={
-                expo.slug === "jungle-1"
-                  ? t("jungle1Lead")
-                  : expo.slug === "jungle-2"
-                    ? t("jungle2Lead")
-                    : tr(expo.subtitle, locale)
-              }
-            />
-          ))}
-        </div>
-      </Section>
+      <Hero locale={locale} firstExpoSlug={firstExpo.slug} />
 
       {/* ================================================================== */}
       {/*  L'artiste                                                          */}
@@ -96,6 +65,37 @@ export default async function HomePage({
               <ActionLink href="/artiste">{t("discover")}</ActionLink>
             </div>
           </Reveal>
+        </div>
+      </Section>
+
+      {/* ================================================================== */}
+      {/*  Les expositions                                                    */}
+      {/* ================================================================== */}
+      <Section id="expositions" className="py-24 sm:py-32">
+        <Reveal>
+          <SectionHeading
+            eyebrow={tn("expositions")}
+            title={t("expositionsTitle")}
+            lead={t("expositionsLead")}
+          />
+        </Reveal>
+
+        {/* Un bandeau par exposition : ses toiles, puis la flèche vers sa page */}
+        <div className="mt-10 divide-y divide-glow/10">
+          {expositions.map((expo) => (
+            <ExpositionRow
+              key={expo.slug}
+              expo={expo}
+              locale={locale}
+              lead={
+                expo.slug === "jungle-1"
+                  ? t("jungle1Lead")
+                  : expo.slug === "jungle-2"
+                    ? t("jungle2Lead")
+                    : tr(expo.subtitle, locale)
+              }
+            />
+          ))}
         </div>
       </Section>
 
