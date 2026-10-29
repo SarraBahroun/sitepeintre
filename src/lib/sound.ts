@@ -37,18 +37,32 @@ function ramp(audio: HTMLAudioElement, to: number, onDone?: () => void) {
   }, 25);
 }
 
-/** Joue le cri du phénix, ou son substitut. Ne lève jamais. */
-export async function playIntroSound(volume = 0.55): Promise<void> {
+export type PlayResult = "playing" | "blocked" | "missing";
+
+/**
+ * Joue le cri du phénix. Ne lève jamais : renvoie ce qui s'est passé.
+ *
+ * « blocked » veut dire que le navigateur a refusé — il n'autorise le son
+ * qu'après un geste du visiteur. Ce n'est pas une panne, c'est la règle.
+ */
+export async function playIntroSound(volume = 0.55): Promise<PlayResult> {
   stopIntroSound();
+  const audio = new Audio(FILE);
+  audio.volume = 0;
+  current = audio;
+
   try {
-    const audio = new Audio(FILE);
-    audio.volume = 0;
-    current = audio;
     await audio.play();
     ramp(audio, volume);
-  } catch {
+    return "playing";
+  } catch (error) {
     current = null;
+    const blocked =
+      error instanceof DOMException && error.name === "NotAllowedError";
+    if (blocked) return "blocked";
+    // Le fichier manque ou ne se décode pas : l'accord de synthèse prend le relais
     chime(volume);
+    return "missing";
   }
 }
 

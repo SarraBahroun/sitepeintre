@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
@@ -78,12 +78,27 @@ export default function Intro({ locale }: { locale: Locale }) {
   const [rx, setRx] = useState(300);
   // false : l'oiseau arrive. true : il a pris son orbite.
   const [flying, setFlying] = useState(false);
+  // Le coin d'où il surgit, mesuré une fois l'écran connu
+  const [entry, setEntry] = useState({ x: -620, y: -420 });
+  // Mesures prises : on peut poser l'oiseau à son point de départ
+  const [ready, setReady] = useState(false);
+  // Le premier geste sert à lancer le son, pas à fermer le rideau
+  const armedRef = useRef(false);
 
   const orbit = useOrbit(rx, rx * 0.34);
   const name = locale === "ar" ? site.nameAr : site.name;
   const units = locale === "ar" ? name.split(" ") : Array.from(name);
 
-  const close = useCallback(() => {
+  /**
+   * Lève le rideau. Le tout premier geste du visiteur sert à lancer le son
+   * — on le laisse passer sans fermer. `force` ignore cette franchise :
+   * la minuterie, elle, doit toujours aboutir.
+   */
+  const close = useCallback((force = false) => {
+    if (!force && armedRef.current) {
+      armedRef.current = false;
+      return;
+    }
     setOpen(false);
     stopIntroSound();
     try {
@@ -111,24 +126,62 @@ export default function Intro({ locale }: { locale: Locale }) {
     }
 
     setRx(Math.min(Math.max(window.innerWidth * 0.3, 160), 330));
+    // Il entre par le coin haut-gauche, hors champ
+    setEntry({
+      x: -window.innerWidth * 0.52,
+      y: -window.innerHeight * 0.46,
+    });
+    setReady(true);
 
-    const timer = window.setTimeout(close, AUTO_DISMISS);
+    const timer = window.setTimeout(() => close(true), AUTO_DISMISS);
     return () => window.clearTimeout(timer);
   }, [onHome, close]);
 
-  /* --- Le son suit la préférence enregistrée, jamais tout seul --- */
+  /* --- Le son -----------------------------------------------------------
+     Les navigateurs refusent de jouer un son tant que le visiteur n'a rien
+     touché. On tente quand même : certains l'autorisent sur un site déjà
+     fréquenté. Si c'est refusé, le premier geste — clic, touche, doigt —
+     le déclenche. Ce premier geste-là ne lève pas le rideau, pour ne pas
+     emporter le son avec lui.
+     --------------------------------------------------------------------- */
   useEffect(() => {
     if (!open) return;
-    let wanted = false;
+
+    let muted = false;
     try {
-      wanted = localStorage.getItem(SOUND_KEY) === "on";
+      muted = localStorage.getItem(SOUND_KEY) === "off";
     } catch {
       /* ignore */
     }
-    if (wanted) {
+    if (muted) return;
+
+    let done = false;
+    const detach = () => {
+      window.removeEventListener("pointerdown", onGesture, true);
+      window.removeEventListener("keydown", onGesture, true);
+      window.removeEventListener("touchstart", onGesture, true);
+    };
+
+    function onGesture() {
+      if (done) return;
+      done = true;
+      armedRef.current = true; // ce geste a servi au son, pas à fermer
       setSound(true);
       void playIntroSound();
+      detach();
     }
+
+    void playIntroSound().then((result) => {
+      if (result === "blocked") return; // on attend le premier geste
+      done = true;
+      setSound(true);
+      detach();
+    });
+
+    window.addEventListener("pointerdown", onGesture, true);
+    window.addEventListener("keydown", onGesture, true);
+    window.addEventListener("touchstart", onGesture, true);
+    return detach;
   }, [open]);
 
   /* --- Toute touche lève le rideau --- */
@@ -168,7 +221,7 @@ export default function Intro({ locale }: { locale: Locale }) {
           key="intro"
           exit={{ opacity: 0, filter: "blur(14px)" }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          onClick={close}
+          onClick={() => close()}
           role="dialog"
           aria-label={t("title")}
           className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center overflow-hidden bg-night"
@@ -197,7 +250,10 @@ export default function Intro({ locale }: { locale: Locale }) {
             {/* Le nom, lettre à lettre */}
             <h1 className="mt-8 font-display text-[clamp(2.2rem,8vw,5.5rem)] font-light leading-[1.02] tracking-[0.05em] text-ivory">
               <span className="sr-only">{name}</span>
-              <span aria-hidden className="inline-flex flex-wrap justify-center">
+              <span
+                aria-hidden
+                className="inline-flex flex-wrap justify-center"
+              >
                 {units.map((unit, i) => (
                   <motion.span
                     key={`${unit}-${i}`}
@@ -239,34 +295,16 @@ export default function Intro({ locale }: { locale: Locale }) {
               aria-hidden
               className="pointer-events-none absolute left-1/2 top-[46%] -z-10 h-0 w-0"
             >
-              {/* Calque du trajet : l'arrivée l'amène au bas de l'ellipse,
-                  puis il tourne sans fin, toujours dans le même sens. */}
-              <motion.div
-                animate={
-                  flying
-                    ? { x: orbit.x, y: orbit.y, rotate: orbit.rotate }
-                    : { x: [0, orbit.x[0]], y: [0, orbit.y[0]], rotate: 0 }
-                }
-                transition={
-                  flying
-                    ? {
-                        duration: LAP,
-                        ease: "linear",
-                        repeat: Infinity,
-                        times: orbit.times,
-                      }
-                    : { duration: ARRIVAL, ease: [0.22, 1, 0.36, 1] }
-                }
-                onAnimationComplete={() => setFlying(true)}
-              >
-                {/* Calque de la taille : l'oiseau paraît immense, se rapproche
-                    en diminuant, puis respire au rythme de son orbite. */}
+              {/* Calque du trajet : il entre par le coin, rejoint le bas de
+                  l'ellipse, puis tourne sans fin, toujours dans le même sens.
+                  On attend les mesures de l'écran pour le poser à son départ. */}
+              {ready && (
                 <motion.div
-                  initial={{ scale: 3.6, opacity: 0 }}
+                  initial={{ x: entry.x, y: entry.y, rotate: -16 }}
                   animate={
                     flying
-                      ? { scale: orbit.depth, opacity: orbit.opacity }
-                      : { scale: 1, opacity: 1 }
+                      ? { x: orbit.x, y: orbit.y, rotate: orbit.rotate }
+                      : { x: orbit.x[0], y: orbit.y[0], rotate: 0 }
                   }
                   transition={
                     flying
@@ -276,20 +314,67 @@ export default function Intro({ locale }: { locale: Locale }) {
                           repeat: Infinity,
                           times: orbit.times,
                         }
-                      : { duration: ARRIVAL, ease: [0.22, 1, 0.36, 1] }
+                      : { duration: ARRIVAL, ease: [0.3, 0.8, 0.3, 1] }
                   }
-                  className="absolute -left-[175px] -top-[98px]"
+                  onAnimationComplete={() => setFlying(true)}
                 >
-                  <Image
-                    src="/images/oeuvres/phenix.png"
-                    alt=""
-                    width={350}
-                    height={195}
-                    priority
-                    className="w-[350px] drop-shadow-[0_0_52px_rgba(235,130,40,0.6)]"
-                  />
+                  {/* Calque de la taille : immense en arrivant, il se rapproche
+                    en diminuant, puis respire au rythme de son orbite. */}
+                  <motion.div
+                    initial={{ scale: 5.2, opacity: 0 }}
+                    animate={
+                      flying
+                        ? { scale: orbit.depth, opacity: orbit.opacity }
+                        : { scale: 1, opacity: 1 }
+                    }
+                    transition={
+                      flying
+                        ? {
+                            duration: LAP,
+                            ease: "linear",
+                            repeat: Infinity,
+                            times: orbit.times,
+                          }
+                        : {
+                            duration: ARRIVAL,
+                            ease: [0.3, 0.8, 0.3, 1],
+                            opacity: { duration: ARRIVAL * 0.3 },
+                          }
+                    }
+                    className="absolute -left-[210px] -top-[118px]"
+                  >
+                    {/*
+                    L'embrasement : une copie floutée et surexposée déborde
+                    sous l'oiseau net. C'est elle qui donne l'or fluorescent,
+                    la halo que l'image seule ne porte pas.
+                  */}
+                    <div className="relative w-[420px]">
+                      <Image
+                        src="/images/oeuvres/phenix.png"
+                        alt=""
+                        width={420}
+                        height={234}
+                        priority
+                        aria-hidden
+                        className="absolute inset-0 w-full scale-110 opacity-90 blur-[34px]"
+                        style={{ filter: "brightness(2.1) saturate(2.4)" }}
+                      />
+                      <Image
+                        src="/images/oeuvres/phenix.png"
+                        alt=""
+                        width={420}
+                        height={234}
+                        priority
+                        className="relative w-full"
+                        style={{
+                          filter:
+                            "brightness(1.22) saturate(1.7) drop-shadow(0 0 16px rgba(255,205,90,0.95)) drop-shadow(0 0 44px rgba(255,160,40,0.8)) drop-shadow(0 0 110px rgba(255,120,20,0.55))",
+                        }}
+                      />
+                    </div>
+                  </motion.div>
                 </motion.div>
-              </motion.div>
+              )}
             </div>
           </div>
 
@@ -299,7 +384,7 @@ export default function Intro({ locale }: { locale: Locale }) {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 2.6 }}
-            onClick={close}
+            onClick={() => close(true)}
             className="group absolute bottom-16 inline-flex items-center gap-3.5 rounded-full border border-gold/30 px-7 py-3.5 transition-all duration-500 hover:border-gold/70 hover:bg-gold/10"
           >
             <span className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-gold">
@@ -323,7 +408,13 @@ export default function Intro({ locale }: { locale: Locale }) {
             title={sound ? t("soundOff") : t("soundOn")}
             className="absolute end-7 top-7 flex h-11 w-11 items-center justify-center rounded-full border border-gold/25 text-gold/70 transition-all duration-400 hover:border-gold/60 hover:text-gold"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden
+            >
               <path
                 d="M4 9v6h4l5 4V5L8 9H4Z"
                 stroke="currentColor"
