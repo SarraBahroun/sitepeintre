@@ -112,25 +112,19 @@ export default function Intro({ locale }: { locale: Locale }) {
     }
   }, [onHome]);
 
-  /* --- Le carton attend un geste, n'importe lequel ---------------------- */
+  /* --- Le carton cède au premier geste ---------------------------------
+     Le clic est écouté sur le rideau lui-même, non sur la fenêtre : posé
+     sur la fenêtre, il partait au `pointerdown` et le `click` qui suivait
+     trouvait le film déjà lancé — donc le refermait aussitôt. Un même
+     geste allumait et éteignait.
+     --------------------------------------------------------------------- */
 
   useEffect(() => {
     if (!open || rolling) return;
 
-    const go = () => start(true);
-    window.addEventListener("pointerdown", go);
-    window.addEventListener("keydown", go);
-    window.addEventListener("touchstart", go);
-
     // Personne ne bouge : on finit par jouer, sans le son
     const patience = window.setTimeout(() => start(false), PATIENCE);
-
-    return () => {
-      window.removeEventListener("pointerdown", go);
-      window.removeEventListener("keydown", go);
-      window.removeEventListener("touchstart", go);
-      window.clearTimeout(patience);
-    };
+    return () => window.clearTimeout(patience);
   }, [open, rolling, start]);
 
   /* --- La conduite du film, une fois lancé ------------------------------ */
@@ -198,7 +192,11 @@ export default function Intro({ locale }: { locale: Locale }) {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
+      // Échap coupe court ; sinon la touche fait ce que ferait le clic :
+      // elle lance le film, ou le quitte s'il est déjà lancé.
       if (e.key === "Escape") close();
+      else if (!rolling) start(true);
+      else close();
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -206,7 +204,7 @@ export default function Intro({ locale }: { locale: Locale }) {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [open, close]);
+  }, [open, rolling, close, start]);
 
   if (!onHome) return null;
 
