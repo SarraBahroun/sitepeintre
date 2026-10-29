@@ -81,15 +81,13 @@ export default function HeroCanvas({ plates }: { plates: HeroPlate[] }) {
 
       {/* --- Les voiles : la toile reste visible, le texte reste lisible --- */}
 
-      {/* assombrissement général, léger */}
-      <div className="absolute inset-0 bg-night/45" />
-      {/* colonne centrale, derrière le nom */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_62%_52%_at_50%_46%,color-mix(in_oklab,var(--color-night)_78%,transparent),transparent_72%)]" />
+      {/* L'image porte déjà sa vignette : on se contente de la poser */}
+      <div className="absolute inset-0 bg-night/25" />
+      {/* un souffle sombre derrière le nom, sans masquer les fauves */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_46%_34%_at_50%_44%,color-mix(in_oklab,var(--color-night)_62%,transparent),transparent_75%)]" />
       {/* raccord haut et bas avec le reste de la page */}
-      <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-night via-night/70 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-night via-night/80 to-transparent" />
-      {/* une pointe de vert, pour raccorder à la palette du site */}
-      <div className="absolute inset-0 bg-moss/20 mix-blend-color" />
+      <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-night via-night/60 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-night via-night/70 to-transparent" />
 
       {/* --- Repères de progression --- */}
       {plates.length > 1 && (

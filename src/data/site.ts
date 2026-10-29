@@ -30,9 +30,10 @@ export const site = {
    -------------------------------------------------------------------------- */
 
 export const heroPlates = [
-  { src: "/images/oeuvres/tigre.jpeg", position: "50% 42%" },
-  { src: "/images/oeuvres/flamant.jpeg", position: "50% 38%" },
-  // À venir, dès que les photos seront disponibles :
+  // Composition assemblée à partir de trois toiles : la jungle au tigre,
+  // le félin de lumière et l'oiseau iridescent, fondus l'un dans l'autre.
+  { src: "/images/oeuvres/jungle.jpeg", position: "center" },
+  // Ajouter ici d'autres toiles pour les faire défiler :
   // { src: "/images/oeuvres/lion.jpeg", position: "center" },
   // { src: "/images/oeuvres/phenix.jpeg", position: "center" },
 ];
