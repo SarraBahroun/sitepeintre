@@ -1,14 +1,13 @@
-Son de l'ouverture
+Son de l ouverture
 ==================
 
-Déposez ici un fichier nommé exactement :
+phenix.mp3  —  joué pendant l animation d ouverture.
 
-    phenix.mp3
+Il est découpé des 9 premières secondes de l original, gardé dans
+_sources-originales/audio/. Pour changer l extrait, demandez : la
+découpe se fait à la trame, sans ré-encodage, donc sans perte.
 
-Il sera joué pendant l'animation d'ouverture, lorsque le visiteur
-active le son (les navigateurs interdisent de le lancer tout seul).
-
-Tant que ce fichier n'existe pas, un accord de synthèse discret le
-remplace — l'intro n'est jamais muette.
-
-Conseils : 3 à 6 secondes, en mp3, moins de 300 Ko.
+Le son ne démarre jamais seul — les navigateurs l interdisent. Le
+visiteur l active par le bouton en haut à droite du rideau, et son
+choix est retenu. Il monte et redescend en fondu, et s arrête avec
+le rideau.

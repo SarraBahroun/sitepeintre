@@ -10,27 +10,60 @@
 
 const FILE = "/audio/phenix.mp3";
 
+const FADE_MS = 420;
+
 let current: HTMLAudioElement | null = null;
+let fading: ReturnType<typeof setInterval> | null = null;
+
+function clearFade() {
+  if (fading) {
+    clearInterval(fading);
+    fading = null;
+  }
+}
+
+/** Monte ou descend le volume par petits pas, pour éviter les à-coups. */
+function ramp(audio: HTMLAudioElement, to: number, onDone?: () => void) {
+  clearFade();
+  const from = audio.volume;
+  const started = performance.now();
+  fading = setInterval(() => {
+    const k = Math.min((performance.now() - started) / FADE_MS, 1);
+    audio.volume = Math.max(0, Math.min(1, from + (to - from) * k));
+    if (k === 1) {
+      clearFade();
+      onDone?.();
+    }
+  }, 25);
+}
 
 /** Joue le cri du phénix, ou son substitut. Ne lève jamais. */
 export async function playIntroSound(volume = 0.55): Promise<void> {
   stopIntroSound();
   try {
     const audio = new Audio(FILE);
-    audio.volume = volume;
+    audio.volume = 0;
     current = audio;
     await audio.play();
+    ramp(audio, volume);
   } catch {
     current = null;
     chime(volume);
   }
 }
 
+/** Éteint le son en le laissant redescendre, plutôt que de le couper net. */
 export function stopIntroSound() {
-  if (!current) return;
-  current.pause();
-  current.currentTime = 0;
+  const audio = current;
   current = null;
+  if (!audio) {
+    clearFade();
+    return;
+  }
+  ramp(audio, 0, () => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
 }
 
 /** Trois notes qui montent puis s'éteignent — le repli si le fichier manque. */
