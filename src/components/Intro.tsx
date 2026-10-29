@@ -36,14 +36,6 @@ const END = 10.4; // le rideau se lève, juste avant la fin du second plan
 
 const SHOTS = ["/videos/phenix-1.mp4", "/videos/phenix-2.mp4"] as const;
 
-/**
- * Le cadre du film fond dans le décor au lieu de s'y coller.
- * Sans ce masque, la vidéo verticale pose un rectangle net sur le flou,
- * et l'on voit la découpe.
- */
-const MELT =
-  "radial-gradient(ellipse 74% 88% at 50% 50%, #000 52%, rgba(0,0,0,0.75) 76%, transparent 100%)";
-
 export default function Intro({ locale }: { locale: Locale }) {
   const t = useTranslations("intro");
   const pathname = usePathname();
@@ -252,22 +244,11 @@ export default function Intro({ locale }: { locale: Locale }) {
               className="absolute inset-0"
             >
               {/*
-                Les plans sont verticaux. Sur un écran large, les recadrer
-                couperait l'oiseau : on pose derrière une copie démesurée et
-                floutée, qui tient lieu de décor, et on garde par-dessus le
-                cadre entier, net — mais fondu dans le décor par un masque,
-                sinon la découpe se voit et la vidéo semble collée dessus.
+                Les plans sont verticaux, l'écran ne l'est pas. On remplit
+                le cadre plutôt que d'y loger la vidéo entière : mieux vaut
+                perdre le haut et le bas que laisser des bords apparents de
+                part et d'autre. Le feu occupe tout le champ.
               */}
-              <video
-                aria-hidden
-                src={src}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                className="absolute inset-0 h-full w-full scale-150 object-cover opacity-60 blur-[90px]"
-              />
               <video
                 ref={(el) => {
                   videos.current[i] = el;
@@ -276,8 +257,7 @@ export default function Intro({ locale }: { locale: Locale }) {
                 muted
                 playsInline
                 preload="auto"
-                className="absolute inset-0 h-full w-full object-contain"
-                style={{ maskImage: MELT, WebkitMaskImage: MELT }}
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </motion.div>
           ))}
