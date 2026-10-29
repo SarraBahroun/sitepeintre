@@ -34,13 +34,15 @@ export default function Nav({ locale }: { locale: Locale }) {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
+    // La page peut être rechargée déjà défilée : on lit la position une
+    // fois, mais à l'image suivante, pour ne pas cascader les rendus.
+    const first = requestAnimationFrame(onScroll);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(first);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
-
-  // Le menu se referme à chaque changement de page.
-  useEffect(() => setOpen(false), [pathname]);
 
   // Et bloque le défilement de la page tant qu'il est ouvert.
   useEffect(() => {
@@ -161,6 +163,7 @@ export default function Nav({ locale }: { locale: Locale }) {
                   >
                     <Link
                       href={link.href}
+                      onClick={() => setOpen(false)}
                       className={`block py-3 font-display text-[2rem] leading-tight transition-colors duration-300 ${
                         isActive(link.href)
                           ? "text-glow halo"

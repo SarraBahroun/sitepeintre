@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { expositions } from "@/data/expositions";
 import { artist, courses, diversSections, heroPlates } from "@/data/site";
@@ -22,7 +21,6 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   const t = await getTranslations("home");
-  const te = await getTranslations("expo");
   const tn = await getTranslations("nav");
   const firstExpo = expositions[0];
 

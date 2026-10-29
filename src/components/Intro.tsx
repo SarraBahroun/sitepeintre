@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -23,51 +23,9 @@ import LightStreaks from "./LightStreaks";
 const SEEN_KEY = "hb-intro-seen";
 const SOUND_KEY = "hb-sound";
 
-/* L'oiseau paraît en grand, se rapproche en diminuant, puis se met à tourner */
-const ARRIVAL = 2.6; // s — l'entrée
-const LAP = 3.1; // s — un tour d'ellipse
-const AUTO_DISMISS = (ARRIVAL + LAP * 3) * 1000; // trois tours, puis le rideau se lève
-
-/**
- * Un tour d'ellipse, échantillonné pour framer-motion, toujours dans le même
- * sens : l'oiseau ne revient jamais sur ses pas. Il commence en haut, là où
- * l'entrée l'a déposé.
- */
-function useOrbit(rx: number, ry: number) {
-  return useMemo(() => {
-    const steps = 84;
-    const x: number[] = [];
-    const y: number[] = [];
-    const depth: number[] = [];
-    const opacity: number[] = [];
-    const rotate: number[] = [];
-
-    for (let i = 0; i <= steps; i++) {
-      // On part du bas de l'ellipse — là où l'entrée dépose l'oiseau,
-      // au plus près du spectateur.
-      const a = (i / steps) * Math.PI * 2 + Math.PI / 2;
-      const sin = Math.sin(a);
-      const front = (sin + 1) / 2; // 1 devant, 0 derrière
-
-      x.push(Math.cos(a) * rx);
-      y.push(sin * ry);
-      // Rapporté à 1 au départ : l'entrée peut s'y raccorder sans saut
-      depth.push(0.46 + front * 0.54);
-      opacity.push(0.46 + front * 0.54);
-      // Un roulis léger, comme un oiseau qui vire
-      rotate.push(Math.cos(a) * -14);
-    }
-
-    return {
-      x,
-      y,
-      depth,
-      opacity,
-      rotate,
-      times: x.map((_, i) => i / steps),
-    };
-  }, [rx, ry]);
-}
+/* Le temps de laisser l'oiseau faire deux fois le tour de l'écran */
+const FLIGHT = 10.5; // s — un tour complet, voir Phoenix.tsx
+const AUTO_DISMISS = FLIGHT * 2 * 1000;
 
 export default function Intro({ locale }: { locale: Locale }) {
   const t = useTranslations("intro");
@@ -76,17 +34,9 @@ export default function Intro({ locale }: { locale: Locale }) {
 
   const [open, setOpen] = useState(true);
   const [sound, setSound] = useState(false);
-  const [rx, setRx] = useState(300);
-  // false : l'oiseau arrive. true : il a pris son orbite.
-  const [flying, setFlying] = useState(false);
-  // Le coin d'où il surgit, mesuré une fois l'écran connu
-  const [entry, setEntry] = useState({ x: -620, y: -420 });
-  // Mesures prises : on peut poser l'oiseau à son point de départ
-  const [ready, setReady] = useState(false);
   // Le premier geste sert à lancer le son, pas à fermer le rideau
   const armedRef = useRef(false);
 
-  const orbit = useOrbit(rx, rx * 0.34);
   const name = locale === "ar" ? site.nameAr : site.name;
   const units = locale === "ar" ? name.split(" ") : Array.from(name);
 
@@ -122,17 +72,11 @@ export default function Intro({ locale }: { locale: Locale }) {
     ).matches;
 
     if (seen || reduced || !onHome) {
-      setOpen(false);
-      return;
+      // Différé d'une image : poser l'état en plein effet ferait
+      // cascader les rendus.
+      const skip = requestAnimationFrame(() => setOpen(false));
+      return () => cancelAnimationFrame(skip);
     }
-
-    setRx(Math.min(Math.max(window.innerWidth * 0.3, 160), 330));
-    // Il entre par le coin haut-gauche, hors champ
-    setEntry({
-      x: -window.innerWidth * 0.52,
-      y: -window.innerHeight * 0.46,
-    });
-    setReady(true);
 
     const timer = window.setTimeout(() => close(true), AUTO_DISMISS);
     return () => window.clearTimeout(timer);
@@ -286,100 +230,11 @@ export default function Intro({ locale }: { locale: Locale }) {
             </motion.p>
 
             {/*
-              L'oiseau de feu : il paraît d'abord en grand, droit devant, puis
-              se rapproche en diminuant jusqu'à prendre son orbite autour du
-              monogramme et du nom. Ensuite il tourne, toujours dans le même
-              sens — il ne revient jamais sur ses pas.
-
-              Deux calques imbriqués : le premier porte le trajet, le second
-              l'entrée. Ainsi l'orbite peut tourner sans fin sans rejouer
-              l'arrivée à chaque tour.
+              L'oiseau de feu. Il mène sa course lui-même : une boucle qui
+              balaie tout l'écran, le cap sur la tangente, l'image retournée
+              dès qu'il repart vers la gauche. Voir Phoenix.tsx.
             */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute left-1/2 top-[46%] -z-10 h-0 w-0"
-            >
-              {/* Calque du trajet : il entre par le coin, rejoint le bas de
-                  l'ellipse, puis tourne sans fin, toujours dans le même sens.
-                  On attend les mesures de l'écran pour le poser à son départ. */}
-              {ready && (
-                <motion.div
-                  initial={{ x: entry.x, y: entry.y, rotate: -16 }}
-                  animate={
-                    flying
-                      ? { x: orbit.x, y: orbit.y, rotate: orbit.rotate }
-                      : { x: orbit.x[0], y: orbit.y[0], rotate: 0 }
-                  }
-                  transition={
-                    flying
-                      ? {
-                          duration: LAP,
-                          ease: "linear",
-                          repeat: Infinity,
-                          times: orbit.times,
-                        }
-                      : { duration: ARRIVAL, ease: [0.3, 0.8, 0.3, 1] }
-                  }
-                  onAnimationComplete={() => setFlying(true)}
-                >
-                  {/* Calque de la taille : immense en arrivant, il se rapproche
-                    en diminuant, puis respire au rythme de son orbite. */}
-                  <motion.div
-                    initial={{ scale: 5.2, opacity: 0 }}
-                    animate={
-                      flying
-                        ? { scale: orbit.depth, opacity: orbit.opacity }
-                        : { scale: 1, opacity: 1 }
-                    }
-                    transition={
-                      flying
-                        ? {
-                            duration: LAP,
-                            ease: "linear",
-                            repeat: Infinity,
-                            times: orbit.times,
-                          }
-                        : {
-                            duration: ARRIVAL,
-                            ease: [0.3, 0.8, 0.3, 1],
-                            opacity: { duration: ARRIVAL * 0.3 },
-                          }
-                    }
-                    className="absolute -left-[230px] -top-[137px]"
-                    style={{ perspective: 1400 }}
-                  >
-                    {/*
-                      Il entre de profil, presque de champ, et se tourne vers
-                      nous à mesure qu'il approche. Une fois en orbite il
-                      s'incline légèrement d'un bord puis de l'autre, comme
-                      un oiseau qui tient son virage.
-                    */}
-                    <motion.div
-                      initial={{ rotateY: -86, rotateZ: -12 }}
-                      animate={
-                        flying
-                          ? { rotateY: [-68, -78, -62, -78, -68], rotateZ: 0 }
-                          : { rotateY: -68, rotateZ: 0 }
-                      }
-                      transition={
-                        flying
-                          ? {
-                              duration: LAP,
-                              ease: "easeInOut",
-                              repeat: Infinity,
-                              times: [0, 0.25, 0.5, 0.75, 1],
-                            }
-                          : { duration: ARRIVAL, ease: [0.35, 0.1, 0.25, 1] }
-                      }
-                      style={{ transformStyle: "preserve-3d" }}
-                    >
-                      {/* L'oiseau n'est pas une image : ses ailes battent. */}
-                      <Phoenix width={460} />
-                    </motion.div>
-                  </motion.div>
-                </motion.div>
-              )}
-            </div>
+            <Phoenix size={340} duration={10.5} className="-z-10" />
           </div>
 
           {/* --- Entrer --- */}
