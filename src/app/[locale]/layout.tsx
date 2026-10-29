@@ -6,6 +6,7 @@ import { Cormorant_Garamond, Inter, Amiri, Cairo } from "next/font/google";
 
 import { routing, type Locale } from "@/i18n/routing";
 import JungleBackdrop from "@/components/JungleBackdrop";
+import Intro from "@/components/Intro";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import "../globals.css";
@@ -95,6 +96,7 @@ export default async function LocaleLayout({
     >
       <body className="relative min-h-dvh">
         <NextIntlClientProvider>
+          <Intro locale={locale as Locale} />
           <JungleBackdrop />
           <div className="relative z-10 flex min-h-dvh flex-col">
             <Nav locale={locale as Locale} />

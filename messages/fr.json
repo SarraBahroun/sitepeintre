@@ -132,5 +132,12 @@
     "formLevelAdvanced": "Avancé",
     "formQuestion": "Votre question ou message",
     "formSend": "Envoyer ma demande"
+  },
+  "intro": {
+    "title": "Ouverture",
+    "motto": "La Jungle nous observe",
+    "enter": "Entrer",
+    "soundOn": "Activer le son",
+    "soundOff": "Couper le son"
   }
 }

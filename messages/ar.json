@@ -132,5 +132,12 @@
     "formLevelAdvanced": "متقدّم",
     "formQuestion": "سؤالك أو رسالتك",
     "formSend": "إرسال الطلب"
+  },
+  "intro": {
+    "title": "الافتتاح",
+    "motto": "الغابة تراقبنا",
+    "enter": "دخول",
+    "soundOn": "تشغيل الصوت",
+    "soundOff": "إيقاف الصوت"
   }
 }

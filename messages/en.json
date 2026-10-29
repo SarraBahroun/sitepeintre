@@ -132,5 +132,12 @@
     "formLevelAdvanced": "Advanced",
     "formQuestion": "Your question or message",
     "formSend": "Send my request"
+  },
+  "intro": {
+    "title": "Opening",
+    "motto": "The Jungle Watches Us",
+    "enter": "Enter",
+    "soundOn": "Turn sound on",
+    "soundOff": "Turn sound off"
   }
 }

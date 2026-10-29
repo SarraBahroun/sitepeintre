@@ -1,0 +1,14 @@
+Son de l'ouverture
+==================
+
+Déposez ici un fichier nommé exactement :
+
+    phenix.mp3
+
+Il sera joué pendant l'animation d'ouverture, lorsque le visiteur
+active le son (les navigateurs interdisent de le lancer tout seul).
+
+Tant que ce fichier n'existe pas, un accord de synthèse discret le
+remplace — l'intro n'est jamais muette.
+
+Conseils : 3 à 6 secondes, en mp3, moins de 300 Ko.
