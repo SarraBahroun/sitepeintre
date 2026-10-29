@@ -1,0 +1,230 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+
+import { routing, type Locale } from "@/i18n/routing";
+import { artist, site } from "@/data/site";
+import { t as tr, tRich } from "@/data/types";
+
+import Reveal from "@/components/Reveal";
+import {
+  Section,
+  SectionHeading,
+  ActionLink,
+  Placeholder,
+} from "@/components/ui";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "artist" });
+  return { title: t("title") };
+}
+
+export default async function ArtistPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: raw } = await params;
+  const locale = raw as Locale;
+  setRequestLocale(locale);
+
+  const t = await getTranslations("artist");
+  const tc = await getTranslations("common");
+  const tn = await getTranslations("nav");
+  const tm = await getTranslations("meta");
+
+  const bio = tRich(artist.bio, locale);
+  const approach = tRich(artist.approach, locale);
+  const statement = tr(artist.statement, locale);
+  const name = locale === "ar" ? site.nameAr : site.name;
+
+  return (
+    <>
+      {/* ================================================================== */}
+      {/*  Portrait                                                           */}
+      {/* ================================================================== */}
+      <Section className="pt-40 pb-20 sm:pt-48">
+        <div className="grid items-center gap-14 lg:grid-cols-[1fr_0.9fr] lg:gap-24">
+          <Reveal>
+            <p className="eyebrow">{tm("tagline")}</p>
+            <h1 className="mt-6 font-display text-[clamp(2.6rem,7vw,5.5rem)] font-light leading-[1.02] text-ivory">
+              {name}
+            </h1>
+            <div className="rule-glow mt-9 w-40" aria-hidden />
+            {statement ? (
+              <p className="mt-9 max-w-xl font-display text-[clamp(1.15rem,2.3vw,1.6rem)] font-light italic leading-relaxed text-sage">
+                {statement}
+              </p>
+            ) : (
+              <p className="mt-9 max-w-xl text-sage-dim italic">
+                {tc("comingSoon")}
+              </p>
+            )}
+          </Reveal>
+
+          <Reveal delay={0.14}>
+            <div className="relative mx-auto aspect-[4/5] w-full max-w-md">
+              <div
+                aria-hidden
+                className="absolute -inset-5 rounded-sm border border-glow/15"
+              />
+              <div
+                aria-hidden
+                className="absolute -inset-5 -z-10 rounded-sm bg-glow/5 blur-3xl"
+              />
+              <Image
+                src={artist.portrait}
+                alt={name}
+                fill
+                priority
+                sizes="(max-width: 1024px) 85vw, 40vw"
+                className="rounded-sm object-cover"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* ================================================================== */}
+      {/*  Biographie                                                         */}
+      {/* ================================================================== */}
+      <Section className="py-20 sm:py-28">
+        <div className="grid gap-14 lg:grid-cols-[0.4fr_1fr] lg:gap-20">
+          <Reveal>
+            <h2 className="font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-light text-ivory">
+              {t("bioTitle")}
+            </h2>
+            <div className="rule-glow mt-5 w-20" aria-hidden />
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            {bio.length > 0 ? (
+              <div className="max-w-2xl space-y-6">
+                {bio.map((paragraph, i) => (
+                  <p
+                    key={i}
+                    className="text-[0.98rem] leading-[1.95] text-sage"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            ) : (
+              <Placeholder
+                label={tc("comingSoon")}
+                hint="src/data/site.ts → artist.bio"
+              />
+            )}
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* ================================================================== */}
+      {/*  Démarche                                                           */}
+      {/* ================================================================== */}
+      <Section className="py-20 sm:py-28">
+        <Reveal>
+          <div className="relative overflow-hidden rounded-sm border border-glow/12 bg-gradient-to-br from-moss/50 via-night-2/60 to-night px-7 py-14 sm:px-14 sm:py-20">
+            <div
+              aria-hidden
+              className="absolute -left-16 -bottom-20 h-64 w-64 rounded-full bg-glow/10 blur-[80px]"
+            />
+            <div className="relative mx-auto max-w-3xl">
+              <p className="eyebrow text-center">{t("approachTitle")}</p>
+              {approach.length > 0 ? (
+                <div className="mt-10 space-y-6">
+                  {approach.map((paragraph, i) => (
+                    <p
+                      key={i}
+                      className={`leading-[1.9] ${
+                        i === 0
+                          ? "text-center font-display text-[clamp(1.2rem,2.5vw,1.7rem)] font-light italic text-ivory"
+                          : "text-[0.98rem] text-sage"
+                      }`}
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-8 text-center text-sage-dim italic">
+                  {tc("comingSoon")}
+                </p>
+              )}
+            </div>
+          </div>
+        </Reveal>
+      </Section>
+
+      {/* ================================================================== */}
+      {/*  Parcours                                                           */}
+      {/* ================================================================== */}
+      {artist.timeline.length > 0 && (
+        <Section className="py-20 sm:py-28">
+          <Reveal>
+            <SectionHeading title={t("pathTitle")} />
+          </Reveal>
+          <ol className="mt-12 border-s border-glow/15 ps-8">
+            {artist.timeline.map((entry, i) => (
+              <Reveal as="li" key={`${entry.year}-${i}`} delay={i * 0.06}>
+                <div className="relative pb-10">
+                  <span
+                    aria-hidden
+                    className="absolute -start-[2.1rem] top-2 h-2 w-2 rounded-full bg-glow shadow-[0_0_14px_var(--color-glow)]"
+                  />
+                  <p className="font-display text-xl text-gold">
+                    {entry.year}
+                  </p>
+                  <p className="mt-1.5 text-[0.98rem] text-ivory">
+                    {tr(entry.label, locale)}
+                  </p>
+                  {entry.place && (
+                    <p className="mt-1 text-sm text-sage-dim">
+                      {tr(entry.place, locale)}
+                    </p>
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </ol>
+        </Section>
+      )}
+
+      {/* ================================================================== */}
+      {/*  Atelier                                                            */}
+      {/* ================================================================== */}
+      {artist.gallery.length > 0 && (
+        <Section className="py-20">
+          <div className="grid gap-5 sm:grid-cols-2">
+            {artist.gallery.map((src, i) => (
+              <Reveal key={src} delay={i * 0.1}>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-glow/10">
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-[1.2s] ease-[var(--ease-silk)] hover:scale-105"
+                  />
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      <Section className="pb-28 text-center">
+        <ActionLink href="/contact">{tn("contact")}</ActionLink>
+      </Section>
+    </>
+  );
+}

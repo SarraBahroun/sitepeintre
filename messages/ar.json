@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "siteName": "هناء بحرون",
+    "tagline": "فنانة تشكيلية",
+    "description": "هناء بحرون، فنانة تشكيلية. الضوء والحيوان والنبات: معرضا الأدغال I والأدغال II، الرسوم التوضيحية والإبداعات."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "artist": "الفنانة",
+    "expositions": "المعارض",
+    "jungle1": "الأدغال I",
+    "jungle2": "الأدغال II",
+    "divers": "أعمال أخرى",
+    "contact": "اتصال",
+    "menu": "القائمة",
+    "close": "إغلاق",
+    "language": "اللغة"
+  },
+  "home": {
+    "enter": "ادخل إلى الأدغال",
+    "scroll": "مرّر للأسفل",
+    "expositionsTitle": "المعارض",
+    "expositionsLead": "فصلان من غابة واحدة.",
+    "diversTitle": "أعمال أخرى",
+    "diversLead": "رسوم الكتب، تصميم المجوهرات واستكشافات أخرى.",
+    "artistTitle": "الفنانة",
+    "artistLead": "خلف الضوء.",
+    "discover": "اكتشف",
+    "seeAll": "عرض الكل",
+    "featuredTitle": "أعمال مختارة"
+  },
+  "artist": {
+    "title": "الفنانة",
+    "bioTitle": "السيرة الذاتية",
+    "approachTitle": "الرؤية الفنية",
+    "pathTitle": "المسار"
+  },
+  "expo": {
+    "artworksTitle": "الأعمال",
+    "artworksLead": "اضغط على اللوحة لعرض التفاصيل.",
+    "vernissageTitle": "الافتتاح",
+    "vernissageLead": "صور من المعرض.",
+    "mediaTitle": "فيديو ووسائل الإعلام",
+    "mediaLead": "تقارير ومقابلات إذاعية وتلفزية.",
+    "pressTitle": "الصحافة",
+    "statementTitle": "عن المعرض",
+    "venue": "المكان",
+    "dates": "التواريخ",
+    "year": "السنة",
+    "artworksCount": "عملاً",
+    "backToExpos": "كل المعارض",
+    "next": "المعرض التالي",
+    "previous": "المعرض السابق"
+  },
+  "artwork": {
+    "technique": "التقنية",
+    "dimensions": "الأبعاد",
+    "year": "السنة",
+    "price": "السعر",
+    "onRequest": "السعر عند الطلب",
+    "inquire": "الاستفسار عن هذا العمل",
+    "close": "إغلاق",
+    "next": "التالي",
+    "previous": "السابق",
+    "status": {
+      "available": "متوفرة",
+      "sold": "مباعة",
+      "reserved": "محجوزة",
+      "notForSale": "مجموعة خاصة"
+    }
+  },
+  "media": {
+    "watch": "مشاهدة",
+    "listen": "استماع",
+    "kind": {
+      "video": "فيديو",
+      "radio": "إذاعة",
+      "tv": "تلفزة",
+      "interview": "مقابلة"
+    }
+  },
+  "contact": {
+    "title": "اتصال",
+    "lead": "للاقتناء أو المعارض أو التعاون.",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "studio": "المرسم",
+    "follow": "تابعونا",
+    "formName": "الاسم",
+    "formEmail": "البريد الإلكتروني",
+    "formSubject": "الموضوع",
+    "formMessage": "الرسالة",
+    "formSend": "إرسال",
+    "formNote": "سيتم ربط النموذج قريباً."
+  },
+  "footer": {
+    "rights": "جميع الحقوق محفوظة.",
+    "madeIn": "تونس"
+  },
+  "common": {
+    "soon": "قريباً",
+    "comingSoon": "المحتوى متوفر قريباً.",
+    "notFound": "الصفحة غير موجودة",
+    "backHome": "العودة إلى الرئيسية"
+  }
+}

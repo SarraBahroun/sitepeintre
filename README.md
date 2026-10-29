@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Hana Bahroun — site d'artiste peintre
 
-## Getting Started
-
-First, run the development server:
+Site vitrine trilingue (français · anglais · arabe) construit avec Next.js 16,
+Tailwind v4 et Framer Motion.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # http://localhost:3000  → redirige vers /fr
+npm run build   # vérifie que tout compile et pré-génère les pages
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Où se trouve quoi
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Je veux…                                  | Fichier à ouvrir                          |
+| ----------------------------------------- | ----------------------------------------- |
+| Ajouter une œuvre, un prix, un « vendu »  | `src/data/expositions.ts`                 |
+| Ajouter une vidéo YouTube / un passage radio | `src/data/expositions.ts` → `media`    |
+| Écrire la biographie de l'artiste         | `src/data/site.ts` → `artist`             |
+| Remplir la page « Divers »                | `src/data/site.ts` → `diversSections`     |
+| E-mail, téléphone, réseaux                | `src/data/site.ts` → `site`               |
+| Traduire un libellé d'interface           | `messages/fr.json` · `en.json` · `ar.json` |
+| Changer les couleurs ou les polices       | `src/app/globals.css` (bloc `@theme`)     |
+| Ajouter une photo                         | `public/images/…`                         |
 
-## Learn More
+Les photos d'origine, non redimensionnées, restent dans `_sources-originales/`
+(ignoré par git).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Ajouter une œuvre
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Dans `src/data/expositions.ts`, à l'intérieur du tableau `artworks` de
+l'exposition concernée :
 
-## Deploy on Vercel
+```ts
+{
+  id: "le-tigre",                        // identifiant unique, en minuscules
+  image: "/images/jungle-2/j2-12.jpeg",  // chemin depuis public/
+  title: { fr: "Le Tigre", en: "The Tiger", ar: "النمر" },
+  description: { fr: "…", en: "…", ar: "…" },
+  technique: {
+    fr: "Acrylique sur toile",
+    en: "Acrylic on canvas",
+    ar: "أكريليك على قماش",
+  },
+  dimensions: "100 × 80 cm",
+  year: "2026",
+  price: 2400,          // retirer cette ligne → « Prix sur demande »
+  currency: "TND",      // "TND" | "EUR" | "USD"
+  status: "available",  // "available" | "sold" | "reserved" | "notForSale"
+  featured: true,       // apparaît aussi en page d'accueil
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`status` pilote la pastille de couleur sur la vignette et dans la fiche :
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Valeur        | Affichage           |
+| ------------- | ------------------- |
+| `available`   | Disponible (vert)   |
+| `sold`        | Vendue (orange)     |
+| `reserved`    | Réservée (or)       |
+| `notForSale`  | Collection privée   |
+
+Un champ laissé vide (`""`) n'est simplement pas affiché — le site reste propre
+tant que les textes ne sont pas écrits.
+
+---
+
+## Ajouter une vidéo ou un passage radio
+
+Toujours dans `src/data/expositions.ts`, tableau `media` :
+
+```ts
+{
+  id: "radio-mosaique",
+  kind: "radio",            // "video" | "radio" | "tv" | "interview"
+  title: { fr: "…", en: "…", ar: "…" },
+  outlet: "Mosaïque FM",
+  youtubeId: "dQw4w9WgXcQ", // la partie après « v= » dans l'adresse YouTube
+  date: "2026-05",
+}
+```
+
+Pour un lien qui n'est pas une vidéo YouTube (podcast, replay), remplacer
+`youtubeId` par `url: "https://…"`.
+
+La vignette YouTube reste une image tant qu'on ne clique pas : aucun script tiers
+n'est chargé à l'ouverture de la page.
+
+---
+
+## Ajouter une exposition
+
+Copier un bloc complet du tableau `expositions`, changer `slug`, `numeral`,
+`title`. La page `/[langue]/expositions/<slug>`, les liens du menu et le
+chaînage « exposition suivante » se mettent à jour tout seuls.
+
+Le menu de navigation est listé dans `src/components/Nav.tsx` (tableau `links`)
+— c'est le seul endroit à compléter à la main.
+
+---
+
+## Les trois langues
+
+Le préfixe de langue est toujours présent dans l'adresse : `/fr/…`, `/en/…`,
+`/ar/…`. L'arabe bascule automatiquement en écriture de droite à gauche et
+change de police (Amiri / Cairo au lieu de Cormorant / Inter).
+
+Le sélecteur de langue conserve la page en cours.

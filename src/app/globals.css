@@ -1,26 +1,257 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   HANA BAHROUN — Design system « Jungle Lumineuse »
+   Palette extraite des toiles : nuit végétale, filaments turquoise, or chaud.
+   ========================================================================== */
+
+@theme {
+  /* --- Fonds : la nuit de la jungle --- */
+  --color-night: #050b09;
+  --color-night-2: #08130f;
+  --color-moss: #0d1f19;
+  --color-jade: #15362c;
+  --color-fern: #1f4c3d;
+
+  /* --- Lumières : les filaments des toiles --- */
+  --color-glow: #5eead4;
+  --color-glow-soft: #2dd4bf;
+  --color-glow-deep: #0f766e;
+  --color-gold: #e6b864;
+  --color-gold-soft: #f3d49a;
+  --color-gold-deep: #a9792f;
+  --color-iris: #a78bfa;
+  --color-ember: #f08b5a;
+
+  /* --- Textes --- */
+  --color-ivory: #f5f2ea;
+  --color-sage: #9db5a9;
+  --color-sage-dim: #6a8277;
+
+  /* --- Typographies --- */
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-ar-display: var(--font-amiri), "Amiri", Georgia, serif;
+  --font-ar-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+
+  /* --- Rythme --- */
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-leaf: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --nav-h: 76px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-night);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-night);
+  color: var(--color-ivory);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Grain organique très léger, posé au-dessus du fond */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* --------------------------------------------------------------------------
+   Arabe : bascule typographique + sens de lecture
+   -------------------------------------------------------------------------- */
+
+html[lang="ar"] body {
+  font-family: var(--font-ar-sans);
+}
+
+html[lang="ar"] .font-display,
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3 {
+  font-family: var(--font-ar-display);
+  letter-spacing: 0;
+}
+
+/* L'arabe ne se prête pas à l'interlettrage latin */
+html[lang="ar"] .tracking-widest,
+html[lang="ar"] .tracking-wider,
+html[lang="ar"] .tracking-\[0\.3em\],
+html[lang="ar"] .tracking-\[0\.25em\],
+html[lang="ar"] .tracking-\[0\.2em\] {
+  letter-spacing: 0 !important;
+}
+
+/* ==========================================================================
+   Sélection & focus
+   ========================================================================== */
+
+::selection {
+  background: var(--color-glow);
+  color: var(--color-night);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-glow);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Barre de défilement
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-night);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-jade);
+  border-radius: 999px;
+  border: 3px solid var(--color-night);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-glow-deep);
+}
+
+/* ==========================================================================
+   Utilitaires maison
+   ========================================================================== */
+
+@utility halo {
+  text-shadow:
+    0 0 18px color-mix(in oklab, var(--color-glow) 45%, transparent),
+    0 0 50px color-mix(in oklab, var(--color-glow) 20%, transparent);
+}
+
+@utility halo-gold {
+  text-shadow:
+    0 0 18px color-mix(in oklab, var(--color-gold) 45%, transparent),
+    0 0 50px color-mix(in oklab, var(--color-gold) 18%, transparent);
+}
+
+/* Filet dégradé — sert de séparateur élégant */
+@utility rule-glow {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in oklab, var(--color-glow) 55%, transparent),
+    color-mix(in oklab, var(--color-gold) 35%, transparent),
+    transparent
+  );
+}
+
+/* Verre dépoli végétal */
+@utility glass {
+  background: color-mix(in oklab, var(--color-night-2) 72%, transparent);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--color-glow) 12%, transparent);
+}
+
+/* Texte en petites capitales espacées — signature du site */
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-1.4deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1.4deg) translateY(-8px);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(14px, -22px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.07);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-sway {
+  animation: sway 11s var(--ease-leaf) infinite;
+  transform-origin: top center;
+}
+.animate-drift {
+  animation: drift 18s ease-in-out infinite;
+}
+.animate-breathe {
+  animation: breathe 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-sway,
+  .animate-drift,
+  .animate-breathe {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "siteName": "Hana Bahroun",
+    "tagline": "Painter",
+    "description": "Hana Bahroun, painter. Light, wildlife and foliage: the exhibitions The Jungle I and The Jungle II, illustrations and creations."
+  },
+  "nav": {
+    "home": "Home",
+    "artist": "The Artist",
+    "expositions": "Exhibitions",
+    "jungle1": "The Jungle I",
+    "jungle2": "The Jungle II",
+    "divers": "Other Works",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Close",
+    "language": "Language"
+  },
+  "home": {
+    "enter": "Enter the jungle",
+    "scroll": "Scroll",
+    "expositionsTitle": "The exhibitions",
+    "expositionsLead": "Two chapters of the same forest.",
+    "diversTitle": "Other Works",
+    "diversLead": "Book illustration, jewellery design and other explorations.",
+    "artistTitle": "The Artist",
+    "artistLead": "Behind the light.",
+    "discover": "Discover",
+    "seeAll": "See all",
+    "featuredTitle": "Selected works"
+  },
+  "artist": {
+    "title": "The Artist",
+    "bioTitle": "Biography",
+    "approachTitle": "Approach",
+    "pathTitle": "Career"
+  },
+  "expo": {
+    "artworksTitle": "The works",
+    "artworksLead": "Click a work to see the details.",
+    "vernissageTitle": "The opening",
+    "vernissageLead": "Images from the exhibition.",
+    "mediaTitle": "Video & media",
+    "mediaLead": "Features, radio and television appearances.",
+    "pressTitle": "Press",
+    "statementTitle": "About the exhibition",
+    "venue": "Venue",
+    "dates": "Dates",
+    "year": "Year",
+    "artworksCount": "works",
+    "backToExpos": "All exhibitions",
+    "next": "Next exhibition",
+    "previous": "Previous exhibition"
+  },
+  "artwork": {
+    "technique": "Medium",
+    "dimensions": "Dimensions",
+    "year": "Year",
+    "price": "Price",
+    "onRequest": "Price on request",
+    "inquire": "Enquire about this work",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous",
+    "status": {
+      "available": "Available",
+      "sold": "Sold",
+      "reserved": "Reserved",
+      "notForSale": "Private collection"
+    }
+  },
+  "media": {
+    "watch": "Watch",
+    "listen": "Listen",
+    "kind": {
+      "video": "Video",
+      "radio": "Radio",
+      "tv": "Television",
+      "interview": "Interview"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "lead": "For an acquisition, an exhibition or a collaboration.",
+    "email": "Email",
+    "phone": "Phone",
+    "studio": "Studio",
+    "follow": "Follow",
+    "formName": "Name",
+    "formEmail": "Email",
+    "formSubject": "Subject",
+    "formMessage": "Message",
+    "formSend": "Send",
+    "formNote": "The form will be connected soon."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "madeIn": "Tunis"
+  },
+  "common": {
+    "soon": "Soon",
+    "comingSoon": "Content coming soon.",
+    "notFound": "Page not found",
+    "backHome": "Back home"
+  }
+}

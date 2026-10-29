@@ -1,0 +1,106 @@
+{
+  "meta": {
+    "siteName": "Hana Bahroun",
+    "tagline": "Artiste peintre",
+    "description": "Hana Bahroun, artiste peintre. Lumière, faune et végétal : les expositions La Jungle I et La Jungle II, illustrations et créations."
+  },
+  "nav": {
+    "home": "Accueil",
+    "artist": "L'artiste",
+    "expositions": "Expositions",
+    "jungle1": "La Jungle I",
+    "jungle2": "La Jungle II",
+    "divers": "Divers",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Fermer",
+    "language": "Langue"
+  },
+  "home": {
+    "enter": "Entrer dans la jungle",
+    "scroll": "Faites défiler",
+    "expositionsTitle": "Les expositions",
+    "expositionsLead": "Deux chapitres d'une même forêt.",
+    "diversTitle": "Divers",
+    "diversLead": "Illustrations de livres, création de bijoux et autres explorations.",
+    "artistTitle": "L'artiste",
+    "artistLead": "Derrière la lumière.",
+    "discover": "Découvrir",
+    "seeAll": "Voir tout",
+    "featuredTitle": "Œuvres choisies"
+  },
+  "artist": {
+    "title": "L'artiste",
+    "bioTitle": "Biographie",
+    "approachTitle": "Démarche",
+    "pathTitle": "Parcours"
+  },
+  "expo": {
+    "artworksTitle": "Les œuvres",
+    "artworksLead": "Cliquez sur une œuvre pour voir le détail.",
+    "vernissageTitle": "Le vernissage",
+    "vernissageLead": "Images de l'exposition.",
+    "mediaTitle": "Vidéos & médias",
+    "mediaLead": "Reportages, passages radio et télévision.",
+    "pressTitle": "Presse",
+    "statementTitle": "À propos de l'exposition",
+    "venue": "Lieu",
+    "dates": "Dates",
+    "year": "Année",
+    "artworksCount": "œuvres",
+    "backToExpos": "Toutes les expositions",
+    "next": "Exposition suivante",
+    "previous": "Exposition précédente"
+  },
+  "artwork": {
+    "technique": "Technique",
+    "dimensions": "Dimensions",
+    "year": "Année",
+    "price": "Prix",
+    "onRequest": "Prix sur demande",
+    "inquire": "Demander cette œuvre",
+    "close": "Fermer",
+    "next": "Suivante",
+    "previous": "Précédente",
+    "status": {
+      "available": "Disponible",
+      "sold": "Vendue",
+      "reserved": "Réservée",
+      "notForSale": "Collection privée"
+    }
+  },
+  "media": {
+    "watch": "Regarder",
+    "listen": "Écouter",
+    "kind": {
+      "video": "Vidéo",
+      "radio": "Radio",
+      "tv": "Télévision",
+      "interview": "Entretien"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "lead": "Pour une acquisition, une exposition ou une collaboration.",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "studio": "Atelier",
+    "follow": "Suivre",
+    "formName": "Nom",
+    "formEmail": "E-mail",
+    "formSubject": "Sujet",
+    "formMessage": "Message",
+    "formSend": "Envoyer",
+    "formNote": "Le formulaire sera connecté prochainement."
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "madeIn": "Tunis"
+  },
+  "common": {
+    "soon": "Bientôt",
+    "comingSoon": "Contenu bientôt disponible.",
+    "notFound": "Page introuvable",
+    "backHome": "Retour à l'accueil"
+  }
+}
