@@ -61,7 +61,13 @@ export default function Intro({ locale }: { locale: Locale }) {
   /* --- Lever le rideau ------------------------------------------------- */
 
   const close = useCallback(() => {
-    videos.current.forEach((v) => v?.pause());
+    // On arrête le film avant de l'emporter : composer une vidéo en cours
+    // de lecture pendant qu'on l'agrandit et l'efface coûte cher, et c'est
+    // là que la transition hachait.
+    videos.current.forEach((v) => {
+      v?.pause();
+      if (v) v.removeAttribute("src");
+    });
     // Le site reprend ses esprits pendant que le rideau s'efface :
     // les deux mouvements se recouvrent.
     delete document.documentElement.dataset.intro;
@@ -225,8 +231,11 @@ export default function Intro({ locale }: { locale: Locale }) {
       {open && (
         <motion.div
           key="intro"
-          exit={{ opacity: 0, scale: 1.025, filter: "blur(7px)" }}
-          transition={{ duration: 1.15, ease: [0.4, 0, 0.2, 1] }}
+          exit={{ opacity: 0, scale: 1.18 }}
+          transition={{
+            opacity: { duration: 0.75, ease: [0.4, 0, 1, 1] },
+            scale: { duration: 1.25, ease: [0.16, 1, 0.3, 1] },
+          }}
           onClick={() => (rolling ? close() : start(true))}
           role="dialog"
           aria-label={t("title")}

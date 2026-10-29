@@ -78,7 +78,7 @@ export default function Hero({
         <motion.p
           initial={{ opacity: 0, y: 14 }}
           animate={raised ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.9, delay: 0.15 }}
+          transition={{ duration: 0.9, delay: 0.35 }}
           className="eyebrow"
         >
           {tm("tagline")}
@@ -96,7 +96,7 @@ export default function Hero({
                 }
                 transition={{
                   duration: 1.05,
-                  delay: 0.3 + i * 0.045,
+                  delay: 0.5 + i * 0.05,
                   ease: [0.22, 1, 0.36, 1],
                 }}
                 className="inline-block"
@@ -110,7 +110,7 @@ export default function Hero({
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
           animate={raised ? { opacity: 1, scaleX: 1 } : undefined}
-          transition={{ duration: 1.2, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.2, delay: 1.15, ease: [0.22, 1, 0.36, 1] }}
           className="rule-glow mx-auto mt-9 w-56"
           aria-hidden
         />
@@ -118,7 +118,7 @@ export default function Hero({
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={raised ? { opacity: 1, y: 0 } : undefined}
-          transition={{ duration: 0.9, delay: 1.1 }}
+          transition={{ duration: 0.9, delay: 1.35 }}
           className="mt-10"
         >
           <Link
@@ -152,7 +152,7 @@ export default function Hero({
       <motion.div
         initial={{ opacity: 0 }}
         animate={raised ? { opacity: 1 } : undefined}
-        transition={{ duration: 1, delay: 1.6 }}
+        transition={{ duration: 1, delay: 1.9 }}
         style={{ opacity: titleOpacity }}
         className="absolute inset-x-0 bottom-8 flex flex-col items-center gap-3"
       >
