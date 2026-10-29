@@ -38,7 +38,7 @@ export default async function Footer({ locale }: { locale: Locale }) {
           {/* Marque */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3">
-              <Monogram feather className="h-14 w-14" />
+              <Monogram feather density={18} className="h-16 w-16" />
               <div>
                 <p className="font-display text-xl tracking-[0.12em] text-ivory">
                   {locale === "ar" ? site.nameAr : site.name}

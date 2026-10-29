@@ -10,10 +10,11 @@ import type { Locale } from "@/i18n/routing";
 
    Trois états, parce qu'un dessin fin ne survit pas à toutes les tailles :
 
-     · `Monogram` seul — les lettres, rien d'autre. En dessous d'une
-       cinquantaine de pixels les barbes s'empâtent et la plume devient une
-       tache ; c'est cet état qu'il faut alors, et il reste net partout.
-     · `Monogram feather` — les lettres dans leur plume. À partir de 48 px.
+     · `Monogram feather` — les lettres dans leur plume. C'est la marque,
+       partout où elle tient : il lui faut 44 px, et une densité de barbes
+       accordée à sa taille (voir `density`).
+     · `Monogram` seul — les lettres, rien d'autre. Le dernier recours,
+       quand la place manque vraiment : favicon, vignettes.
      · `Signature` — la plume, les lettres, et le nom tracé dessous. Il faut
        140 px au moins pour que le nom se lise.
    ========================================================================== */
@@ -40,7 +41,7 @@ function barbs(count: number) {
             key={side}
             d={`M${AXIS + side * CHANNEL} ${y.toFixed(1)} Q${(AXIS + side * (CHANNEL + span * 0.55)).toFixed(1)} ${(y + drop * 0.35).toFixed(1)} ${(AXIS + side * (CHANNEL + span)).toFixed(1)} ${(y + drop).toFixed(1)}`}
             stroke="url(#hb-plume)"
-            strokeWidth="1.1"
+            strokeWidth={count < 24 ? 1.5 : 1.1}
             fill="none"
             strokeLinecap="round"
             opacity={opacity.toFixed(2)}
@@ -102,10 +103,17 @@ function Defs() {
 export function Monogram({
   className = "",
   feather = false,
+  density = 38,
 }: {
   className?: string;
-  /** Pose les lettres dans leur plume. À réserver au-delà de 48 px. */
+  /** Pose les lettres dans leur plume. À réserver au-delà de 44 px. */
   feather?: boolean;
+  /**
+   * Nombre de barbes. Elles doivent s'espacer quand la marque rapetisse :
+   * à 52 px, trente-huit barbes se referment en tache, dix-huit se
+   * comptent encore. Elles s'épaississent d'autant.
+   */
+  density?: number;
 }) {
   if (!feather) {
     // Les lettres seules : le cadrage serre au plus près du tracé
@@ -120,7 +128,7 @@ export function Monogram({
   return (
     <svg viewBox="0 0 220 215" fill="none" aria-hidden className={className}>
       <Defs />
-      {barbs(38)}
+      {barbs(density)}
       {/* la hampe, derrière les lettres */}
       <path
         d="M110 14 C 107 70, 108 140, 113 200"
@@ -180,7 +188,11 @@ export default function Logo({
 
   return (
     <span className="group inline-flex items-center gap-2.5">
-      <Monogram className="h-9 w-9 shrink-0 transition-transform duration-500 ease-[var(--ease-silk)] group-hover:rotate-[6deg] group-hover:scale-105" />
+      <Monogram
+        feather
+        density={16}
+        className="h-[52px] w-[52px] shrink-0 transition-transform duration-500 ease-[var(--ease-silk)] group-hover:rotate-[4deg] group-hover:scale-105"
+      />
       {!compact && (
         <span className="flex flex-col leading-none">
           <span className="font-display text-[1.05rem] font-medium tracking-[0.14em] text-ivory">
