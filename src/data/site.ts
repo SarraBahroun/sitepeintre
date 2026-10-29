@@ -30,12 +30,11 @@ export const site = {
    -------------------------------------------------------------------------- */
 
 export const heroPlates = [
-  // Composition assemblée à partir de trois toiles : la jungle au tigre,
-  // le félin de lumière et l'oiseau iridescent, fondus l'un dans l'autre.
-  { src: "/images/oeuvres/jungle.jpeg", position: "center" },
-  // Ajouter ici d'autres toiles pour les faire défiler :
-  // { src: "/images/oeuvres/lion.jpeg", position: "center" },
-  // { src: "/images/oeuvres/phenix.jpeg", position: "center" },
+  // La jungle de nuit : lion, tigre, phénix et tout le peuple des arbres.
+  { src: "/images/oeuvres/animaux.jpeg", position: "center" },
+  // Autres fonds possibles, à décommenter pour les faire défiler :
+  // { src: "/images/oeuvres/jungle.jpeg", position: "center" },
+  // { src: "/images/oeuvres/tigre.jpeg", position: "50% 42%" },
 ];
 
 /* --------------------------------------------------------------------------
