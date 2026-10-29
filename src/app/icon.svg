@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <!--
+    La marque, à la taille d'un onglet.
+    Pas de plume ici : à seize pixels ses barbes se referment en tache. Les
+    seules lettres, posées sur la nuit du site, et deux barbes à peine pour
+    rappeler d'où elles viennent.
+  -->
+  <defs>
+    <linearGradient id="encre" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3d49a"/>
+      <stop offset="100%" stop-color="#e6b864"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="120" height="120" rx="26" fill="#050b09"/>
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="none"
+        stroke="#e6b864" stroke-width="2" opacity="0.28"/>
+
+  <g transform="translate(16 18) scale(0.95)" fill="none" stroke="url(#encre)"
+     stroke-linecap="round" stroke-linejoin="round">
+    <path d="M34 10 C 30 32, 28 56, 29 74 C 29 82, 34 85, 40 81" stroke-width="5"/>
+    <path d="M24 48 C 40 44, 56 42, 70 40" stroke-width="4.5"/>
+    <path d="M64 12 C 60 34, 58 58, 58 78" stroke-width="5"/>
+    <path d="M64 16 C 80 12, 94 20, 88 30 C 84 37, 74 39, 68 39" stroke-width="4.6"/>
+    <path d="M68 39 C 86 40, 96 50, 88 60 C 81 68, 68 68, 60 64" stroke-width="4.6"/>
+  </g>
+</svg>
