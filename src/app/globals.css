@@ -229,6 +229,31 @@ html[lang="ar"] .tracking-\[0\.2em\] {
   }
 }
 
+/* --------------------------------------------------------------------------
+   Le passage du rideau au site
+   -----------------------------------------------------------------------------
+   Tant que l'ouverture joue, le site attend en retrait, un peu plus grand et
+   effacé. Quand le rideau se lève, il revient à lui pendant que l'ouverture
+   s'efface : les deux se recouvrent au lieu de se succéder, et l'on ne voit
+   pas la couture.
+
+   L'attribut n'est posé qu'une fois l'ouverture certaine de jouer. Sans
+   JavaScript, ou si elle est sautée, il n'existe pas et le site est là.
+   -------------------------------------------------------------------------- */
+
+.site-shell {
+  transition:
+    opacity 1.1s var(--ease-silk),
+    transform 1.5s var(--ease-silk),
+    filter 1.2s var(--ease-silk);
+}
+
+html[data-intro="running"] .site-shell {
+  opacity: 0;
+  transform: scale(1.045);
+  filter: blur(6px);
+}
+
 /* Une braise qui monte, dérive, et s'éteint */
 @keyframes ember {
   0% {

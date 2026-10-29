@@ -98,7 +98,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <Intro locale={locale as Locale} />
           <JungleBackdrop />
-          <div className="relative z-10 flex min-h-dvh flex-col">
+          <div className="site-shell relative z-10 flex min-h-dvh flex-col">
             <Nav locale={locale as Locale} />
             <main className="flex-1">{children}</main>
             <Footer locale={locale as Locale} />

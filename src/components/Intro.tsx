@@ -62,6 +62,9 @@ export default function Intro({ locale }: { locale: Locale }) {
 
   const close = useCallback(() => {
     videos.current.forEach((v) => v?.pause());
+    // Le site reprend ses esprits pendant que le rideau s'efface :
+    // les deux mouvements se recouvrent.
+    delete document.documentElement.dataset.intro;
     setOpen(false);
     try {
       sessionStorage.setItem(SEEN_KEY, "1");
@@ -110,6 +113,12 @@ export default function Intro({ locale }: { locale: Locale }) {
       const skip = requestAnimationFrame(() => setOpen(false));
       return () => cancelAnimationFrame(skip);
     }
+
+    // Le site se met en retrait le temps de l'ouverture
+    document.documentElement.dataset.intro = "running";
+    return () => {
+      delete document.documentElement.dataset.intro;
+    };
   }, [onHome]);
 
   /* --- Le carton cède au premier geste ---------------------------------
@@ -216,8 +225,8 @@ export default function Intro({ locale }: { locale: Locale }) {
       {open && (
         <motion.div
           key="intro"
-          exit={{ opacity: 0, scale: 1.06, filter: "blur(18px)" }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0, scale: 1.025, filter: "blur(7px)" }}
+          transition={{ duration: 1.15, ease: [0.4, 0, 0.2, 1] }}
           onClick={() => (rolling ? close() : start(true))}
           role="dialog"
           aria-label={t("title")}
