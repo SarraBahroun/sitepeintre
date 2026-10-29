@@ -21,10 +21,16 @@ import { Monogram } from "./Logo";
 
 const SEEN_KEY = "hb-intro-seen";
 const SOUND_KEY = "hb-sound";
-const AUTO_DISMISS = 6400; // ms
-const ORBIT_DURATION = 7.5; // s
+const LAP = 4.3; // s — un tour d'ellipse
+const ORBIT_DURATION = LAP * 2; // deux tours : un dans chaque sens
+const AUTO_DISMISS = ORBIT_DURATION * 1000 + 1400; // le temps des deux tours
 
-/** Un tour d'ellipse, échantillonné pour framer-motion. */
+/**
+ * Deux tours d'ellipse, échantillonnés pour framer-motion : le premier dans
+ * un sens, le second en sens inverse. Le demi-tour se fait en haut du
+ * parcours, là où l'oiseau est le plus petit et le plus pâle — c'est là
+ * qu'il se retourne sans qu'on y prenne garde.
+ */
 function useOrbit(rx: number, ry: number) {
   return useMemo(() => {
     const steps = 72;
@@ -45,7 +51,27 @@ function useOrbit(rx: number, ry: number) {
       // Un léger roulis, comme un oiseau qui vire
       rotate.push(Math.cos(a) * -13);
     }
-    return { x, y, scale, opacity, rotate };
+
+    // Le retour : le même parcours, parcouru à l'envers
+    const back = <T,>(a: T[]) => a.slice(0, -1).reverse();
+    const full = {
+      x: [...x, ...back(x)],
+      y: [...y, ...back(y)],
+      scale: [...scale, ...back(scale)],
+      opacity: [...opacity, ...back(opacity)],
+      // Le roulis s'inverse aussi : l'oiseau vire de l'autre bord
+      rotate: [...rotate, ...back(rotate).map((r) => -r)],
+    };
+
+    // L'oiseau regarde devant lui : il se retourne au demi-tour
+    const scaleX = full.x.map((_, i) => (i <= steps ? 1 : -1));
+    // Le retournement prend deux pas, juste après le sommet
+    scaleX[steps] = 1;
+    scaleX[steps + 1] = -1;
+
+    const times = full.x.map((_, i) => i / (full.x.length - 1));
+
+    return { ...full, scaleX, times };
   }, [rx, ry]);
 }
 
@@ -121,6 +147,9 @@ export default function Intro({ locale }: { locale: Locale }) {
       document.body.style.overflow = "";
     };
   }, [open, close]);
+
+  /* --- Le son n'appartient qu'à l'ouverture : il s'arrête avec elle --- */
+  useEffect(() => stopIntroSound, []);
 
   const toggleSound = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -214,6 +243,7 @@ export default function Intro({ locale }: { locale: Locale }) {
                   x: orbit.x,
                   y: orbit.y,
                   scale: orbit.scale,
+                  scaleX: orbit.scaleX,
                   opacity: orbit.opacity,
                   rotate: orbit.rotate,
                 }}
@@ -221,7 +251,7 @@ export default function Intro({ locale }: { locale: Locale }) {
                   duration: ORBIT_DURATION,
                   ease: "linear",
                   repeat: Infinity,
-                  times: orbit.x.map((_, i) => i / (orbit.x.length - 1)),
+                  times: orbit.times,
                 }}
                 className="absolute -left-[110px] -top-[76px]"
               >
