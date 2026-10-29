@@ -73,7 +73,12 @@ export default function ArtworkGallery({
       {/* ---------------------------------------------------------------- */}
       {/*  Grille                                                           */}
       {/* ---------------------------------------------------------------- */}
-      <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+      {/*
+        Mosaïque en colonnes, et non grille à cases égales : chaque toile
+        garde sa proportion. Les cadres ne s'alignent pas — c'est le prix à
+        payer pour qu'aucune peinture ne soit rognée, et il est juste.
+      */}
+      <div className="columns-1 gap-7 sm:columns-2 lg:columns-3 [&>*]:mb-7">
         {artworks.map((artwork, i) => {
           const title = tr(artwork.title, locale);
           const price = formatPrice(artwork.price, artwork.currency, locale);
@@ -91,17 +96,18 @@ export default function ArtworkGallery({
                 delay: (i % 3) * 0.1,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="group text-start"
+              className="group block w-full break-inside-avoid text-start"
             >
               <div
-                className={`relative aspect-[4/5] overflow-hidden rounded-sm border border-glow/10 bg-night-2 transition-all duration-700 ease-[var(--ease-silk)] ${accentRing[accent]}`}
+                className={`relative overflow-hidden rounded-sm border border-glow/10 bg-night-2 transition-all duration-700 ease-[var(--ease-silk)] ${accentRing[accent]}`}
               >
                 <Image
                   src={artwork.image}
                   alt={title || `Œuvre ${i + 1}`}
-                  fill
+                  width={artwork.width ?? 1200}
+                  height={artwork.height ?? 1500}
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-[1.1s] ease-[var(--ease-silk)] group-hover:scale-[1.06]"
+                  className="h-auto w-full transition-transform duration-[1.1s] ease-[var(--ease-silk)] group-hover:scale-[1.04]"
                 />
 
                 {/* voile qui se lève au survol */}
@@ -136,9 +142,7 @@ export default function ArtworkGallery({
                   )}
                 </h3>
                 <p className="shrink-0 text-[0.78rem] tracking-[0.08em] text-sage">
-                  {artwork.status === "sold"
-                    ? ""
-                    : (price ?? t("onRequest"))}
+                  {artwork.status === "sold" ? "" : (price ?? t("onRequest"))}
                 </p>
               </div>
               {artwork.dimensions && (

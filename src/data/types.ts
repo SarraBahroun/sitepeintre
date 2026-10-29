@@ -20,8 +20,15 @@ export type ArtworkStatus = "available" | "sold" | "reserved" | "notForSale";
 export type Artwork = {
   /** Identifiant stable, sert d'ancre dans l'URL : ?oeuvre=le-tigre */
   id: string;
-  /** Chemin depuis /public, ex. "/images/jungle-2/j2-07.jpeg" */
+  /** Chemin depuis /public, ex. "/images/jungle-2/tableau-d.jpeg" */
   image: string;
+  /**
+   * Dimensions du fichier, relevées à l'installation. Elles donnent à
+   * chaque toile sa proportion exacte dans la grille : rien n'est rogné,
+   * et la page ne sursaute pas au chargement.
+   */
+  width?: number;
+  height?: number;
   title: Localized;
   /** Série à laquelle l'œuvre appartient, ex. « The Jungle Series ». */
   collection?: Localized;
