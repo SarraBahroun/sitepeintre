@@ -49,9 +49,28 @@ export default function Hero({
       {/* Les toiles elles-mêmes, plein cadre */}
       <HeroCanvas plates={plates} />
 
+      {/*
+        Un halo de flou, posé seulement sous le nom : la jungle reste nette
+        partout ailleurs. Le masque radial efface les bords du panneau, qui
+        ne doit jamais se voir comme un rectangle.
+
+        À garder hors du bloc animé : un parent qui porte un transform ou une
+        opacité isole le backdrop, et le flou n'aurait plus rien à flouter.
+      */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[clamp(300px,46vh,460px)] w-[min(1000px,92vw)] -translate-x-1/2 -translate-y-[56%] backdrop-blur-[14px] backdrop-brightness-[0.82] backdrop-saturate-[1.1]"
+        style={{
+          maskImage:
+            "radial-gradient(ellipse 52% 50% at 50% 50%, #000 38%, transparent 74%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 52% 50% at 50% 50%, #000 38%, transparent 74%)",
+        }}
+      />
+
       <motion.div
         style={{ y: titleY, opacity: titleOpacity }}
-        className="relative mx-auto max-w-5xl text-center"
+        className="relative z-10 mx-auto max-w-5xl text-center"
       >
         <motion.p
           initial={{ opacity: 0, y: 14 }}

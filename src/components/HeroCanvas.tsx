@@ -57,24 +57,23 @@ export default function HeroCanvas({ plates }: { plates: HeroPlate[] }) {
         <AnimatePresence initial={false}>
           <motion.div
             key={plates[index].src}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{
-              opacity: { duration: 2.2, ease: "easeInOut" },
-              scale: { duration: DURATION / 1000 + 3, ease: "linear" },
-            }}
+            transition={{ opacity: { duration: 2.2, ease: "easeInOut" } }}
             className="absolute inset-0"
           >
-            <Image
-              src={plates[index].src}
-              alt=""
-              fill
-              priority={index === 0}
-              sizes="100vw"
-              className="object-cover"
-              style={{ objectPosition: plates[index].position ?? "center" }}
-            />
+            <div className="animate-canvas absolute inset-0">
+              <Image
+                src={plates[index].src}
+                alt=""
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover"
+                style={{ objectPosition: plates[index].position ?? "center" }}
+              />
+            </div>
           </motion.div>
         </AnimatePresence>
       </motion.div>
