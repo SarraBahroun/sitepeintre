@@ -10,6 +10,7 @@ import { site } from "@/data/site";
 import { playIntroSound, stopIntroSound } from "@/lib/sound";
 import { Monogram } from "./Logo";
 import Phoenix from "./Phoenix";
+import LightStreaks from "./LightStreaks";
 
 /* =============================================================================
    Ouverture — le phénix tourne autour du nom
@@ -24,8 +25,8 @@ const SOUND_KEY = "hb-sound";
 
 /* L'oiseau paraît en grand, se rapproche en diminuant, puis se met à tourner */
 const ARRIVAL = 2.6; // s — l'entrée
-const LAP = 5.2; // s — un tour d'ellipse
-const AUTO_DISMISS = (ARRIVAL + LAP * 2) * 1000; // deux tours, puis le rideau se lève
+const LAP = 3.1; // s — un tour d'ellipse
+const AUTO_DISMISS = (ARRIVAL + LAP * 3) * 1000; // trois tours, puis le rideau se lève
 
 /**
  * Un tour d'ellipse, échantillonné pour framer-motion, toujours dans le même
@@ -236,6 +237,9 @@ export default function Intro({ locale }: { locale: Locale }) {
             }}
           />
 
+          {/* --- Les traînées de lumière, qui donnent la vitesse --- */}
+          <LightStreaks />
+
           {/* --- Le théâtre : nom au centre, phénix en orbite --- */}
           <div className="relative flex flex-col items-center px-6 text-center">
             {/* Le monogramme ouvre la marche */}
@@ -351,11 +355,11 @@ export default function Intro({ locale }: { locale: Locale }) {
                       un oiseau qui tient son virage.
                     */}
                     <motion.div
-                      initial={{ rotateY: -74, rotateZ: -10 }}
+                      initial={{ rotateY: -86, rotateZ: -12 }}
                       animate={
                         flying
-                          ? { rotateY: [0, -16, 0, 16, 0], rotateZ: 0 }
-                          : { rotateY: 0, rotateZ: 0 }
+                          ? { rotateY: [-68, -78, -62, -78, -68], rotateZ: 0 }
+                          : { rotateY: -68, rotateZ: 0 }
                       }
                       transition={
                         flying

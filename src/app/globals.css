@@ -229,6 +229,29 @@ html[lang="ar"] .tracking-\[0\.2em\] {
   }
 }
 
+/* Une traînée de lumière qui file d'un bord à l'autre du champ */
+@keyframes streak {
+  0% {
+    transform: translate3d(-60vw, 0, 0) rotate(var(--tilt, -12deg));
+    opacity: 0;
+  }
+  10%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(160vw, 0, 0) rotate(var(--tilt, -12deg));
+    opacity: 0;
+  }
+}
+
+.animate-streak {
+  animation-name: streak;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  animation-iteration-count: infinite;
+  opacity: 0;
+}
+
 /* Le fond d'accueil respire : une lente dérive, jamais une secousse */
 @keyframes canvas-drift {
   0% {
@@ -267,6 +290,9 @@ html[lang="ar"] .tracking-\[0\.2em\] {
   .animate-breathe,
   .animate-canvas {
     animation: none !important;
+  }
+  .animate-streak {
+    display: none !important;
   }
   *,
   *::before,
