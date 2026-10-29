@@ -25,9 +25,7 @@ export default async function Footer({ locale }: { locale: Locale }) {
       items: [
         { label: t("artist"), href: "/artiste" },
         { label: t("divers"), href: "/divers" },
-        ...(courses.enabled
-          ? [{ label: t("courses"), href: "/cours" }]
-          : []),
+        ...(courses.enabled ? [{ label: t("courses"), href: "/cours" }] : []),
         { label: t("contact"), href: "/contact" },
       ],
     },
@@ -40,7 +38,7 @@ export default async function Footer({ locale }: { locale: Locale }) {
           {/* Marque */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3">
-              <Monogram className="h-10 w-10" />
+              <Monogram feather className="h-14 w-14" />
               <div>
                 <p className="font-display text-xl tracking-[0.12em] text-ivory">
                   {locale === "ar" ? site.nameAr : site.name}
@@ -112,8 +110,7 @@ export default async function Footer({ locale }: { locale: Locale }) {
 
         <div className="flex flex-col items-center justify-between gap-3 text-[0.72rem] tracking-[0.1em] text-sage-dim sm:flex-row">
           <p>
-            © {year} {locale === "ar" ? site.nameAr : site.name}.{" "}
-            {tf("rights")}
+            © {year} {locale === "ar" ? site.nameAr : site.name}. {tf("rights")}
           </p>
           <p>
             {tr(site.city, locale)}, {tr(site.country, locale)}

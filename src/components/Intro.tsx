@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { site } from "@/data/site";
-import { Monogram } from "./Logo";
+import { Signature } from "./Logo";
 import Embers from "./Embers";
 
 /* =============================================================================
@@ -308,10 +308,10 @@ export default function Intro({ locale }: { locale: Locale }) {
                 ease: [0.22, 1, 0.36, 1],
               }}
             >
-              <Monogram className="h-16 w-16 drop-shadow-[0_0_26px_rgba(230,184,100,0.8)] sm:h-20 sm:w-20" />
+              <Signature className="h-[clamp(150px,26vh,230px)] w-auto drop-shadow-[0_0_30px_rgba(230,184,100,0.55)]" />
             </motion.div>
 
-            <h1 className="mt-8 font-display text-[clamp(2.3rem,8.5vw,6rem)] font-light leading-[1.02] tracking-[0.06em] text-ivory">
+            <h1 className="mt-6 font-display text-[clamp(2.3rem,8.5vw,6rem)] font-light leading-[1.02] tracking-[0.06em] text-ivory">
               <span className="sr-only">{name}</span>
               <span
                 aria-hidden
