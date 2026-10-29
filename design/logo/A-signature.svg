@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 104" width="360" height="288">
+  <defs><linearGradient id="s" x1="0" y1="0" x2="1" y2="1">
+     <stop offset="0%" stop-color="#f3d49a"/><stop offset="100%" stop-color="#e6b864"/>
+   </linearGradient></defs>
+  <g fill="none" stroke="url(#s)" stroke-linecap="round" stroke-linejoin="round">
+    <!-- hampe gauche du H, terminée par une boucle -->
+    <path d="M34 10 C 30 32, 28 56, 29 74 C 29 82, 34 85, 40 81" stroke-width="2.4"/>
+    <!-- la barre, lancée vers la droite -->
+    <path d="M24 48 C 40 44, 56 42, 70 40" stroke-width="2.1"/>
+    <!-- hampe droite, qui se prolonge dans le B -->
+    <path d="M64 12 C 60 34, 58 58, 58 78" stroke-width="2.4"/>
+    <!-- les deux panses du B -->
+    <path d="M64 16 C 80 12, 94 20, 88 30 C 84 37, 74 39, 68 39" stroke-width="2.2"/>
+    <path d="M68 39 C 86 40, 96 50, 88 60 C 81 68, 68 68, 60 64" stroke-width="2.2"/>
+  </g>
+  <text x="65" y="98" fill="#e6b864" opacity="0.75" font-family="Georgia, serif"
+        font-style="italic" font-size="13" text-anchor="middle" letter-spacing="1.4">Bahroun Hana</text>
+</svg>
