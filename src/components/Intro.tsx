@@ -342,9 +342,36 @@ export default function Intro({ locale }: { locale: Locale }) {
                           }
                     }
                     className="absolute -left-[230px] -top-[137px]"
+                    style={{ perspective: 1400 }}
                   >
-                    {/* L'oiseau n'est pas une image : ses ailes battent. */}
-                    <Phoenix width={460} />
+                    {/*
+                      Il entre de profil, presque de champ, et se tourne vers
+                      nous à mesure qu'il approche. Une fois en orbite il
+                      s'incline légèrement d'un bord puis de l'autre, comme
+                      un oiseau qui tient son virage.
+                    */}
+                    <motion.div
+                      initial={{ rotateY: -74, rotateZ: -10 }}
+                      animate={
+                        flying
+                          ? { rotateY: [0, -16, 0, 16, 0], rotateZ: 0 }
+                          : { rotateY: 0, rotateZ: 0 }
+                      }
+                      transition={
+                        flying
+                          ? {
+                              duration: LAP,
+                              ease: "easeInOut",
+                              repeat: Infinity,
+                              times: [0, 0.25, 0.5, 0.75, 1],
+                            }
+                          : { duration: ARRIVAL, ease: [0.35, 0.1, 0.25, 1] }
+                      }
+                      style={{ transformStyle: "preserve-3d" }}
+                    >
+                      {/* L'oiseau n'est pas une image : ses ailes battent. */}
+                      <Phoenix width={460} />
+                    </motion.div>
                   </motion.div>
                 </motion.div>
               )}
