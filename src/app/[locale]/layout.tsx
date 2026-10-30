@@ -9,6 +9,7 @@ import JungleBackdrop from "@/components/JungleBackdrop";
 import Intro from "@/components/Intro";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 import "../globals.css";
 
 /* --- Typographies ------------------------------------------------------- */
@@ -102,6 +103,7 @@ export default async function LocaleLayout({
             <Nav locale={locale as Locale} />
             <main className="flex-1">{children}</main>
             <Footer locale={locale as Locale} />
+            <BackToTop />
           </div>
         </NextIntlClientProvider>
       </body>
