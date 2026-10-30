@@ -261,6 +261,7 @@ export default async function ExpositionPage({
               artworks={expo.artworks}
               locale={locale}
               accent={expo.accent}
+              origin={tr(expo.title, "fr")}
             />
           ) : (
             <Placeholder

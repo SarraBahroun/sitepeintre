@@ -8,6 +8,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import Logo from "./Logo";
 import LocaleSwitcher from "./LocaleSwitcher";
+import CartButton from "./CartButton";
 
 /* =============================================================================
    Barre de navigation
@@ -102,6 +103,7 @@ export default function Nav({ locale }: { locale: Locale }) {
 
           <div className="flex items-center gap-4">
             <LocaleSwitcher current={locale} className="hidden sm:flex" />
+            <CartButton />
 
             <button
               type="button"

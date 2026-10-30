@@ -68,6 +68,17 @@ permet d'afficher les œuvres entières.
 
 ---
 
+## Panier et commande
+
+Chaque œuvre **disponible** a un bouton « Ajouter au panier » dans sa fiche.
+Le panier (`/panier`) envoie la commande par Web3Forms, comme les autres
+formulaires, avec une référence (HB-AAMMJJ-1234). Aucun paiement en ligne :
+l'artiste rappelle, le règlement se fait en espèces ou par chèque.
+Une œuvre vendue : passer son `status` à `sold`, le bouton disparaît.
+Les bijoux pourront entrer dans le même panier (`kind: "jewel"`).
+
+---
+
 ## À régler avant la mise en ligne
 
 **Le poids des vidéos** — 7,7 Mo ramenés à 6,0 Mo (H.264, CRF 25, démarrage

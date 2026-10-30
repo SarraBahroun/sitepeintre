@@ -9,8 +9,8 @@ import type { Artwork } from "@/data/types";
 import { t as tr, formatPrice } from "@/data/types";
 import { dimensions } from "@/data/dimensions";
 import type { Locale } from "@/i18n/routing";
-import { Link } from "@/i18n/navigation";
 import { MetaRow, StatusBadge } from "./ui";
+import AddToCart from "./AddToCart";
 
 /* =============================================================================
    Les œuvres — grille et fiche détaillée
@@ -25,6 +25,8 @@ type Props = {
   locale: Locale;
   /** Teinte d'accent héritée de l'exposition. */
   accent?: "glow" | "gold" | "iris";
+  /** D'où viennent les œuvres, pour la commande : « La Jungle 2 ». */
+  origin?: string;
 };
 
 const accentRing: Record<string, string> = {
@@ -37,6 +39,7 @@ export default function ArtworkGallery({
   artworks,
   locale,
   accent = "glow",
+  origin,
 }: Props) {
   const t = useTranslations("artwork");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -272,12 +275,17 @@ export default function ArtworkGallery({
                 </dl>
 
                 {current.status === "available" && (
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center justify-center gap-2 rounded-sm border border-glow/35 bg-glow/5 px-6 py-3.5 text-[0.76rem] font-medium uppercase tracking-[0.18em] text-glow transition-all duration-400 hover:border-glow/70 hover:bg-glow/15"
-                  >
-                    {t("inquire")}
-                  </Link>
+                  <AddToCart
+                    item={{
+                      id: current.id,
+                      kind: "artwork",
+                      title: current.title,
+                      image: current.image,
+                      price: current.price,
+                      currency: current.currency,
+                      origin,
+                    }}
+                  />
                 )}
 
                 {/* Circulation */}

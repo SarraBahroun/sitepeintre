@@ -47,9 +47,9 @@ export function useFormSender() {
           access_key: site.web3formsKey,
           subject,
           from_name: `${site.name} — site`,
-          replyto: email,
+          ...(email && { replyto: email }),
           Nom: name,
-          "E-mail": email,
+          "E-mail": email || "—",
           ...fields,
         }),
       });
