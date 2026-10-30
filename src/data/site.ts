@@ -23,12 +23,19 @@ export const site = {
   phoneDisplay: "56 182 269",
   instagram: "https://www.instagram.com/bahroun_hana/",
   instagramHandle: "@bahroun_hana",
-  facebook: "",
+  facebook: "https://www.facebook.com/lavague.bahroun/",
+  /** Numéro WhatsApp, chiffres seuls, indicatif compris (216 = Tunisie). */
+  whatsapp: "21656182269",
   /** Profil sur la plateforme internationale Saatchi Art. */
   saatchi: "https://www.saatchiart.com/hana-bahroun-artist",
   city: { fr: "Nabeul", en: "Nabeul", ar: "نابل" } as Localized,
   country: { fr: "Tunisie", en: "Tunisia", ar: "تونس" } as Localized,
 };
+
+/** Ouvre une conversation WhatsApp avec l'artiste, premier mot déjà écrit. */
+export function whatsappHref(message: string) {
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
+}
 
 /* --------------------------------------------------------------------------
    Les toiles du fond d'accueil

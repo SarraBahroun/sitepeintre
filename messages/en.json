@@ -114,7 +114,9 @@
     "courses": "Painting lessons",
     "formSending": "Sending…",
     "formSent": "Thank you, your message has been sent. Hana Bahroun will reply very soon.",
-    "formError": "The message could not be sent. Please try again, or write directly to"
+    "formError": "The message could not be sent. Please try again, or write directly to",
+    "whatsappCta": "Message on WhatsApp",
+    "whatsappHello": "Hello Hana, I'm writing to you from your website."
   },
   "footer": {
     "rights": "All rights reserved.",

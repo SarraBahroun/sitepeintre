@@ -2,14 +2,16 @@ import { getTranslations } from "next-intl/server";
 
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { site, courses } from "@/data/site";
+import { site, courses, whatsappHref } from "@/data/site";
 import { expositions } from "@/data/expositions";
 import { t as tr } from "@/data/types";
 import { Monogram } from "./Logo";
+import { InstagramIcon, FacebookIcon, WhatsAppIcon } from "./SocialIcons";
 
 export default async function Footer({ locale }: { locale: Locale }) {
   const t = await getTranslations("nav");
   const tf = await getTranslations("footer");
+  const tc = await getTranslations("contact");
   const year = new Date().getFullYear();
 
   const columns = [
@@ -56,32 +58,32 @@ export default async function Footer({ locale }: { locale: Locale }) {
                 rel="noopener noreferrer"
                 className="mt-7 inline-flex items-center gap-2.5 text-sm text-sage transition-colors duration-300 hover:text-glow"
               >
-                <svg
-                  width="17"
-                  height="17"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden
-                >
-                  <rect
-                    x="2.5"
-                    y="2.5"
-                    width="19"
-                    height="19"
-                    rx="5.5"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="4.2"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                  <circle cx="17.6" cy="6.4" r="1.2" fill="currentColor" />
-                </svg>
+                <InstagramIcon />
                 {site.instagramHandle}
+              </a>
+            )}
+
+            {site.facebook && (
+              <a
+                href={site.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex items-center gap-2.5 text-sm text-sage transition-colors duration-300 hover:text-glow"
+              >
+                <FacebookIcon />
+                Facebook
+              </a>
+            )}
+
+            {site.whatsapp && (
+              <a
+                href={whatsappHref(tc("whatsappHello"))}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex items-center gap-2.5 text-sm text-sage transition-colors duration-300 hover:text-glow"
+              >
+                <WhatsAppIcon />
+                WhatsApp
               </a>
             )}
 

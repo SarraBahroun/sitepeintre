@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { routing, type Locale } from "@/i18n/routing";
-import { site } from "@/data/site";
+import { site, whatsappHref } from "@/data/site";
 import { t as tr } from "@/data/types";
 
 import Reveal from "@/components/Reveal";
 import ContactForm from "@/components/ContactForm";
+import { WhatsAppIcon } from "@/components/SocialIcons";
 import { Section } from "@/components/ui";
 
 export function generateStaticParams() {
@@ -45,6 +46,11 @@ export default async function ContactPage({
       value: site.phoneDisplay,
       href: `tel:${site.phone.replace(/\s/g, "")}`,
     },
+    site.whatsapp && {
+      label: "WhatsApp",
+      value: site.phoneDisplay,
+      href: whatsappHref(t("whatsappHello")),
+    },
     {
       label: t("studio"),
       value: `${tr(site.city, locale)}, ${tr(site.country, locale)}`,
@@ -54,6 +60,11 @@ export default async function ContactPage({
       label: "Instagram",
       value: site.instagramHandle,
       href: site.instagram,
+    },
+    site.facebook && {
+      label: "Facebook",
+      value: "La Vague Bahroun",
+      href: site.facebook,
     },
     site.saatchi && {
       label: t("saatchi"),
@@ -77,6 +88,19 @@ export default async function ContactPage({
           <p className="mt-8 max-w-md text-[0.98rem] leading-relaxed text-sage">
             {t("lead")}
           </p>
+
+          {/* Le plus direct, en Tunisie : un message WhatsApp */}
+          {site.whatsapp && (
+            <a
+              href={whatsappHref(t("whatsappHello"))}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-9 inline-flex items-center gap-3 rounded-full border border-glow/35 bg-glow/5 px-6 py-3.5 text-[0.76rem] font-medium uppercase tracking-[0.18em] text-glow transition-all duration-400 hover:border-glow/70 hover:bg-glow/15"
+            >
+              <WhatsAppIcon size={19} />
+              {t("whatsappCta")}
+            </a>
+          )}
 
           <dl className="mt-12 space-y-7">
             {coordinates.map((item) => (
