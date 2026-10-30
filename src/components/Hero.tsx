@@ -1,18 +1,24 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { site } from "@/data/site";
+import { dimensions } from "@/data/dimensions";
 import { useCurtain } from "@/lib/useCurtain";
 import HeroCanvas, { type HeroPlate } from "./HeroCanvas";
 
 /* =============================================================================
    Ouverture — le nom se lève lettre à lettre sur la jungle,
    puis se décale doucement au défilement.
+
+   Sur un écran en hauteur, une toile en largeur recadrée plein écran n'en
+   montrerait qu'un quart, agrandi jusqu'au flou : on la pose alors entière,
+   d'un bord à l'autre, au-dessus du nom.
    ========================================================================== */
 
 export default function Hero({
@@ -47,7 +53,7 @@ export default function Hero({
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-5 pt-28 pb-20 sm:px-8"
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-5 pt-28 pb-20 sm:px-8 portrait:flex-col portrait:items-stretch portrait:pb-32"
     >
       {/* Les toiles elles-mêmes, plein cadre */}
       <HeroCanvas plates={plates} />
@@ -62,7 +68,7 @@ export default function Hero({
       */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[clamp(340px,52vh,520px)] w-[min(1120px,94vw)] -translate-x-1/2 -translate-y-[56%] backdrop-blur-[26px] backdrop-brightness-[0.76] backdrop-saturate-[1.12]"
+        className="pointer-events-none absolute left-1/2 top-1/2 portrait:hidden h-[clamp(340px,52vh,520px)] w-[min(1120px,94vw)] -translate-x-1/2 -translate-y-[56%] backdrop-blur-[26px] backdrop-brightness-[0.76] backdrop-saturate-[1.12]"
         style={{
           maskImage:
             "radial-gradient(ellipse 54% 52% at 50% 50%, #000 42%, transparent 78%)",
@@ -70,6 +76,26 @@ export default function Hero({
             "radial-gradient(ellipse 54% 52% at 50% 50%, #000 42%, transparent 78%)",
         }}
       />
+
+      {/* En hauteur : la toile entière. Elle suit la première du fond. */}
+      {plates[0] && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={raised ? { opacity: 1 } : undefined}
+          transition={{ duration: 1.4, delay: 0.2 }}
+          className="relative z-10 -mx-5 mb-10 hidden portrait:block sm:-mx-8"
+        >
+          <Image
+            src={plates[0].src}
+            alt=""
+            {...dimensions(plates[0].src)}
+            priority
+            sizes="100vw"
+            quality={90}
+            className="mx-auto h-auto max-h-[50svh] w-auto max-w-full shadow-[0_30px_60px_-20px_rgba(0,0,0,0.75)]"
+          />
+        </motion.div>
+      )}
 
       <motion.div
         style={{ y: titleY, opacity: titleOpacity }}

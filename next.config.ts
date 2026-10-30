@@ -24,6 +24,8 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    // 90 pour la toile d'ouverture, 75 partout ailleurs
+    qualities: [75, 90],
   },
 };
 
