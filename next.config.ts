@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
   // même : il gêne pour juger du dessin.
   devIndicators: false,
 
+  // Ouvrir le site de développement depuis le téléphone, sur le même Wi-Fi :
+  // sans cela, Next bloque ses propres scripts et la page reste inerte.
+  // Si l'ordinateur change d'adresse sur le réseau, la remplacer ici.
+  allowedDevOrigins: ["192.168.100.7"],
+
   turbopack: {
     rules: {
       "*.css": {
