@@ -9,6 +9,11 @@ export const site = {
   nameAr: "هناء بحرون",
   monogram: "HB",
   email: "bahrounhana19@gmail.com",
+  /**
+   * Clé Web3Forms : les formulaires envoient vers `email` ci-dessus.
+   * Publique par nature — elle ne sait écrire qu'à cette adresse.
+   */
+  web3formsKey: "60eae060-d3ba-46c7-bd64-9aceb1d2e5fb",
   phone: "+216 56 182 269",
   phoneDisplay: "56 182 269",
   instagram: "https://www.instagram.com/bahroun_hana/",

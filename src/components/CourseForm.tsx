@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { courses, site } from "@/data/site";
+import { courses } from "@/data/site";
 import { t as tr } from "@/data/types";
 import type { Locale } from "@/i18n/routing";
+import { useFormSender } from "@/lib/useFormSender";
+import FormStatus from "@/components/FormStatus";
 
 /* =============================================================================
    Demande d'inscription aux cours
    -----------------------------------------------------------------------------
-   En attendant un service d'envoi (Resend, Formspree…), le formulaire compose
-   un message prérempli et l'ouvre dans la messagerie du visiteur. Rien n'est
-   perdu : la demande part bien, signée par l'expéditeur.
+   La demande arrive directement dans la boîte de l'artiste (voir
+   `useFormSender`), sans que le visiteur quitte la page.
    ========================================================================== */
 
 const fieldClass =
@@ -21,28 +21,28 @@ const fieldClass =
 export default function CourseForm({ locale }: { locale: Locale }) {
   const t = useTranslations("courses");
   const tc = useTranslations("contact");
-  const [sent, setSent] = useState(false);
+  const { status, send } = useFormSender();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    // Le piège à robots : un humain ne voit pas cette case
+    if (data.get("botcheck")) return;
 
-    const lines = [
-      `${tc("formName")} : ${data.get("name")}`,
-      `${tc("formEmail")} : ${data.get("email")}`,
-      `${tc("phone")} : ${data.get("phone")}`,
-      `${t("formFormula")} : ${data.get("formula")}`,
-      `${t("formLevel")} : ${data.get("level")}`,
-      "",
-      `${t("formQuestion")} :`,
-      String(data.get("message") ?? ""),
-    ];
-
-    const subject = `${t("title")} — ${data.get("name")}`;
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
-      subject,
-    )}&body=${encodeURIComponent(lines.join("\n"))}`;
-    setSent(true);
+    const get = (key: string) => String(data.get(key) ?? "");
+    const ok = await send({
+      subject: `Cours de peinture — ${get("name")}`,
+      name: get("name"),
+      email: get("email"),
+      fields: {
+        Téléphone: get("phone"),
+        Formule: get("formula") || "—",
+        Niveau: get("level"),
+        Message: get("message"),
+      },
+    });
+    if (ok) form.reset();
   };
 
   const levels = [
@@ -146,23 +146,18 @@ export default function CourseForm({ locale }: { locale: Locale }) {
             className={`${fieldClass} resize-none leading-relaxed`}
           />
         </div>
+
+        <input
+          type="checkbox"
+          name="botcheck"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden
+          className="hidden"
+        />
       </div>
 
-      <button
-        type="submit"
-        className="mt-10 w-full rounded-sm border border-glow/35 bg-glow/5 px-7 py-4 text-[0.76rem] font-medium uppercase tracking-[0.2em] text-glow transition-all duration-400 hover:border-glow/70 hover:bg-glow/15"
-      >
-        {t("formSend")}
-      </button>
-
-      <p
-        className={`mt-5 text-center text-xs transition-colors duration-500 ${
-          sent ? "text-glow" : "text-sage-dim"
-        }`}
-        role="status"
-      >
-        {sent ? site.email : tc("formNote")}
-      </p>
+      <FormStatus status={status} sendLabel={t("formSend")} />
     </form>
   );
 }

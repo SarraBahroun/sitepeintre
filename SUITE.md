@@ -75,9 +75,10 @@ permet d'afficher les œuvres entières.
 lente, l'ouverture se fera attendre. Avec ffmpeg on descend autour de 2 Mo
 sans perte visible ; ffmpeg n'est pas installé sur cette machine.
 
-**Le formulaire des cours** ouvre la messagerie du visiteur avec une demande
-préremplie. Pour recevoir les demandes sur le site, brancher un service
-d'envoi — Resend, Formspree ou équivalent.
+**Les formulaires** (contact et cours) envoient par Web3Forms vers
+bahrounhana19@gmail.com — clé dans `src/data/site.ts`. Au moment de la mise
+en ligne, remplacer `localhost` par la vraie adresse du site dans les
+réglages du formulaire, sur web3forms.com.
 
 **`NEXT_PUBLIC_SITE_URL`** doit être renseigné au déploiement : les
 métadonnées Open Graph retombent sinon sur `localhost`.

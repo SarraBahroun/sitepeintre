@@ -102,9 +102,12 @@
     "formSubject": "Subject",
     "formMessage": "Message",
     "formSend": "Send",
-    "formNote": "The form will be connected soon.",
+    "formNote": "Your message goes straight to the artist.",
     "saatchi": "Saatchi Art",
-    "courses": "Painting lessons"
+    "courses": "Painting lessons",
+    "formSending": "Sending…",
+    "formSent": "Thank you, your message has been sent. Hana Bahroun will reply very soon.",
+    "formError": "The message could not be sent. Please try again, or write directly to"
   },
   "footer": {
     "rights": "All rights reserved.",
