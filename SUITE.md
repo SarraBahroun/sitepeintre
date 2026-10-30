@@ -60,7 +60,6 @@ Vient ensuite le **texte de présentation de chaque exposition**
 | Le texte de présentation de chaque exposition | `src/data/expositions.ts` → `statement` |
 | Les images de la rubrique Divers | `src/data/site.ts` → `diversSections` |
 | Les vidéos et passages radio | `src/data/expositions.ts` → `media` |
-
 | Horaires et tarif des cours | `src/data/site.ts` → `courses.practical` |
 
 **Après avoir déposé des images dans `public/images/`, lancer
