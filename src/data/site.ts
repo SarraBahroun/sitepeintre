@@ -1,4 +1,9 @@
-import type { Localized, LocalizedRich, DiversSection } from "./types";
+import type {
+  Localized,
+  LocalizedRich,
+  DiversSection,
+  PressItem,
+} from "./types";
 
 /* =============================================================================
    IDENTITÉ, BIOGRAPHIE, CONTACT, RUBRIQUE « DIVERS », COURS DE PEINTURE
@@ -54,6 +59,46 @@ export const artist = {
     youtubeId: "0yl7YAAxPoU",
     outlet: "El Wataniya",
   },
+
+  /**
+   * Les articles qui lui sont consacrés, du plus récent au plus ancien.
+   * `date` au format AAAA-MM-JJ ; le titre arabe est celui de l'article.
+   */
+  press: [
+    {
+      id: "egytimes-qui-est-hana-bahroun",
+      title: {
+        fr: "Qui est Hana Bahroun, l'artiste plasticienne tunisienne ?",
+        en: "Who is Hana Bahroun, the Tunisian visual artist?",
+        ar: "من هي هناء بحرون الفنانة التشكيلية التونسية؟",
+      },
+      outlet: "Egy Times",
+      url: "https://egytimeseg.com/%d9%85%d9%86-%d9%87%d9%8a-%d9%87%d9%86%d8%a7%d8%a1-%d8%a8%d8%ad%d8%b1%d9%88%d9%86-%d8%a7%d9%84%d9%81%d9%86%d8%a7%d9%86%d8%a9-%d8%a7%d9%84%d8%aa%d8%b4%d9%83%d9%8a%d9%84%d9%8a%d8%a9-%d8%a7%d9%84%d8%aa/",
+      date: "2026-10-17",
+    },
+    {
+      id: "bait-al-arab-diwaniya",
+      title: {
+        fr: "Diwaniyat Al-Rajhi : parution du troisième volume, sous la direction artistique de Hana Bahroun",
+        en: "Diwaniyat Al-Rajhi: the third volume is published, with Hana Bahroun as art director",
+        ar: "الراجحي يوجّه بإصدار «الجزء الثالث» من كتب الديوانية",
+      },
+      outlet: "Bait Al Arab",
+      url: "https://wbaad.com/index.php?name=News&file=article&sid=29937",
+      date: "2026-06-11",
+    },
+    {
+      id: "bait-al-arab-genie",
+      title: {
+        fr: "Hana Bahroun, un génie artistique tunisien au-delà du temps",
+        en: "Hana Bahroun, a Tunisian artistic genius beyond time",
+        ar: "هناء بحرون… عبقرية فنية تونسية تخطّت حدود الزمن",
+      },
+      outlet: "Bait Al Arab",
+      url: "https://wbaad.com/index.php?name=News&file=article&sid=29522",
+      date: "2026-05-25",
+    },
+  ] as PressItem[],
   gallery: [
     "/images/artiste/portrait-02.jpeg",
     "/images/artiste/portrait-03.jpeg",

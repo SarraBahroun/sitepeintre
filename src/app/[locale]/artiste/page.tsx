@@ -275,6 +275,54 @@ export default async function ArtistPage({
       )}
 
       {/* ================================================================== */}
+      {/*  Dans la presse                                                     */}
+      {/* ================================================================== */}
+      {artist.press.length > 0 && (
+        <Section className="py-20 sm:py-28">
+          <Reveal>
+            <SectionHeading title={t("pressTitle")} />
+          </Reveal>
+          <ul className="mt-12 divide-y divide-glow/10 border-y border-glow/10">
+            {artist.press.map((item, i) => (
+              <Reveal as="li" key={item.id} delay={i * 0.06}>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col gap-3 py-7 transition-colors duration-300 hover:bg-glow/[0.03] sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"
+                >
+                  <span>
+                    <span className="block text-[0.68rem] uppercase tracking-[0.18em] text-gold">
+                      {item.outlet}
+                      {item.date && (
+                        <span className="text-sage-dim">
+                          {" · "}
+                          {new Intl.DateTimeFormat(locale, {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric",
+                          }).format(new Date(item.date))}
+                        </span>
+                      )}
+                    </span>
+                    <span className="mt-2 block font-display text-[clamp(1.15rem,2.2vw,1.5rem)] font-light leading-snug text-ivory transition-colors group-hover:text-glow">
+                      {tr(item.title, locale)}
+                    </span>
+                  </span>
+                  <span className="inline-flex shrink-0 items-center gap-2 text-[0.72rem] font-medium uppercase tracking-[0.18em] text-glow">
+                    {t("pressRead")}
+                    <span aria-hidden className="rtl:-scale-x-100">
+                      ↗
+                    </span>
+                  </span>
+                </a>
+              </Reveal>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {/* ================================================================== */}
       {/*  Saatchi Art                                                        */}
       {/* ================================================================== */}
       {site.saatchi && (
