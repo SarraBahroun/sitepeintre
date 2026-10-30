@@ -45,6 +45,10 @@ Vient ensuite le **texte de présentation de chaque exposition**
 - **Les toiles** — 17 pour La Jungle 1, 9 pour La Jungle 2, plus les 21
   photographies de vernissage.
 - **Aucun recadrage** — chaque œuvre garde sa proportion, partout.
+- **Pages d'exposition** — dans l'ordre : le texte (emplacement réservé
+  tant qu'il n'est pas écrit), le film YouTube, puis le vernissage une
+  photo à la fois, flèches à gauche et à droite. La Jungle 1 n'a pas
+  encore de photos de vernissage.
 
 ---
 

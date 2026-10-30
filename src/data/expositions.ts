@@ -294,6 +294,7 @@ export const expositions: Exposition[] = [
         status: "available",
       },
     ],
+    film: "RVRLLJYfi58",
     vernissage: [],
     media: [],
     press: [],
@@ -443,6 +444,7 @@ export const expositions: Exposition[] = [
         status: "available",
       },
     ],
+    film: "aEvdAMARZ5Y",
     vernissage: [
       "/images/jungle-2/j2-01.jpeg",
       "/images/jungle-2/j2-02.jpeg",

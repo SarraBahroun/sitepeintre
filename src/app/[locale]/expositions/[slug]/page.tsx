@@ -14,7 +14,8 @@ import { t as tr, tRich } from "@/data/types";
 
 import Reveal from "@/components/Reveal";
 import ArtworkGallery from "@/components/ArtworkGallery";
-import PhotoGallery from "@/components/PhotoGallery";
+import VernissageCarousel from "@/components/VernissageCarousel";
+import ExpoFilm from "@/components/ExpoFilm";
 import MediaGallery from "@/components/MediaGallery";
 import {
   Section,
@@ -64,6 +65,7 @@ export default async function ExpositionPage({
 
   const t = await getTranslations("expo");
   const tc = await getTranslations("common");
+  const tm = await getTranslations("media");
   const { previous, next } = getSiblingExpositions(slug);
 
   const statement = tRich(expo.statement, locale);
@@ -165,11 +167,13 @@ export default async function ExpositionPage({
       {/* ================================================================== */}
       {/*  Texte de l'exposition                                              */}
       {/* ================================================================== */}
-      {statement.length > 0 && (
-        <Section className="py-20 sm:py-28">
-          <Reveal>
-            <div className="mx-auto max-w-3xl">
-              <p className="eyebrow text-center">{t("statementTitle")}</p>
+      {/*  Le texte se tient à sa place même avant d'être écrit : l'ordre de
+          la page — le texte, le film, le vernissage — reste lisible. */}
+      <Section className="py-20 sm:py-28">
+        <Reveal>
+          <div className="mx-auto max-w-3xl">
+            <p className="eyebrow text-center">{t("statementTitle")}</p>
+            {statement.length > 0 ? (
               <div className="mt-10 space-y-6">
                 {statement.map((paragraph, i) => (
                   <p
@@ -184,8 +188,53 @@ export default async function ExpositionPage({
                   </p>
                 ))}
               </div>
+            ) : (
+              <Placeholder
+                className="mt-10"
+                label={tc("comingSoon")}
+                hint="src/data/expositions.ts → statement"
+              />
+            )}
+          </div>
+        </Reveal>
+      </Section>
+
+      {/* ================================================================== */}
+      {/*  Le film                                                          */}
+      {/* ================================================================== */}
+      {expo.film && (
+        <Section className="py-12 sm:py-16">
+          <Reveal>
+            <p className="eyebrow text-center">{t("filmTitle")}</p>
+            <div className="mx-auto mt-10 max-w-5xl">
+              <ExpoFilm
+                youtubeId={expo.film}
+                title={tr(expo.title, locale)}
+                playLabel={tm("watch")}
+              />
             </div>
           </Reveal>
+        </Section>
+      )}
+
+      {/* ================================================================== */}
+      {/*  Le vernissage                                                      */}
+      {/* ================================================================== */}
+      {expo.vernissage.length > 0 && (
+        <Section className="py-20 sm:py-28">
+          <Reveal>
+            <SectionHeading
+              eyebrow={tr(expo.dates, locale) || expo.year}
+              title={t("vernissageTitle")}
+            />
+          </Reveal>
+          <div className="mx-auto mt-14 max-w-6xl">
+            <VernissageCarousel
+              images={expo.vernissage}
+              label={tr(expo.title, locale)}
+              rtl={locale === "ar"}
+            />
+          </div>
         </Section>
       )}
 
@@ -218,72 +267,46 @@ export default async function ExpositionPage({
       </Section>
 
       {/* ================================================================== */}
-      {/*  Le vernissage                                                      */}
+      {/*  Vidéos & médias                                                    */}
       {/* ================================================================== */}
-      {expo.vernissage.length > 0 && (
+      {(expo.media.length > 0 || expo.press.length > 0) && (
         <Section className="py-20 sm:py-28">
           <Reveal>
             <SectionHeading
-              eyebrow={tr(expo.dates, locale) || expo.year}
-              title={t("vernissageTitle")}
-              lead={t("vernissageLead")}
+              eyebrow={t("pressTitle")}
+              title={t("mediaTitle")}
+              lead={expo.media.length > 0 ? t("mediaLead") : undefined}
             />
           </Reveal>
+
           <div className="mt-14">
-            <PhotoGallery
-              images={expo.vernissage}
-              label={tr(expo.title, locale)}
-            />
+            <MediaGallery items={expo.media} locale={locale} />
           </div>
+
+          {expo.press.length > 0 && (
+            <ul className="mt-14 divide-y divide-glow/10 border-y border-glow/10">
+              {expo.press.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={item.url ?? "#"}
+                    target={item.url ? "_blank" : undefined}
+                    rel={item.url ? "noopener noreferrer" : undefined}
+                    className="group flex flex-wrap items-baseline justify-between gap-4 py-5 transition-colors duration-300 hover:bg-glow/[0.03]"
+                  >
+                    <span className="font-display text-lg font-light text-ivory transition-colors group-hover:text-glow">
+                      {tr(item.title, locale)}
+                    </span>
+                    <span className="text-[0.72rem] uppercase tracking-[0.18em] text-sage-dim">
+                      {item.outlet}
+                      {item.date && ` · ${item.date}`}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </Section>
       )}
-
-      {/* ================================================================== */}
-      {/*  Vidéos & médias                                                    */}
-      {/* ================================================================== */}
-      <Section className="py-20 sm:py-28">
-        <Reveal>
-          <SectionHeading
-            eyebrow={t("pressTitle")}
-            title={t("mediaTitle")}
-            lead={expo.media.length > 0 ? t("mediaLead") : undefined}
-          />
-        </Reveal>
-
-        <div className="mt-14">
-          {expo.media.length > 0 ? (
-            <MediaGallery items={expo.media} locale={locale} />
-          ) : (
-            <Placeholder
-              label={tc("comingSoon")}
-              hint="src/data/expositions.ts → media"
-            />
-          )}
-        </div>
-
-        {expo.press.length > 0 && (
-          <ul className="mt-14 divide-y divide-glow/10 border-y border-glow/10">
-            {expo.press.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={item.url ?? "#"}
-                  target={item.url ? "_blank" : undefined}
-                  rel={item.url ? "noopener noreferrer" : undefined}
-                  className="group flex flex-wrap items-baseline justify-between gap-4 py-5 transition-colors duration-300 hover:bg-glow/[0.03]"
-                >
-                  <span className="font-display text-lg font-light text-ivory transition-colors group-hover:text-glow">
-                    {tr(item.title, locale)}
-                  </span>
-                  <span className="text-[0.72rem] uppercase tracking-[0.18em] text-sage-dim">
-                    {item.outlet}
-                    {item.date && ` · ${item.date}`}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Section>
 
       {/* ================================================================== */}
       {/*  Chapitre suivant                                                   */}

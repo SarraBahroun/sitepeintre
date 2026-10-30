@@ -90,6 +90,11 @@ export type Exposition = {
   /** Teinte dominante de l'exposition, pour les halos et les filets. */
   accent: "glow" | "gold" | "iris";
   artworks: Artwork[];
+  /**
+   * Le film de l'exposition : identifiant YouTube seul, ce qui suit « v= »
+   * ou « youtu.be/ » dans l'adresse. Affiché en grand sous le texte.
+   */
+  film?: string;
   /** Photographies du vernissage et de l'accrochage. */
   vernissage: string[];
   media: MediaItem[];
