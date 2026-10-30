@@ -95,6 +95,8 @@ export type Exposition = {
    * ou « youtu.be/ » dans l'adresse. Affiché en grand sous le texte.
    */
   film?: string;
+  /** Le média qui l'a tourné, affiché au-dessus : « Mosaïque FM »… */
+  filmOutlet?: string;
   /** Photographies du vernissage et de l'accrochage. */
   vernissage: string[];
   media: MediaItem[];

@@ -57,7 +57,7 @@ Vient ensuite le **texte de présentation de chaque exposition**
 | Ce qui manque | Où cela se pose |
 | --- | --- |
 | Titres, symbolisme, descriptions, dimensions, prix | `src/data/expositions.ts` |
-| Le texte de présentation de chaque exposition | `src/data/expositions.ts` → `statement` |
+| Le texte de présentation de chaque exposition | fait — fr, en, ar |
 | Les images de la rubrique Divers | `src/data/site.ts` → `diversSections` |
 | Les vidéos et passages radio | `src/data/expositions.ts` → `media` |
 | Horaires et tarif des cours | `src/data/site.ts` → `courses.practical` |

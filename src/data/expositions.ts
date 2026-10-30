@@ -63,10 +63,21 @@ export const expositions: Exposition[] = [
       ar: "سيدي بوسعيد",
     },
     statement: {
-      // Paragraphe de présentation de l'exposition — à fournir.
-      fr: [],
-      en: [],
-      ar: [],
+      fr: [
+        "L’exposition La Jungle 1, organisée au Palais du Baron Rodolphe d’Erlanger à Sidi Bou Saïd, a bénéficié d’une couverture médiatique de la part de Mosaïque FM, qui a accompagné cette expérience artistique à travers une série de reportages vidéo publiés sur sa chaîne YouTube officielle.",
+        "Cette couverture vient documenter une facette de mon parcours plastique et mettre en lumière mon univers artistique, à travers lequel j’explore la relation entre la nature, les êtres vivants et l’humain. Les éléments de la jungle y dépassent leur simple présence naturelle pour devenir des symboles porteurs de dimensions humaines et philosophiques.",
+        "J’ai le plaisir de partager ces reportages avec les visiteurs de mon site, afin qu’ils demeurent un témoignage médiatique de cette étape de mon parcours artistique.",
+      ],
+      en: [
+        "The exhibition La Jungle 1, held at the Palace of Baron Rodolphe d’Erlanger in Sidi Bou Saïd, received media coverage from Mosaïque FM, which followed this artistic experience through a series of video reports published on its official YouTube channel.",
+        "This coverage documents one facet of my artistic journey and sheds light on my artistic universe, in which I explore the relationship between nature, living beings and humankind. The elements of the jungle go beyond their mere natural presence to become symbols carrying human and philosophical dimensions.",
+        "I am pleased to share these reports with the visitors of my website, so that they remain a media testimony to this stage of my artistic journey.",
+      ],
+      ar: [
+        "حظي معرض «الغابة 1»، الذي احتضنه قصر البارون رودولف ديرلانجي بسيدي بوسعيد، بتغطية إعلامية من إذاعة موزاييك أف أم، التي واكبت هذه التجربة الفنية من خلال سلسلة من الروبورتاجات المصوّرة المنشورة على قناتها الرسمية على يوتيوب.",
+        "توثّق هذه التغطية جانباً من مسيرتي التشكيلية، وتسلّط الضوء على عالمي الفني الذي أستكشف من خلاله العلاقة بين الطبيعة والكائنات الحية والإنسان؛ فعناصر الغابة تتجاوز فيه حضورها الطبيعي لتصبح رموزاً تحمل أبعاداً إنسانية وفلسفية.",
+        "ويسعدني أن أشارك هذه الروبورتاجات مع زوّار موقعي، لتبقى شاهداً إعلامياً على هذه المرحلة من مسيرتي الفنية.",
+      ],
     },
     cover: "/images/jungle-1/tableau-01.jpeg",
     backdrop: JUNGLE,
@@ -295,6 +306,7 @@ export const expositions: Exposition[] = [
       },
     ],
     film: "RVRLLJYfi58",
+    filmOutlet: "Mosaïque FM",
     vernissage: [],
     media: [],
     press: [],
@@ -325,10 +337,18 @@ export const expositions: Exposition[] = [
     },
     city: { fr: "Nabeul", en: "Nabeul", ar: "نابل" },
     statement: {
-      // Paragraphe de présentation de l'exposition — à fournir.
-      fr: [],
-      en: [],
-      ar: [],
+      fr: [
+        "L’exposition Jungle 2, accueillie par la Galerie Jeelen à Nabeul, a bénéficié d’une couverture médiatique de la part de Radio Med, qui a accompagné cet événement artistique et mis en lumière l’expérience plastique de l’artiste Hana Bahroun, ses univers artistiques et sa vision créative au sein de la série Jungle.",
+        "Cette couverture vient documenter une facette du parcours artistique de l’exposition, ainsi que les expressions visuelles et symboliques qu’elle porte, explorant la relation entre la nature, l’humain et l’imaginaire.",
+      ],
+      en: [
+        "The exhibition Jungle 2, hosted by Galerie Jeelen in Nabeul, received media coverage from Radio Med, which followed this artistic event and highlighted the visual practice of the artist Hana Bahroun, her artistic worlds and her creative vision within the Jungle series.",
+        "This coverage documents one facet of the exhibition’s artistic journey, as well as the visual and symbolic expressions it carries, exploring the relationship between nature, humankind and the imagination.",
+      ],
+      ar: [
+        "حظي معرض «الغابة 2»، الذي احتضنه غاليري جيلان بنابل، بتغطية إعلامية من إذاعة راديو ماد، التي واكبت هذا الحدث الفني وسلّطت الضوء على التجربة التشكيلية للفنانة هناء بحرون، وعوالمها الفنية ورؤيتها الإبداعية ضمن سلسلة «الغابة».",
+        "توثّق هذه التغطية جانباً من المسيرة الفنية للمعرض، وما يحمله من تعبيرات بصرية ورمزية تستكشف العلاقة بين الطبيعة والإنسان والخيال.",
+      ],
     },
     cover: "/images/jungle-2/tableau-d.jpeg",
     backdrop: JUNGLE,
@@ -445,6 +465,7 @@ export const expositions: Exposition[] = [
       },
     ],
     film: "aEvdAMARZ5Y",
+    filmOutlet: "Radio Med",
     vernissage: [
       "/images/jungle-2/j2-01.jpeg",
       "/images/jungle-2/j2-03.jpeg",

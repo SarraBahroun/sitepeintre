@@ -206,6 +206,11 @@ export default async function ExpositionPage({
         <Section className="py-12 sm:py-16">
           <Reveal>
             <p className="eyebrow text-center">{t("filmTitle")}</p>
+            {expo.filmOutlet && (
+              <p className="mt-3 text-center font-display text-[clamp(1.3rem,2.6vw,1.9rem)] font-light text-ivory">
+                {expo.filmOutlet}
+              </p>
+            )}
             <div className="mx-auto mt-10 max-w-5xl">
               <ExpoFilm
                 youtubeId={expo.film}
