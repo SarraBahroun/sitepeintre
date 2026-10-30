@@ -99,10 +99,6 @@ export const artist = {
       date: "2026-05-25",
     },
   ] as PressItem[],
-  gallery: [
-    "/images/artiste/portrait-02.jpeg",
-    "/images/artiste/portrait-03.jpeg",
-  ],
 
   /** Les trois casquettes, affichées en ligne sous le nom. */
   roles: {

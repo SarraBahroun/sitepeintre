@@ -10,6 +10,7 @@ import { dimensions } from "@/data/dimensions";
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
 import ExpositionRow from "@/components/ExpositionRow";
+import TvFeature from "@/components/TvFeature";
 import { Section, SectionHeading, ActionLink } from "@/components/ui";
 
 export default async function HomePage({
@@ -70,6 +71,11 @@ export default async function HomePage({
           </Reveal>
         </div>
       </Section>
+
+      {/* ================================================================== */}
+      {/*  À la télévision                                                    */}
+      {/* ================================================================== */}
+      <TvFeature locale={locale} />
 
       {/* ================================================================== */}
       {/*  Les expositions                                                    */}

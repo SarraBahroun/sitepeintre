@@ -8,7 +8,7 @@ import { t as tr, tRich } from "@/data/types";
 import { dimensions } from "@/data/dimensions";
 
 import Reveal from "@/components/Reveal";
-import ExpoFilm from "@/components/ExpoFilm";
+import TvFeature from "@/components/TvFeature";
 import {
   Section,
   SectionHeading,
@@ -43,7 +43,6 @@ export default async function ArtistPage({
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
   const tm = await getTranslations("meta");
-  const tmedia = await getTranslations("media");
 
   const bio = tRich(artist.bio, locale);
   const approach = tRich(artist.approach, locale);
@@ -158,6 +157,8 @@ export default async function ArtistPage({
         </div>
       </Section>
 
+      <TvFeature locale={locale} />
+
       {/* ================================================================== */}
       {/*  Démarche                                                           */}
       {/* ================================================================== */}
@@ -224,53 +225,6 @@ export default async function ArtistPage({
               </Reveal>
             ))}
           </ol>
-        </Section>
-      )}
-
-      {/* ================================================================== */}
-      {/*  Atelier                                                            */}
-      {/* ================================================================== */}
-      {artist.gallery.length > 0 && (
-        <Section className="py-20">
-          <div className="grid items-start gap-5 sm:grid-cols-2">
-            {artist.gallery.map((src, i) => (
-              <Reveal key={src} delay={i * 0.1}>
-                <div className="overflow-hidden rounded-sm border border-glow/10">
-                  <Image
-                    src={src}
-                    alt=""
-                    {...dimensions(src)}
-                    sizes="(max-width: 640px) 100vw, 50vw"
-                    className="h-auto w-full transition-transform duration-[1.2s] ease-[var(--ease-silk)] hover:scale-[1.04]"
-                  />
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {/* ================================================================== */}
-      {/*  À la télévision                                                    */}
-      {/* ================================================================== */}
-      {artist.tv.youtubeId && (
-        <Section className="py-20 sm:py-28">
-          <Reveal>
-            <SectionHeading
-              eyebrow={artist.tv.outlet}
-              title={t("tvTitle")}
-              lead={t("tvLead")}
-            />
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="mx-auto mt-14 max-w-5xl">
-              <ExpoFilm
-                youtubeId={artist.tv.youtubeId}
-                title={`${name} — ${artist.tv.outlet}`}
-                playLabel={tmedia("watch")}
-              />
-            </div>
-          </Reveal>
         </Section>
       )}
 
