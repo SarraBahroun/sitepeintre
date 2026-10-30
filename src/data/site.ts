@@ -20,7 +20,7 @@ export const site = {
   instagramHandle: "@bahroun_hana",
   facebook: "",
   /** Profil sur la plateforme internationale Saatchi Art. */
-  saatchi: "",
+  saatchi: "https://www.saatchiart.com/hana-bahroun-artist",
   city: { fr: "Nabeul", en: "Nabeul", ar: "نابل" } as Localized,
   country: { fr: "Tunisie", en: "Tunisia", ar: "تونس" } as Localized,
 };
@@ -48,6 +48,12 @@ export const heroPlates = [
 
 export const artist = {
   portrait: "/images/artiste/portrait-01.jpeg",
+
+  /** Passage télévisé : identifiant YouTube seul, et la chaîne. */
+  tv: {
+    youtubeId: "0yl7YAAxPoU",
+    outlet: "El Wataniya",
+  },
   gallery: [
     "/images/artiste/portrait-02.jpeg",
     "/images/artiste/portrait-03.jpeg",
@@ -217,6 +223,20 @@ export const diversSections: DiversSection[] = [
     description: { fr: [], en: [], ar: [] },
     images: [],
     artworks: [],
+    links: [
+      {
+        label: "Souk El Kahina",
+        href: "https://soukelkahina.tn/en/brand/465-bazzar-of-art-chic-et-glamour",
+      },
+      {
+        label: "Artisan Tunisien",
+        href: "https://www.artisantunisien.com/artisan/28",
+      },
+      {
+        label: "Instagram — @bazaar_of_art",
+        href: "https://www.instagram.com/bazaar_of_art/",
+      },
+    ],
   },
 ];
 

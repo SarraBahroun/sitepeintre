@@ -110,6 +110,8 @@ export type DiversSection = {
   cover?: string;
   images: string[];
   artworks: Artwork[];
+  /** Où trouver ce travail ailleurs : boutiques, réseaux. */
+  links?: { label: string; href: string }[];
 };
 
 /* --------------------------------------------------------------------------

@@ -41,6 +41,7 @@ export default async function DiversPage({
   const t = await getTranslations("home");
   const tn = await getTranslations("nav");
   const tc = await getTranslations("common");
+  const ta = await getTranslations("artist");
 
   return (
     <>
@@ -111,6 +112,34 @@ export default async function DiversPage({
                       {paragraph}
                     </p>
                   ))}
+                </div>
+              </Reveal>
+            )}
+
+            {section.links && section.links.length > 0 && (
+              <Reveal delay={0.1}>
+                <div className="mt-10">
+                  <p className="eyebrow">{ta("findIt")}</p>
+                  <ul className="mt-5 flex flex-wrap gap-3">
+                    {section.links.map((link) => (
+                      <li key={link.href}>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full border border-gold/25 px-5 py-2.5 text-[0.8rem] text-ivory transition-all duration-400 hover:border-gold/60 hover:text-gold"
+                        >
+                          {link.label}
+                          <span
+                            aria-hidden
+                            className="text-gold rtl:-scale-x-100"
+                          >
+                            ↗
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </Reveal>
             )}

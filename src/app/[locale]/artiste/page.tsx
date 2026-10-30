@@ -8,6 +8,7 @@ import { t as tr, tRich } from "@/data/types";
 import { dimensions } from "@/data/dimensions";
 
 import Reveal from "@/components/Reveal";
+import ExpoFilm from "@/components/ExpoFilm";
 import {
   Section,
   SectionHeading,
@@ -42,6 +43,7 @@ export default async function ArtistPage({
   const tc = await getTranslations("common");
   const tn = await getTranslations("nav");
   const tm = await getTranslations("meta");
+  const tmedia = await getTranslations("media");
 
   const bio = tRich(artist.bio, locale);
   const approach = tRich(artist.approach, locale);
@@ -245,6 +247,49 @@ export default async function ArtistPage({
               </Reveal>
             ))}
           </div>
+        </Section>
+      )}
+
+      {/* ================================================================== */}
+      {/*  À la télévision                                                    */}
+      {/* ================================================================== */}
+      {artist.tv.youtubeId && (
+        <Section className="py-20 sm:py-28">
+          <Reveal>
+            <SectionHeading
+              eyebrow={artist.tv.outlet}
+              title={t("tvTitle")}
+              lead={t("tvLead")}
+            />
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="mx-auto mt-14 max-w-5xl">
+              <ExpoFilm
+                youtubeId={artist.tv.youtubeId}
+                title={`${name} — ${artist.tv.outlet}`}
+                playLabel={tmedia("watch")}
+              />
+            </div>
+          </Reveal>
+        </Section>
+      )}
+
+      {/* ================================================================== */}
+      {/*  Saatchi Art                                                        */}
+      {/* ================================================================== */}
+      {site.saatchi && (
+        <Section className="py-16 text-center">
+          <Reveal>
+            <p className="eyebrow">Saatchi Art</p>
+            <p className="mx-auto mt-5 max-w-xl font-display text-[clamp(1.3rem,2.6vw,1.9rem)] font-light text-ivory">
+              {t("saatchiLead")}
+            </p>
+            <div className="mt-8">
+              <ActionLink href={site.saatchi} external tone="gold">
+                {t("saatchiCta")}
+              </ActionLink>
+            </div>
+          </Reveal>
         </Section>
       )}
 

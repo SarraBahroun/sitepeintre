@@ -39,7 +39,12 @@
     "title": "The Artist",
     "bioTitle": "Biography",
     "approachTitle": "Approach",
-    "pathTitle": "Career"
+    "pathTitle": "Career",
+    "tvTitle": "On television",
+    "tvLead": "On El Wataniya, Hana Bahroun talks about her journey, her painting and her creations.",
+    "saatchiLead": "Her paintings are also presented on Saatchi Art, the international online gallery.",
+    "saatchiCta": "Visit her Saatchi Art gallery",
+    "findIt": "Where to find her creations"
   },
   "expo": {
     "artworksTitle": "The works",

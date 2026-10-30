@@ -39,7 +39,12 @@
     "title": "L'artiste",
     "bioTitle": "Biographie",
     "approachTitle": "Démarche",
-    "pathTitle": "Parcours"
+    "pathTitle": "Parcours",
+    "tvTitle": "À la télévision",
+    "tvLead": "Sur El Wataniya, Hana Bahroun revient sur son parcours, sa peinture et ses créations.",
+    "saatchiLead": "Ses toiles sont également présentées sur Saatchi Art, la galerie en ligne internationale.",
+    "saatchiCta": "Voir sa galerie Saatchi Art",
+    "findIt": "Où trouver ses créations"
   },
   "expo": {
     "artworksTitle": "Les œuvres",

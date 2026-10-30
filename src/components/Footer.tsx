@@ -84,6 +84,23 @@ export default async function Footer({ locale }: { locale: Locale }) {
                 {site.instagramHandle}
               </a>
             )}
+
+            {site.saatchi && (
+              <a
+                href={site.saatchi}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex items-center gap-2.5 text-sm text-sage transition-colors duration-300 hover:text-glow"
+              >
+                <span
+                  aria-hidden
+                  className="flex h-[17px] w-[17px] items-center justify-center rounded-[4px] border border-current text-[0.6rem] font-semibold"
+                >
+                  S
+                </span>
+                Saatchi Art
+              </a>
+            )}
           </div>
 
           {/* Plan du site */}
