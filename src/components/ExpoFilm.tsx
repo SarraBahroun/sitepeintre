@@ -8,8 +8,9 @@ import Image from "next/image";
    -----------------------------------------------------------------------------
    Tant qu'on ne clique pas, ce n'est qu'une image : aucun script YouTube
    n'est chargé à l'ouverture de la page. Le clic lance la lecture.
-   La grande vignette n'existe pas pour toutes les vidéos ; à défaut on
-   retombe sur la moyenne.
+   La grande vignette n'existe pas pour toutes les vidéos. YouTube répond
+   alors par une image grise de 120 px, sans erreur : c'est sa largeur qui
+   trahit l'absence, et l'on retombe sur la vignette moyenne.
    ========================================================================== */
 
 export default function ExpoFilm({
@@ -52,6 +53,10 @@ export default function ExpoFilm({
             onError={() =>
               setThumb(`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`)
             }
+            onLoad={(e) => {
+              if (e.currentTarget.naturalWidth <= 120)
+                setThumb(`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`);
+            }}
             className="object-cover opacity-85 transition-all duration-[1.1s] ease-[var(--ease-silk)] group-hover:scale-[1.03] group-hover:opacity-100"
           />
           <span className="absolute inset-0 bg-night/35 transition-opacity duration-500 group-hover:opacity-10" />

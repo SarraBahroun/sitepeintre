@@ -120,11 +120,15 @@ export default async function ContactPage({
                       }
                       className="font-display text-xl font-light text-ivory transition-colors duration-300 hover:text-glow"
                     >
-                      {item.value}
+                      <bdi dir={item.href ? "ltr" : undefined}>
+                        {item.value}
+                      </bdi>
                     </a>
                   ) : (
                     <span className="font-display text-xl font-light text-ivory">
-                      {item.value}
+                      <bdi dir={item.href ? "ltr" : undefined}>
+                        {item.value}
+                      </bdi>
                     </span>
                   )}
                 </dd>

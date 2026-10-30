@@ -2,6 +2,8 @@
 
 import { useCallback, useState } from "react";
 import Image from "next/image";
+
+import { dimensions } from "@/data/dimensions";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -65,6 +67,16 @@ export default function VernissageCarousel({
   if (!images.length) return null;
 
   const src = images[index];
+
+  // La scène prend la proportion la plus large de la série : les photos
+  // de même format la remplissent exactement, les plus hautes se posent
+  // au milieu, sans jamais être rognées. Plafonnée pour tenir à l'écran.
+  const ratio = Math.max(
+    ...images.map((image) => {
+      const { width, height } = dimensions(image);
+      return width / height;
+    }),
+  );
   const offset = (rtl ? -1 : 1) * 48;
 
   const arrowClass =
@@ -79,7 +91,10 @@ export default function VernissageCarousel({
       onKeyDown={onKeyDown}
       className="outline-none"
     >
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-glow/10 bg-night-2 sm:aspect-[3/2] lg:aspect-[16/9]">
+      <div
+        className="relative mx-auto max-h-[80svh] w-full overflow-hidden rounded-sm border border-glow/10 bg-night-2"
+        style={{ aspectRatio: ratio, maxWidth: `calc(80svh * ${ratio})` }}
+      >
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={src}

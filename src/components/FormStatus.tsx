@@ -49,7 +49,7 @@ export default function FormStatus({
               href={`mailto:${site.email}`}
               className="text-glow underline underline-offset-4"
             >
-              {site.email}
+              <bdi dir="ltr">{site.email}</bdi>
             </a>
           </>
         )}

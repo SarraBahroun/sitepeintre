@@ -155,13 +155,13 @@ export default async function CoursesPage({
                 href={`tel:${site.phone.replace(/\s/g, "")}`}
                 className="block text-sage transition-colors hover:text-glow"
               >
-                {site.phoneDisplay}
+                <bdi dir="ltr">{site.phoneDisplay}</bdi>
               </a>
               <a
                 href={`mailto:${site.email}`}
                 className="block text-sage transition-colors hover:text-glow"
               >
-                {site.email}
+                <bdi dir="ltr">{site.email}</bdi>
               </a>
             </div>
           </Reveal>

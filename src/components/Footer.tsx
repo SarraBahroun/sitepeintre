@@ -59,7 +59,7 @@ export default async function Footer({ locale }: { locale: Locale }) {
                 className="mt-7 inline-flex items-center gap-2.5 text-sm text-sage transition-colors duration-300 hover:text-glow"
               >
                 <InstagramIcon />
-                {site.instagramHandle}
+                <bdi dir="ltr">{site.instagramHandle}</bdi>
               </a>
             )}
 
