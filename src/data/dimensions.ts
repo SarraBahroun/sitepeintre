@@ -7,8 +7,6 @@
 
 export const DIMENSIONS: Record<string, readonly [number, number]> = {
   "/images/artiste/portrait-01.jpeg": [815, 1087],
-  "/images/artiste/portrait-02.jpeg": [969, 1144],
-  "/images/artiste/portrait-03.jpeg": [194, 259],
   "/images/jungle-1/tableau-01.jpeg": [1280, 914],
   "/images/jungle-1/tableau-02.jpeg": [913, 1280],
   "/images/jungle-1/tableau-03.jpeg": [1080, 1280],
@@ -55,13 +53,7 @@ export const DIMENSIONS: Record<string, readonly [number, number]> = {
   "/images/jungle-2/tableau-h.jpeg": [1269, 1160],
   "/images/jungle-2/tableau-i.jpeg": [966, 1267],
   "/images/oeuvres/animaux.jpeg": [2560, 1429],
-  "/images/oeuvres/flamant.jpeg": [460, 660],
   "/images/oeuvres/jungle.jpeg": [2400, 1350],
-  "/images/oeuvres/phenix-profil.png": [1200, 721],
-  "/images/oeuvres/phenix.png": [1200, 713],
-  "/images/oeuvres/phenix/aile-droite.png": [560, 713],
-  "/images/oeuvres/phenix/aile-gauche.png": [560, 713],
-  "/images/oeuvres/phenix/corps.png": [310, 713],
   "/images/oeuvres/tigre.jpeg": [1198, 852],
 };
 
