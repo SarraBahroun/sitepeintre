@@ -70,9 +70,10 @@ permet d'afficher les œuvres entières.
 
 ## À régler avant la mise en ligne
 
-**Le poids des vidéos.** `public/videos/` pèse 7,7 Mo. Sur une connexion
-lente, l'ouverture se fera attendre. Avec ffmpeg on descend autour de 2 Mo
-sans perte visible ; ffmpeg n'est pas installé sur cette machine.
+**Le poids des vidéos** — 7,7 Mo ramenés à 6,0 Mo (H.264, CRF 25, démarrage
+rapide), sans perte visible (SSIM ≥ 0,987). Aller plus bas abîme l'image :
+les originaux sont déjà bien compressés. ffmpeg est installé (winget,
+Gyan.FFmpeg). Les originaux restent dans `_sources-originales/`.
 
 **Les formulaires** (contact et cours) envoient par Web3Forms vers
 bahrounhana19@gmail.com — clé dans `src/data/site.ts`. Au moment de la mise
