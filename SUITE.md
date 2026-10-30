@@ -42,7 +42,7 @@ Vient ensuite le **texte de présentation de chaque exposition**
 - **Marque** — le monogramme HB, relevé de la signature des toiles, en
   nervure d'une plume de phénix. Trois états selon la taille, et l'onglet
   porte les lettres seules.
-- **Les toiles** — 17 pour La Jungle 1, 9 pour La Jungle 2, plus les 21
+- **Les toiles** — 17 pour La Jungle 1, 9 pour La Jungle 2, plus les 19
   photographies de vernissage.
 - **Aucun recadrage** — chaque œuvre garde sa proportion, partout.
 - **Pages d'exposition** — dans l'ordre : le texte (emplacement réservé

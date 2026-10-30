@@ -447,7 +447,6 @@ export const expositions: Exposition[] = [
     film: "aEvdAMARZ5Y",
     vernissage: [
       "/images/jungle-2/j2-01.jpeg",
-      "/images/jungle-2/j2-02.jpeg",
       "/images/jungle-2/j2-03.jpeg",
       "/images/jungle-2/j2-04.jpeg",
       "/images/jungle-2/j2-05.jpeg",
@@ -458,7 +457,6 @@ export const expositions: Exposition[] = [
       "/images/jungle-2/j2-10.jpeg",
       "/images/jungle-2/j2-11.jpeg",
       "/images/jungle-2/j2-12.jpeg",
-      "/images/jungle-2/j2-13.jpeg",
       "/images/jungle-2/j2-14.jpeg",
       "/images/jungle-2/j2-15.jpeg",
       "/images/jungle-2/j2-16.jpeg",
