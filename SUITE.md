@@ -1,7 +1,12 @@
 # Où nous en sommes
 
-Dernière séance : 29 octobre 2026.
+Dernière séance : 31 octobre 2026.
 `npm run dev`, puis http://localhost:3000 — la racine redirige vers `/fr`.
+Au téléphone, sur le même Wi-Fi : http://192.168.100.7:3000/fr — si
+l'adresse de l'ordinateur change, la mettre aussi dans `allowedDevOrigins`
+(`next.config.ts`), sinon la page s'affiche mais ne réagit plus.
+Une erreur 500 partout alors que le code est sain : arrêter le serveur,
+supprimer `.next/`, relancer.
 Rien n'est en ligne pour l'instant.
 
 ---
@@ -49,6 +54,9 @@ Vient ensuite le **texte de présentation de chaque exposition**
   tant qu'il n'est pas écrit), le film YouTube, puis le vernissage une
   photo à la fois, flèches à gauche et à droite. La Jungle 1 n'a pas
   encore de photos de vernissage.
+- **Fond d'accueil** — la jungle de nuit en HD (`animaux-hd.jpeg`) ; les
+  écrans en hauteur reçoivent la version peinte en hauteur
+  (`animaux-telephone.jpeg`), via `portrait` dans `heroPlates`.
 
 ---
 
