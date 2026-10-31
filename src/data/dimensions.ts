@@ -52,7 +52,8 @@ export const DIMENSIONS: Record<string, readonly [number, number]> = {
   "/images/jungle-2/tableau-g.jpeg": [990, 1236],
   "/images/jungle-2/tableau-h.jpeg": [1269, 1160],
   "/images/jungle-2/tableau-i.jpeg": [966, 1267],
-  "/images/oeuvres/animaux.jpeg": [2560, 1429],
+  "/images/oeuvres/animaux-hd.jpeg": [1679, 937],
+  "/images/oeuvres/animaux-telephone.jpeg": [937, 1678],
   "/images/oeuvres/jungle.jpeg": [2400, 1350],
   "/images/oeuvres/tigre.jpeg": [1198, 852],
 };

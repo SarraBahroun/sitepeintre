@@ -18,7 +18,7 @@ import type { Exposition } from "./types";
    ========================================================================== */
 
 /** Le fond de nuit commun aux pages d'exposition. */
-const JUNGLE = "/images/oeuvres/animaux.jpeg";
+const JUNGLE = "/images/oeuvres/animaux-hd.jpeg";
 
 /** Série commune aux deux expositions. */
 const jungleSeries = {

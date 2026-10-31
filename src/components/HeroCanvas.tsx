@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import {
   AnimatePresence,
   motion,
@@ -15,14 +15,16 @@ import {
    Plein cadre, nettes, en fondu enchaîné lent, avec une lente dérive d'échelle.
    Un voile sombre descend par-dessus : la peinture reste lisible, le nom aussi.
 
-   Écran en hauteur (téléphone) : ce fond n'est plus que la toile adoucie ;
-   la toile entière, nette, est posée par le hero au-dessus du nom.
+   Une toile peut avoir sa version en hauteur (`portrait`) : l'écran en
+   hauteur la reçoit à la place, et rien n'est recadré au point de flouter.
    ========================================================================== */
 
 export type HeroPlate = {
   src: string;
   /** Cadrage : « center », « top », « 60% 40% »… */
   position?: string;
+  /** La même toile en hauteur, pour les téléphones. */
+  portrait?: string;
   alt?: string;
 };
 
@@ -72,16 +74,7 @@ export default function HeroCanvas({ plates }: { plates: HeroPlate[] }) {
             className="absolute inset-0"
           >
             <div className="animate-canvas absolute inset-0">
-              <Image
-                src={plates[index].src}
-                alt=""
-                fill
-                priority={index === 0}
-                sizes="100vw"
-                quality={90}
-                className="object-cover portrait:blur-2xl portrait:brightness-[0.6]"
-                style={{ objectPosition: plates[index].position ?? "center" }}
-              />
+              <Plate plate={plates[index]} priority={index === 0} />
             </div>
           </motion.div>
         </AnimatePresence>
@@ -90,9 +83,9 @@ export default function HeroCanvas({ plates }: { plates: HeroPlate[] }) {
       {/* --- Les voiles : la toile reste visible, le texte reste lisible --- */}
 
       {/* L'image porte déjà sa vignette : on se contente de la poser */}
-      <div className="absolute inset-0 bg-night/25 portrait:hidden" />
+      <div className="absolute inset-0 bg-night/25" />
       {/* un souffle sombre derrière le nom, sans masquer les fauves */}
-      <div className="absolute inset-0 portrait:hidden bg-[radial-gradient(ellipse_46%_34%_at_50%_44%,color-mix(in_oklab,var(--color-night)_62%,transparent),transparent_75%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_46%_34%_at_50%_44%,color-mix(in_oklab,var(--color-night)_62%,transparent),transparent_75%)]" />
       {/* raccord haut et bas avec le reste de la page */}
       <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-night via-night/60 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-night via-night/70 to-transparent" />
@@ -111,5 +104,37 @@ export default function HeroCanvas({ plates }: { plates: HeroPlate[] }) {
         </div>
       )}
     </div>
+  );
+}
+
+/** Une toile plein cadre ; sa version en hauteur sur les écrans en hauteur. */
+function Plate({ plate, priority }: { plate: HeroPlate; priority: boolean }) {
+  const common = {
+    alt: "",
+    fill: true,
+    priority,
+    sizes: "100vw",
+    quality: 90,
+  };
+  const {
+    props: { srcSet: portraitSrcSet },
+  } = getImageProps({ ...common, src: plate.portrait ?? plate.src });
+  const { props } = getImageProps({ ...common, src: plate.src });
+
+  return (
+    <picture>
+      {plate.portrait && (
+        <source media="(orientation: portrait)" srcSet={portraitSrcSet} />
+      )}
+      <img
+        {...props}
+        alt=""
+        className="object-cover"
+        style={{
+          ...props.style,
+          objectPosition: plate.position ?? "center",
+        }}
+      />
+    </picture>
   );
 }

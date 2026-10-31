@@ -48,7 +48,11 @@ export function whatsappHref(message: string) {
 
 export const heroPlates = [
   // La jungle de nuit : lion, tigre, phénix et tout le peuple des arbres.
-  { src: "/images/oeuvres/animaux.jpeg", position: "center" },
+  {
+    src: "/images/oeuvres/animaux-hd.jpeg",
+    portrait: "/images/oeuvres/animaux-telephone.jpeg",
+    position: "center",
+  },
   // Autres fonds possibles, à décommenter pour les faire défiler :
   // { src: "/images/oeuvres/jungle.jpeg", position: "center" },
   // { src: "/images/oeuvres/tigre.jpeg", position: "50% 42%" },
