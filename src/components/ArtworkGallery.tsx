@@ -194,7 +194,7 @@ export default function ArtworkGallery({
               </div>
 
               {/* Le cartel */}
-              <div className="flex flex-col justify-center gap-6 bg-night-2/70 p-7 sm:p-10 md:max-h-[82dvh] md:overflow-y-auto">
+              <div className="flex flex-col justify-center-safe gap-6 bg-night-2/70 p-7 sm:p-10 md:max-h-[82dvh] md:overflow-y-auto">
                 <div>
                   <StatusBadge
                     label={t(`status.${current.status}`)}
@@ -273,6 +273,22 @@ export default function ArtworkGallery({
                       />
                     )}
                 </dl>
+
+                {current.status === "available" && (
+                  <div>
+                    <p className="eyebrow">{t("acquisition.title")}</p>
+                    <dl className="mt-1">
+                      <MetaRow
+                        label={t("acquisition.statusLabel")}
+                        value={t("acquisition.status")}
+                      />
+                      <MetaRow
+                        label={t("acquisition.certificateLabel")}
+                        value={t("acquisition.certificate")}
+                      />
+                    </dl>
+                  </div>
+                )}
 
                 {current.status === "available" && (
                   <AddToCart

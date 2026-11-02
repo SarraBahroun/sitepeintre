@@ -1,6 +1,6 @@
 # Où nous en sommes
 
-Dernière séance : 31 octobre 2026.
+Dernière séance : 2 novembre 2026.
 `npm run dev`, puis http://localhost:3000 — la racine redirige vers `/fr`.
 Au téléphone, sur le même Wi-Fi : http://192.168.100.7:3000/fr — si
 l'adresse de l'ordinateur change, la mettre aussi dans `allowedDevOrigins`
@@ -13,8 +13,10 @@ Rien n'est en ligne pour l'instant.
 
 ## La prochaine chose à faire
 
-**Écrire les textes des œuvres.** Les vingt-six toiles sont en place et
-s'affichent ; il leur manque la parole. Chaque fiche porte en commentaire le
+**Écrire les textes de La Jungle 1.** Les neuf toiles de La Jungle 2 sont
+écrites ; sur les dix-sept de La Jungle 1, seize attendent encore leur texte.
+Les versions anglaise et arabe de La Jungle 2 sont des traductions à faire
+relire par l'artiste. Chaque fiche porte en commentaire le
 sujet qu'elle montre — « la coccinelle sur le trèfle », « le phénix d'or » —
 de sorte qu'on sait de quelle toile il s'agit sans rouvrir les images.
 
@@ -30,7 +32,8 @@ Pour chacune, dans `src/data/expositions.ts` :
 | `status` | `available` · `sold` · `reserved` · `notForSale` |
 
 *The Infinite Mystery* (La Jungle 1, le tigre) est déjà écrite : elle sert de
-modèle.
+modèle. Le bloc « Détails d'acquisition » s'affiche seul sous chaque œuvre
+`available` : il vient de `messages/*.json`, pas de la fiche.
 
 Vient ensuite le **texte de présentation de chaque exposition**
 (`statement`) — c'est lui qui raconte avant que l'on regarde.

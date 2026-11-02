@@ -85,7 +85,14 @@
     "symbolism": "Symbolism & concept",
     "about": "About the artwork",
     "framing": "Framing",
-    "collection": "Collection"
+    "collection": "Collection",
+    "acquisition": {
+      "title": "Acquisition details",
+      "statusLabel": "Status",
+      "status": "Available for private acquisition / exhibition.",
+      "certificateLabel": "Certificate",
+      "certificate": "Original work accompanied by its certificate of authenticity signed by the artist."
+    }
   },
   "media": {
     "watch": "Watch",
