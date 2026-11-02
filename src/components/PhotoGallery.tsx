@@ -87,7 +87,7 @@ export default function PhotoGallery({
             onClick={close}
             role="dialog"
             aria-modal="true"
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-night/96 p-4 backdrop-blur-xl sm:p-10"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-night p-4 sm:p-10"
           >
             <motion.div
               key={images[index]}

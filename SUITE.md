@@ -2,10 +2,11 @@
 
 Dernière séance : 2 novembre 2026.
 `npm run dev`, puis http://localhost:3000 — la racine redirige vers `/fr`.
-Au téléphone, sur le même Wi-Fi : http://192.168.100.7:3000/fr — si
+Au téléphone, sur le même réseau : http://172.20.10.2:3000/fr — si
 l'adresse de l'ordinateur change, la mettre aussi dans `allowedDevOrigins`
 (`next.config.ts`), sinon la page s'affiche mais ne réagit plus.
-Une erreur 500 partout alors que le code est sain : arrêter le serveur,
+Une erreur 500 partout, ou un changement de `globals.css` qui ne s'affiche
+pas : arrêter le serveur,
 supprimer `.next/`, relancer.
 Rien n'est en ligne pour l'instant.
 

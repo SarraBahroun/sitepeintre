@@ -147,7 +147,7 @@ export default async function ExpositionRow({
                     )}
                   </h4>
                   <p className="mt-1 text-xs text-sage-dim">
-                    {artwork.dimensions}
+                    <bdi dir="ltr">{artwork.dimensions}</bdi>
                     {artwork.dimensions && price && " · "}
                     {artwork.status !== "sold" && price}
                   </p>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
@@ -43,6 +43,10 @@ export default function ArtworkGallery({
 }: Props) {
   const t = useTranslations("artwork");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const isOpen = openIndex !== null;
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const cartelRef = useRef<HTMLDivElement>(null);
 
   const close = useCallback(() => setOpenIndex(null), []);
   const go = useCallback(
@@ -70,7 +74,33 @@ export default function ArtworkGallery({
     };
   }, [openIndex, close, go, locale]);
 
+  // Le clavier entre dans la fiche, et retrouve la toile en en sortant.
+  useEffect(() => {
+    if (!isOpen) return;
+    const previous = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus({ preventScroll: true });
+    return () => previous?.focus({ preventScroll: true });
+  }, [isOpen]);
+
+  // Chaque œuvre se lit depuis son début, même si la précédente était défilée.
+  useEffect(() => {
+    boxRef.current?.scrollTo(0, 0);
+    cartelRef.current?.scrollTo(0, 0);
+  }, [openIndex]);
+
   const current = openIndex === null ? null : artworks[openIndex];
+
+  // Les deux voisines se chargent d'avance : le passage de l'une à l'autre est
+  // immédiat.
+  const neighbours =
+    openIndex === null
+      ? []
+      : [
+          ...new Set([
+            artworks[(openIndex + 1) % artworks.length],
+            artworks[(openIndex - 1 + artworks.length) % artworks.length],
+          ]),
+        ].filter((artwork) => artwork !== current);
 
   return (
     <>
@@ -150,7 +180,7 @@ export default function ArtworkGallery({
               </div>
               {artwork.dimensions && (
                 <p className="mt-1 text-xs text-sage-dim">
-                  {artwork.dimensions}
+                  <bdi dir="ltr">{artwork.dimensions}</bdi>
                 </p>
               )}
             </motion.button>
@@ -168,7 +198,7 @@ export default function ArtworkGallery({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-night/95 backdrop-blur-xl"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-night"
             role="dialog"
             aria-modal="true"
             onClick={close}
@@ -178,6 +208,7 @@ export default function ArtworkGallery({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.98, y: 8 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              ref={boxRef}
               onClick={(e) => e.stopPropagation()}
               className="relative grid max-h-[92dvh] w-full max-w-[1150px] grid-cols-1 overflow-y-auto md:grid-cols-[1.25fr_1fr] md:overflow-hidden"
             >
@@ -191,10 +222,24 @@ export default function ArtworkGallery({
                   className="object-contain"
                   priority
                 />
+                {neighbours.map((artwork) => (
+                  <Image
+                    key={artwork.id}
+                    src={artwork.image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, 60vw"
+                    loading="eager"
+                    className="hidden"
+                  />
+                ))}
               </div>
 
               {/* Le cartel */}
-              <div className="flex flex-col justify-center-safe gap-6 bg-night-2/70 p-7 sm:p-10 md:max-h-[82dvh] md:overflow-y-auto">
+              <div
+                ref={cartelRef}
+                className="flex flex-col justify-center-safe gap-6 bg-night-2/70 p-7 sm:p-10 md:max-h-[82dvh] md:overflow-y-auto md:pe-16 min-[1270px]:pe-10"
+              >
                 <div>
                   <StatusBadge
                     label={t(`status.${current.status}`)}
@@ -245,7 +290,7 @@ export default function ArtworkGallery({
                   {current.dimensions && (
                     <MetaRow
                       label={t("dimensions")}
-                      value={current.dimensions}
+                      value={<bdi dir="ltr">{current.dimensions}</bdi>}
                     />
                   )}
                   {tr(current.framing, locale) && (
@@ -360,24 +405,25 @@ export default function ArtworkGallery({
                   </div>
                 )}
               </div>
-
-              {/* Fermer */}
-              <button
-                type="button"
-                onClick={close}
-                aria-label={t("close")}
-                className="absolute end-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-glow/25 bg-night/70 text-sage backdrop-blur-md transition-colors hover:border-glow/60 hover:text-glow"
-              >
-                <svg width="13" height="13" viewBox="0 0 14 14" aria-hidden>
-                  <path
-                    d="M1 1l12 12M13 1L1 13"
-                    stroke="currentColor"
-                    strokeWidth="1.3"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
             </motion.div>
+
+            {/* Fermer */}
+            <button
+              type="button"
+              ref={closeRef}
+              onClick={close}
+              aria-label={t("close")}
+              className="absolute end-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-glow/25 bg-night/90 text-sage transition-colors hover:border-glow/60 hover:text-glow"
+            >
+              <svg width="13" height="13" viewBox="0 0 14 14" aria-hidden>
+                <path
+                  d="M1 1l12 12M13 1L1 13"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

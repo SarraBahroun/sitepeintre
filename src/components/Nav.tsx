@@ -77,20 +77,20 @@ export default function Nav({ locale }: { locale: Locale }) {
           </Link>
 
           {/* --- Navigation large --- */}
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-1 xl:flex">
             {links.map((link) => {
               const active = isActive(link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`group relative px-3.5 py-2 text-[0.78rem] font-medium tracking-[0.14em] uppercase transition-colors duration-300 ${
+                  className={`group relative whitespace-nowrap px-2.5 py-2 text-[0.75rem] font-medium tracking-[0.12em] uppercase transition-colors duration-300 ${
                     active ? "text-glow" : "text-sage hover:text-ivory"
                   }`}
                 >
                   {t(link.key)}
                   <span
-                    className={`absolute inset-x-3.5 -bottom-0.5 h-px origin-center bg-gradient-to-r from-transparent via-glow to-transparent transition-transform duration-500 ease-[var(--ease-silk)] ${
+                    className={`absolute inset-x-2.5 -bottom-0.5 h-px origin-center bg-gradient-to-r from-transparent via-glow to-transparent transition-transform duration-500 ease-[var(--ease-silk)] ${
                       active
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100"
@@ -110,7 +110,7 @@ export default function Nav({ locale }: { locale: Locale }) {
               onClick={() => setOpen(true)}
               aria-label={t("menu")}
               aria-expanded={open}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-glow/15 text-sage transition-colors duration-300 hover:border-glow/40 hover:text-glow lg:hidden"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-glow/15 text-sage transition-colors duration-300 hover:border-glow/40 hover:text-glow xl:hidden"
             >
               <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden>
                 <path
@@ -133,7 +133,7 @@ export default function Nav({ locale }: { locale: Locale }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
-            className="fixed inset-0 z-[60] bg-night/97 backdrop-blur-2xl lg:hidden"
+            className="fixed inset-0 z-[60] bg-night xl:hidden"
           >
             <div className="flex h-dvh flex-col">
               <div className="flex items-center justify-between px-5 py-5 sm:px-8">

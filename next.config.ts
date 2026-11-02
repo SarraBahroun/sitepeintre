@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
   // Ouvrir le site de développement depuis le téléphone, sur le même Wi-Fi :
   // sans cela, Next bloque ses propres scripts et la page reste inerte.
   // Si l'ordinateur change d'adresse sur le réseau, la remplacer ici.
-  allowedDevOrigins: ["192.168.100.7"],
+  allowedDevOrigins: ["192.168.100.7", "172.20.10.2"],
 
   turbopack: {
     rules: {

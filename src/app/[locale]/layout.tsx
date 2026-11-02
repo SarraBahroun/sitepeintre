@@ -69,6 +69,7 @@ export async function generateMetadata({
       description: t("description"),
       type: "website",
       locale,
+      images: ["/images/jungle-2/tableau-d.jpeg"],
     },
   };
 }
