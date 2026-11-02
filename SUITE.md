@@ -12,6 +12,19 @@ Rien n'est en ligne pour l'instant.
 
 ---
 
+## À vérifier en reprenant
+
+1. **Le mail** — envoyer un message depuis `/fr/contact` dans un vrai
+   navigateur et voir s'il arrive à bahrounhana19@gmail.com (spam compris).
+   Jamais confirmé : le navigateur automatisé est bloqué par Web3Forms, et les
+   trois formulaires n'ont été testés qu'avec un envoi simulé.
+2. **Le téléphone** — parcourir le site sur un vrai téléphone. La fluidité n'a
+   été vérifiée qu'en format téléphone dans le navigateur.
+3. **Les liens des livres** (Divers → Illustration) — les ouvrir à la main : ces
+   sites refusent les robots, aucun n'a pu être lu.
+
+---
+
 ## La prochaine chose à faire
 
 **Écrire les textes de La Jungle 1.** Les neuf toiles de La Jungle 2 sont
@@ -70,7 +83,7 @@ Vient ensuite le **texte de présentation de chaque exposition**
 | --- | --- |
 | Titres, symbolisme, descriptions, dimensions, prix | `src/data/expositions.ts` |
 | Le texte de présentation de chaque exposition | fait — fr, en, ar |
-| Les images de la rubrique Divers | `src/data/site.ts` → `diversSections` |
+| Les images de la rubrique Divers : couvertures des livres, Diwaniyat Al-Rajhi, bijoux | `src/data/site.ts` → `diversSections` |
 | Les vidéos et passages radio | `src/data/expositions.ts` → `media` |
 | Le tarif des cours, s'il doit s'afficher (pas d'horaires fixes : ils se conviennent après l'inscription) | `src/data/site.ts` → `courses.practical` |
 
