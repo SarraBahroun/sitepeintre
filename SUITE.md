@@ -71,7 +71,7 @@ Vient ensuite le **texte de présentation de chaque exposition**
 | Le texte de présentation de chaque exposition | fait — fr, en, ar |
 | Les images de la rubrique Divers | `src/data/site.ts` → `diversSections` |
 | Les vidéos et passages radio | `src/data/expositions.ts` → `media` |
-| Horaires et tarif des cours | `src/data/site.ts` → `courses.practical` |
+| Le tarif des cours, s'il doit s'afficher (pas d'horaires fixes : ils se conviennent après l'inscription) | `src/data/site.ts` → `courses.practical` |
 
 **Après avoir déposé des images dans `public/images/`, lancer
 `npm run images`** : le relevé des proportions se refait, et c'est lui qui

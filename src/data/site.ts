@@ -397,7 +397,11 @@ export const courses = {
       en: "Artist's studio, Nabeul",
       ar: "مرسم الفنانة، نابل",
     } as Localized,
-    schedule: { fr: "", en: "", ar: "" } as Localized,
+    schedule: {
+      fr: "À convenir après l'inscription",
+      en: "Arranged after registration",
+      ar: "تُحدَّد بعد التسجيل",
+    } as Localized,
     price: { fr: "", en: "", ar: "" } as Localized,
   },
 };
