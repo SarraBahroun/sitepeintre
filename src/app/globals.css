@@ -248,7 +248,6 @@ html[lang="ar"] .tracking-\[0\.2em\] {
   /* Deux propriétés seulement, et les deux se composent sur le GPU. Animer
      un flou sur une surface de la taille de l'écran obligeait le navigateur
      à tout repeindre à chaque image : la transition sautait. */
-  will-change: opacity, transform;
 }
 
 /* Le site attend un peu en retrait, et vient se poser. L'ouverture, elle,
@@ -257,6 +256,10 @@ html[lang="ar"] .tracking-\[0\.2em\] {
 html[data-intro="running"] .site-shell {
   opacity: 0;
   transform: scale(0.94);
+  /* Seulement ici : posé en permanence, will-change enferme tous les éléments
+     « fixed » du site (menu, fiches, bouton de retour) dans la hauteur de la
+     page, et ils se placent hors de l'écran dès qu'on a défilé. */
+  will-change: opacity, transform;
 }
 
 /* Une braise qui monte, dérive, et s'éteint */
