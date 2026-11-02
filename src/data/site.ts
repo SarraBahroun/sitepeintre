@@ -243,6 +243,36 @@ export const diversSections: DiversSection[] = [
     description: { fr: [], en: [], ar: [] },
     images: [],
     artworks: [],
+    links: [
+      {
+        label: "Al Kitab",
+        href: "https://www.alkitab.tn/livre/9789938846362-la-maison-de-bambous-hana-bahroun-frederique-khouja/",
+      },
+      {
+        label: "Fnac",
+        href: "https://www.fnac.com/ia4922353/Hana-Bahroun",
+      },
+      {
+        label: "Librairies indépendantes en Nouvelle-Aquitaine",
+        href: "https://www.librairies-nouvelleaquitaine.com/livre/9789938846355-le-petit-tracteur-hana-bahroun-frederique-khouja/",
+      },
+      {
+        label: "Bibliothèque Nationale de Tunisie",
+        href: "https://www.bibliotheque.nat.tn/CATG/detailstatic.aspx?RSC_BASE=SYRACUSE&RSC_DOCID=1561428&TITLE=&_lg=en-US",
+      },
+      {
+        label: "Céli Éditions",
+        href: "https://celi-edition.net/product-category/romans-pour-ados-et-jeunes-adultes/?max_price=5&orderby=menu_order",
+      },
+      {
+        label: "Le Bleuet",
+        href: "https://www.lebleuet.fr/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=Fr%C3%A9d%C3%A9rique%20Khouja&exact&shem=aimgspe,",
+      },
+      {
+        label: "Mots et Cie",
+        href: "https://www.librairiemotsetcie.com/listeliv.php?form_recherche_avancee=ok&editeur=Celi&base=paper&shem=aimgspe,",
+      },
+    ],
   },
   {
     id: "direction-artistique",

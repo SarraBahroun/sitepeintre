@@ -176,7 +176,10 @@ export function Placeholder({
         />
       </svg>
       <p className="text-sm text-sage">{label}</p>
-      {hint && <p className="text-xs text-sage-dim">{hint}</p>}
+      {/* Le chemin du fichier à remplir ne regarde que nous, pas le visiteur. */}
+      {hint && process.env.NODE_ENV === "development" && (
+        <p className="text-xs text-sage-dim">{hint}</p>
+      )}
     </div>
   );
 }

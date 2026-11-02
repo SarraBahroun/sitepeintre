@@ -85,6 +85,7 @@ export default async function DiversPage({
         const isEmpty =
           !section.artworks.length &&
           !section.images.length &&
+          !section.links?.length &&
           !description.length;
 
         return (
