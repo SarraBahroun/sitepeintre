@@ -66,6 +66,16 @@ export default async function ContactPage({
       value: "La Vague Bahroun",
       href: site.facebook,
     },
+    site.tiktok && {
+      label: "TikTok",
+      value: site.tiktokHandle,
+      href: site.tiktok,
+    },
+    site.x && {
+      label: "X",
+      value: site.xHandle,
+      href: site.x,
+    },
     site.saatchi && {
       label: t("saatchi"),
       value: "Saatchi Art",

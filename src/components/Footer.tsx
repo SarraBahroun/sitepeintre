@@ -6,7 +6,13 @@ import { site, courses, whatsappHref } from "@/data/site";
 import { expositions } from "@/data/expositions";
 import { t as tr } from "@/data/types";
 import { Monogram } from "./Logo";
-import { InstagramIcon, FacebookIcon, WhatsAppIcon } from "./SocialIcons";
+import {
+  InstagramIcon,
+  FacebookIcon,
+  WhatsAppIcon,
+  TikTokIcon,
+  XIcon,
+} from "./SocialIcons";
 
 export default async function Footer({ locale }: { locale: Locale }) {
   const t = await getTranslations("nav");
@@ -72,6 +78,30 @@ export default async function Footer({ locale }: { locale: Locale }) {
               >
                 <FacebookIcon />
                 Facebook
+              </a>
+            )}
+
+            {site.tiktok && (
+              <a
+                href={site.tiktok}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex items-center gap-2.5 text-sm text-sage transition-colors duration-300 hover:text-glow"
+              >
+                <TikTokIcon />
+                TikTok
+              </a>
+            )}
+
+            {site.x && (
+              <a
+                href={site.x}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 flex items-center gap-2.5 text-sm text-sage transition-colors duration-300 hover:text-glow"
+              >
+                <XIcon />
+                X
               </a>
             )}
 

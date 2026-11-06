@@ -24,6 +24,10 @@ export const site = {
   instagram: "https://www.instagram.com/bahroun_hana/",
   instagramHandle: "@bahroun_hana",
   facebook: "https://www.facebook.com/lavague.bahroun/",
+  x: "https://x.com/hanabahrou14554",
+  xHandle: "@hanabahrou14554",
+  tiktok: "https://www.tiktok.com/@hana.bahroun",
+  tiktokHandle: "@hana.bahroun",
   /** Numéro WhatsApp, chiffres seuls, indicatif compris (216 = Tunisie). */
   whatsapp: "21656182269",
   /** Profil sur la plateforme internationale Saatchi Art. */
