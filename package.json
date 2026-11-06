@@ -7,11 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "images": "node scripts/mesurer-images.mjs"
+    "images": "node scripts/mesurer-images.mjs && node scripts/variantes-images.mjs",
+    "prebuild": "node scripts/variantes-images.mjs",
+    "voir": "node scripts/servir.mjs",
+    "postbuild": "node scripts/apres-construction.mjs"
   },
   "dependencies": {
     "framer-motion": "^14.7.1",
-    "next": "16.4.3",
+    "next": "16.4.5",
     "next-intl": "^4.14.9",
     "react": "19.3.0",
     "react-dom": "19.3.0"
@@ -22,7 +25,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.4.3",
+    "eslint-config-next": "16.4.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
