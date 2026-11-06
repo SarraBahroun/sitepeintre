@@ -9,7 +9,7 @@ import type { Exposition } from "./types";
      • tout fichier sans nom de tableau = photo d'exposition → `vernissage`
 
    Pour ajouter une œuvre : copier un bloc de `artworks`, changer `id`, `image`
-   et les textes. `status` accepte : "available" | "sold" | "reserved"
+   et les textes. Tant que `image` est vide, la fiche reste cachée. `status` accepte : "available" | "sold" | "reserved"
    | "notForSale". Retirer `price` pour afficher « Prix sur demande ».
 
    Pour ajouter une vidéo : un bloc dans `media`. `youtubeId` est la partie
@@ -40,7 +40,7 @@ const oilOnCanvas = {
   ar: "زيت على قماش",
 };
 
-export const expositions: Exposition[] = [
+const toutesLesExpositions: Exposition[] = [
   /* ---------------------------------------------------------------------- */
   /*  LA JUNGLE I — 2023, Ennejma Ezzahra, Sidi Bou Saïd                     */
   /* ---------------------------------------------------------------------- */
@@ -560,6 +560,66 @@ export const expositions: Exposition[] = [
         dimensions: "100 × 80 cm",
         status: "available",
       },
+      {
+        // le poisson corail dans les herbes
+        id: "good-vibes",
+        // photo à venir → "/images/jungle-1/tableau-18.jpeg"
+        image: "",
+        title: {
+          fr: "Good Vibes",
+          en: "Good Vibes",
+          ar: "Good Vibes",
+        },
+        collection: jungle1,
+        symbolism: {
+          fr: "Dans cette œuvre, le poisson symbolise la fluidité, la sérénité et le mouvement harmonieux de la vie. Il incarne l'énergie positive (good vibes) et la capacité à naviguer avec aisance à travers les courants de l'existence. Ses nageoires déployées comme des voiles traduisent la liberté, l'apaisement et la connexion profonde avec la nature, tandis que les reflets dorés et lumineux rappellent la richesse intérieure et la clarté d'esprit.",
+          en: "In this work, the fish symbolises fluidity, serenity and the harmonious movement of life. It embodies positive energy (good vibes) and the ability to glide with ease through the currents of existence. Its fins, spread like sails, express freedom, calm and a deep connection with nature, while the luminous golden glints recall inner richness and clarity of mind.",
+          ar: "يرمز السمك في هذا العمل إلى الانسيابية والسكينة والحركة المتناغمة للحياة. ويجسّد الطاقة الإيجابية (good vibes) والقدرة على الإبحار بيُسر عبر تيّارات الوجود. وتعبّر زعانفه المبسوطة كالأشرعة عن الحرية والطمأنينة والصلة العميقة بالطبيعة، فيما تذكّر الانعكاسات الذهبية المضيئة بالثراء الداخلي وصفاء الذهن.",
+        },
+        description: {
+          fr: "Cette composition met en scène un poisson aux formes gracieuses et fluides, baignant dans un écosystème aquatique luxuriant. Le sujet principal se distingue par des teintes lumineuses allant du rose corail à l'orangé, rehaussées de délicats détails dorés et de motifs bleutés sur ses nageoires aériennes. Il évolue au milieu d'un feuillage aquatique dense aux nuances de vert vibrant, qui se détache avec profondeur sur un fond sombre et mystérieux. L'ensemble est sublimé par un encadrement doré mat luxueux qui apporte une touche d'élégance et met en valeur la chaleur des teintes de la toile.",
+          en: "This composition depicts a fish with graceful, flowing forms, swimming in a lush aquatic ecosystem. The main subject stands out for its luminous hues ranging from coral pink to orange, enhanced by delicate golden details and bluish patterns on its airy fins. It moves among dense aquatic foliage in vibrant shades of green, which stands out with depth against a dark, mysterious background. The whole is elevated by a luxurious matte gold frame that adds a touch of elegance and brings out the warmth of the canvas.",
+          ar: "تصوّر هذه التركيبة سمكة رشيقة الأشكال انسيابية، تسبح في نظام بيئي مائي وارف. ويتميّز الموضوع الرئيسي بألوان مضيئة تمتدّ من الوردي المرجاني إلى البرتقالي، تزيّنها تفاصيل ذهبية رقيقة وزخارف زرقاء على زعانفها الخفيفة. وتتهادى السمكة وسط نباتات مائية كثيفة بدرجات خضراء نابضة، تبرز بعمق على خلفية داكنة غامضة. ويكتمل العمل بإطار فاخر بلون الذهب المطفي يضفي لمسة من الأناقة ويُبرز دفء ألوان اللوحة.",
+        },
+        technique: oilOnCanvas,
+        framing: {
+          fr: "Cadre doré mat luxueux",
+          en: "Luxurious matte gold frame",
+          ar: "إطار فاخر بلون الذهب المطفي",
+        },
+        dimensions: "90 × 80 cm",
+        status: "available",
+      },
+      {
+        // les grues du Japon sous la neige
+        id: "danse-des-grues",
+        // photo à venir → "/images/jungle-1/tableau-19.jpeg"
+        image: "",
+        title: {
+          fr: "La danse des grues",
+          en: "Dance of the Crane",
+          ar: "Dance of the Crane",
+        },
+        collection: jungle1,
+        symbolism: {
+          fr: "Symbole universel de fidélité, de sagesse et de longévité, cet oiseau majestueux incarne ici l'harmonie et la pureté des liens. Les mouvements amples et synchronisés des ailes expriment la liberté et la grâce d'un rituel ancestral.",
+          en: "A universal symbol of fidelity, wisdom and longevity, this majestic bird here embodies harmony and the purity of bonds. The broad, synchronised movements of the wings express the freedom and grace of an ancestral ritual.",
+          ar: "رمزاً كونياً للوفاء والحكمة وطول العمر، يجسّد هذا الطائر المهيب هنا الانسجام ونقاء الروابط. وتعبّر حركات الأجنحة الواسعة المتناسقة عن حرية طقس عريق ورشاقته.",
+        },
+        description: {
+          fr: "Cette composition saisissante met en scène la grâce intemporelle de la grue du Japon au cœur d'un décor hivernal épuré, délicatement enveloppé de flocons. Leurs plumages d'un blanc immaculé contrastent avec la profondeur du noir de leurs ailes et l'éclat rubis de leur calotte, capturant l'instant précis d'une danse nuptiale d'une grande poésie. Le cadre noir luxueux structure la composition avec modernité et met en valeur la délicatesse des nuances argentées et poudrées de l'arrière-plan.",
+          en: "This striking composition depicts the timeless grace of the Japanese crane in a pared-back winter setting, delicately wrapped in snowflakes. Their immaculate white plumage contrasts with the deep black of their wings and the ruby glint of their crowns, capturing the precise moment of a deeply poetic courtship dance. The luxurious black frame gives the composition a modern structure and brings out the delicate silvery, powdery shades of the background.",
+          ar: "تصوّر هذه التركيبة الآسرة الرشاقة الخالدة لطائر الكركي الياباني في قلب مشهد شتوي صافٍ، تلفّه ندف الثلج برقّة. ويتباين ريشها الأبيض الناصع مع سواد أجنحتها العميق وبريق تاجها الياقوتي، ملتقطاً لحظة رقصة تزاوج بالغة الشاعرية. ويمنح الإطار الأسود الفاخر التركيبة بنية عصرية ويُبرز رقّة الدرجات الفضية والبودرية في الخلفية.",
+        },
+        technique: oilOnCanvas,
+        framing: {
+          fr: "Cadre noir luxueux",
+          en: "Luxurious black frame",
+          ar: "إطار فاخر باللون الأسود",
+        },
+        dimensions: "95 × 95 cm",
+        status: "available",
+      },
     ],
     film: "RVRLLJYfi58",
     filmOutlet: "Mosaïque FM",
@@ -909,6 +969,15 @@ export const expositions: Exposition[] = [
     press: [],
   },
 ];
+
+/**
+ * Les expositions telles que le site les montre : une œuvre dont la photo
+ * manque encore (`image: ""`) attend, rédigée, sans apparaître nulle part.
+ */
+export const expositions: Exposition[] = toutesLesExpositions.map((expo) => ({
+  ...expo,
+  artworks: expo.artworks.filter((a) => a.image),
+}));
 
 export const expositionSlugs = expositions.map((e) => e.slug);
 

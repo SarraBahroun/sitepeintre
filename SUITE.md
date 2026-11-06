@@ -39,6 +39,10 @@ Jungle 2. Il reste :
 - **Le mystère infini** (le tigre du Bengale) — le français suit la nouvelle
   fiche ; l’anglais et l’arabe sont encore ceux de l’ancienne, *The Infinite
   Mystery*. À aligner si l’artiste le souhaite.
+- **Good Vibes** et **La danse des grues** (La Jungle 1) — rédigées, mais
+  sans photo : la fiche reste cachée tant que `image` est vide. Déposer les
+  photos en `public/images/jungle-1/tableau-18.jpeg` et `tableau-19.jpeg`,
+  remettre ces chemins dans `image`, puis `npm run images`.
 - **Les prix** — aucune toile n’en a : toutes affichent « Prix sur demande ».
 - Les versions anglaise et arabe des deux expositions sont des traductions,
   à faire relire par l’artiste.
