@@ -68,6 +68,7 @@ Vient ensuite le **texte de présentation de chaque exposition**
   sur un même mur que l’on longe en descendant dans la page
   (`src/components/MuseumWall.tsx`). Leur taille suit leurs dimensions
   réelles ; un spot les éclaire, un cartel les nomme, un clic ouvre la fiche.
+  Deux flèches amènent la toile d’avant ou d’après au centre.
 - **Pages d'exposition** — dans l'ordre : le texte (emplacement réservé
   tant qu'il n'est pas écrit), le film YouTube, puis le vernissage une
   photo à la fois, flèches à gauche et à droite. La Jungle 1 n'a pas

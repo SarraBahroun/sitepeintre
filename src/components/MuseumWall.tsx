@@ -36,6 +36,28 @@ function longestSide(dims: string): number {
   return numbers && numbers.length ? Math.max(...numbers) : FALLBACK_CM;
 }
 
+/** La même flèche que le carrousel du vernissage. */
+function Arrow({ dir }: { dir: "prev" | "next" }) {
+  return (
+    <svg
+      width="18"
+      height="14"
+      viewBox="0 0 15 12"
+      aria-hidden
+      className="rtl:-scale-x-100"
+    >
+      <path
+        d={dir === "prev" ? "M6 1L1 6l5 5M1 6h13" : "M9 1l5 5-5 5M14 6H1"}
+        stroke="currentColor"
+        strokeWidth="1.2"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 type Props = {
   artworks: Artwork[];
   locale: Locale;
@@ -92,37 +114,59 @@ export default function MuseumWall({
   const x = useTransform(progress, (p) => (rtl ? 1 : -1) * p * travel);
   const bar = useTransform(progress, (p) => p);
 
-  // Le numéro de la toile qu'on a devant soi.
-  const [here, setHere] = useState(1);
-  useEffect(
-    () =>
-      scrollYProgress.on("change", (p) =>
-        setHere(
-          Math.min(artworks.length, Math.round(p * (artworks.length - 1)) + 1),
-        ),
-      ),
-    [scrollYProgress, artworks.length],
-  );
-
-  // Au clavier, la toile qui reçoit le focus vient se placer devant soi.
-  const bringIntoView = (index: number) => {
+  /** La hauteur de page où la toile n° index se tient au centre de l'écran. */
+  const scrollTargetOf = (index: number): number | null => {
     const track = trackRef.current;
     const wall = wallRef.current;
     const item = wall?.children[index] as HTMLElement | undefined;
-    if (!track || !wall || !item || travel === 0) return;
+    if (!track || !wall || !item) return null;
     const center =
       item.offsetLeft + item.offsetWidth / 2 - window.innerWidth / 2;
     const along = rtl ? wall.scrollWidth - window.innerWidth - center : center;
-    const p = Math.min(1, Math.max(0, along / travel));
-    // Une image plus tard : le navigateur a fini son propre défilement de
-    // focus, qui ne connaît pas le mur, et c'est le nôtre qui l'emporte.
-    requestAnimationFrame(() => {
-      const top = track.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: top + p * (track.offsetHeight - window.innerHeight),
-      });
-    });
+    const p = travel > 0 ? Math.min(1, Math.max(0, along / travel)) : 0;
+    const top = track.getBoundingClientRect().top + window.scrollY;
+    return top + p * (track.offsetHeight - window.innerHeight);
   };
+
+  /** La toile la plus proche du centre de l'écran. */
+  const nearest = (): number => {
+    let best = 0;
+    let gap = Infinity;
+    for (let i = 0; i < artworks.length; i++) {
+      const target = scrollTargetOf(i);
+      if (target === null) continue;
+      const d = Math.abs(target - window.scrollY);
+      if (d < gap) {
+        gap = d;
+        best = i;
+      }
+    }
+    return best;
+  };
+
+  // Le numéro de la toile qu'on a devant soi.
+  const [here, setHere] = useState(0);
+  useEffect(
+    () => scrollYProgress.on("change", () => setHere(nearest())),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [scrollYProgress, travel, artworks.length],
+  );
+
+  /** Amène la toile n° index devant soi, en glissant ou d'un coup. */
+  const goTo = (index: number, behavior: ScrollBehavior = "smooth") => {
+    const clamped = Math.min(artworks.length - 1, Math.max(0, index));
+    const target = scrollTargetOf(clamped);
+    if (target !== null) window.scrollTo({ top: target, behavior });
+  };
+
+  // Au clavier, la toile qui reçoit le focus vient se placer devant soi —
+  // une image plus tard : le navigateur a fini son propre défilement de
+  // focus, qui ne connaît pas le mur, et c'est le nôtre qui l'emporte.
+  const bringIntoView = (index: number) =>
+    requestAnimationFrame(() => goTo(index, "instant"));
+
+  const arrowClass =
+    "absolute top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-glow/25 bg-night/60 text-sage backdrop-blur-md transition-all duration-300 hover:border-glow/60 hover:text-glow disabled:pointer-events-none disabled:opacity-0 sm:h-14 sm:w-14";
 
   return (
     <div
@@ -228,11 +272,31 @@ export default function MuseumWall({
           })}
         </motion.ul>
 
+        {/* Les flèches : la toile d'avant, la toile d'après */}
+        <button
+          type="button"
+          onClick={() => goTo(here - 1)}
+          disabled={here === 0}
+          aria-label={t("previous")}
+          className={`${arrowClass} start-3 sm:start-6`}
+        >
+          <Arrow dir="prev" />
+        </button>
+        <button
+          type="button"
+          onClick={() => goTo(here + 1)}
+          disabled={here === artworks.length - 1}
+          aria-label={t("next")}
+          className={`${arrowClass} end-3 sm:end-6`}
+        >
+          <Arrow dir="next" />
+        </button>
+
         {/* Où l'on en est, le long du mur */}
         <div className="pointer-events-none absolute inset-x-0 bottom-[5svh] mx-auto flex w-[min(420px,70vw)] items-center gap-4">
           <span className="text-[0.7rem] tracking-[0.2em] text-sage tabular-nums">
             <bdi dir="ltr">
-              {String(here).padStart(2, "0")} /{" "}
+              {String(here + 1).padStart(2, "0")} /{" "}
               {String(artworks.length).padStart(2, "0")}
             </bdi>
           </span>
