@@ -80,7 +80,7 @@ Vient ensuite le **texte de présentation de chaque exposition**
 | --- | --- |
 | Titres, symbolisme, descriptions, dimensions, prix | `src/data/expositions.ts` |
 | Le texte de présentation de chaque exposition | fait — fr, en, ar |
-| La couverture de Diwaniyat Al-Rajhi (page Livres), les photos et textes des bijoux (page Bijoux). « Divers » n’existe plus : `/divers` mène à `/livres` | `src/data/site.ts` → `diversSections` |
+| Les photos et textes des bijoux (page Bijoux). « Divers » n’existe plus : `/divers` mène à `/livres` | `src/data/site.ts` → `diversSections` |
 | Les vidéos et passages radio | `src/data/expositions.ts` → `media` |
 | Le tarif des cours, s'il doit s'afficher (groupe adultes le jeudi, 14 h – 16 h ; les autres créneaux se conviennent après l'inscription) | `src/data/site.ts` → `courses.practical` |
 

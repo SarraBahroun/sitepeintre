@@ -7,6 +7,7 @@
 
 export const DIMENSIONS: Record<string, readonly [number, number]> = {
   "/images/artiste/portrait-01.jpeg": [815, 1087],
+  "/images/divers/livre-diwaniyat-al-rajhi.jpeg": [666, 1024],
   "/images/divers/livre-dostour.jpeg": [960, 1280],
   "/images/divers/livre-maison-de-bambous.jpeg": [960, 1280],
   "/images/divers/livre-petit-avion.jpeg": [1280, 960],

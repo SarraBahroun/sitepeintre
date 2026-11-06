@@ -356,6 +356,16 @@ export const diversSections: DiversSection[] = [
     },
     images: [],
     artworks: [],
+    books: [
+      {
+        id: "diwaniyat-al-rajhi-3",
+        cover: "/images/divers/livre-diwaniyat-al-rajhi.jpeg",
+        title: "ديوانية الراجحي الثقافية — الجزء الثالث",
+        authors: "إشراف: عبد الخالق الزهراني",
+        publisher: "الإدارة الفنية: هناء بحرون",
+        buy: [],
+      },
+    ],
   },
   {
     id: "bijoux",
