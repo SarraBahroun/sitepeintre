@@ -7,15 +7,15 @@ import { useTranslations } from "next-intl";
 
 import type { Artwork } from "@/data/types";
 import { t as tr, formatPrice } from "@/data/types";
-import { dimensions } from "@/data/dimensions";
 import type { Locale } from "@/i18n/routing";
 import { MetaRow, StatusBadge } from "./ui";
 import AddToCart from "./AddToCart";
+import MuseumWall from "./MuseumWall";
 
 /* =============================================================================
-   Les œuvres — grille et fiche détaillée
+   Les œuvres — le mur du musée et la fiche détaillée
    -----------------------------------------------------------------------------
-   Chaque vignette ouvre une fiche : grande image, prix, disponibilité,
+   Chaque toile du mur ouvre une fiche : grande image, prix, disponibilité,
    technique, dimensions, et le texte de l'artiste. On circule d'une œuvre à
    l'autre au clavier comme à la souris.
    ========================================================================== */
@@ -27,12 +27,6 @@ type Props = {
   accent?: "glow" | "gold" | "iris";
   /** D'où viennent les œuvres, pour la commande : « La Jungle 2 ». */
   origin?: string;
-};
-
-const accentRing: Record<string, string> = {
-  glow: "group-hover:border-glow/45 group-hover:shadow-[0_0_50px_-10px_var(--color-glow-deep)]",
-  gold: "group-hover:border-gold/45 group-hover:shadow-[0_0_50px_-10px_var(--color-gold-deep)]",
-  iris: "group-hover:border-iris/45 group-hover:shadow-[0_0_50px_-10px_var(--color-iris)]",
 };
 
 export default function ArtworkGallery({
@@ -107,86 +101,12 @@ export default function ArtworkGallery({
       {/* ---------------------------------------------------------------- */}
       {/*  Grille                                                           */}
       {/* ---------------------------------------------------------------- */}
-      {/*
-        Mosaïque en colonnes, et non grille à cases égales : chaque toile
-        garde sa proportion. Les cadres ne s'alignent pas — c'est le prix à
-        payer pour qu'aucune peinture ne soit rognée, et il est juste.
-      */}
-      <div className="columns-1 gap-7 sm:columns-2 lg:columns-3 [&>*]:mb-7">
-        {artworks.map((artwork, i) => {
-          const title = tr(artwork.title, locale);
-          const price = formatPrice(artwork.price, artwork.currency, locale);
-
-          return (
-            <motion.button
-              key={artwork.id}
-              type="button"
-              onClick={() => setOpenIndex(i)}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.7,
-                delay: (i % 3) * 0.1,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="group block w-full break-inside-avoid text-start"
-            >
-              <div
-                className={`relative overflow-hidden rounded-sm border border-glow/10 bg-night-2 transition-all duration-700 ease-[var(--ease-silk)] ${accentRing[accent]}`}
-              >
-                <Image
-                  src={artwork.image}
-                  alt={title || `Œuvre ${i + 1}`}
-                  {...dimensions(artwork.image)}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="h-auto w-full transition-transform duration-[1.1s] ease-[var(--ease-silk)] group-hover:scale-[1.04]"
-                />
-
-                {/* voile qui se lève au survol */}
-                <div className="absolute inset-0 bg-gradient-to-t from-night via-night/15 to-transparent opacity-75 transition-opacity duration-700 group-hover:opacity-55" />
-
-                <div className="absolute start-4 top-4">
-                  <StatusBadge
-                    label={t(`status.${artwork.status}`)}
-                    status={artwork.status}
-                  />
-                </div>
-
-                {/* invite à cliquer */}
-                <div className="absolute end-4 bottom-4 flex h-10 w-10 translate-y-2 items-center justify-center rounded-full border border-glow/30 bg-night/60 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                  <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
-                    <path
-                      d="M7 1v12M1 7h12"
-                      stroke="var(--color-glow)"
-                      strokeWidth="1.2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-              </div>
-
-              <div className="mt-4 flex items-baseline justify-between gap-4">
-                <h3 className="font-display text-lg font-light text-ivory transition-colors duration-300 group-hover:text-glow">
-                  {title || (
-                    <span className="text-sage-dim italic">
-                      {locale === "ar" ? "بدون عنوان" : "Sans titre"}
-                    </span>
-                  )}
-                </h3>
-                <p className="shrink-0 text-[0.78rem] tracking-[0.08em] text-sage">
-                  {artwork.status === "sold" ? "" : (price ?? t("onRequest"))}
-                </p>
-              </div>
-              {artwork.dimensions && (
-                <p className="mt-1 text-xs text-sage-dim">
-                  <bdi dir="ltr">{artwork.dimensions}</bdi>
-                </p>
-              )}
-            </motion.button>
-          );
-        })}
-      </div>
+      <MuseumWall
+        artworks={artworks}
+        locale={locale}
+        onOpen={setOpenIndex}
+        accent={accent}
+      />
 
       {/* ---------------------------------------------------------------- */}
       {/*  Fiche                                                            */}

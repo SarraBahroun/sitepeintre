@@ -57,7 +57,7 @@
   },
   "expo": {
     "artworksTitle": "The works",
-    "artworksLead": "Click a work to see the details.",
+    "artworksLead": "Scroll down to walk along the wall; click a painting to see it in detail.",
     "filmTitle": "The exhibition film",
     "vernissageTitle": "The opening",
     "vernissageLead": "Images from the exhibition.",
@@ -99,7 +99,8 @@
       "status": "Available for private acquisition / exhibition.",
       "certificateLabel": "Certificate",
       "certificate": "Original work accompanied by its certificate of authenticity signed by the artist."
-    }
+    },
+    "untitled": "Untitled"
   },
   "media": {
     "watch": "Watch",

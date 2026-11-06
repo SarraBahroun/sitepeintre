@@ -246,7 +246,7 @@ export default async function ExpositionPage({
       {/* ================================================================== */}
       {/*  Les œuvres                                                         */}
       {/* ================================================================== */}
-      <Section id="oeuvres" className="py-20 sm:py-28">
+      <Section id="oeuvres" className="pt-20 sm:pt-28">
         <Reveal>
           <SectionHeading
             eyebrow={tr(expo.title, locale)}
@@ -255,22 +255,25 @@ export default async function ExpositionPage({
           />
         </Reveal>
 
-        <div className="mt-14">
-          {expo.artworks.length > 0 ? (
-            <ArtworkGallery
-              artworks={expo.artworks}
-              locale={locale}
-              accent={expo.accent}
-              origin={tr(expo.title, "fr")}
-            />
-          ) : (
+        {expo.artworks.length === 0 && (
+          <div className="mt-14">
             <Placeholder
               label={tc("comingSoon")}
               hint="src/data/expositions.ts → artworks"
             />
-          )}
-        </div>
+          </div>
+        )}
       </Section>
+
+      {/* Le mur prend toute la largeur de l'écran, hors des marges. */}
+      {expo.artworks.length > 0 && (
+        <ArtworkGallery
+          artworks={expo.artworks}
+          locale={locale}
+          accent={expo.accent}
+          origin={tr(expo.title, "fr")}
+        />
+      )}
 
       {/* ================================================================== */}
       {/*  Vidéos & médias                                                    */}

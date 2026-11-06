@@ -64,6 +64,10 @@ Vient ensuite le **texte de présentation de chaque exposition**
 - **Les toiles** — 18 pour La Jungle 1 (le tigre blanc était en double), 9 pour La Jungle 2, plus les 19
   photographies de vernissage.
 - **Aucun recadrage** — chaque œuvre garde sa proportion, partout.
+- **Le mur du musée** — dans chaque exposition, les toiles sont accrochées
+  sur un même mur que l’on longe en descendant dans la page
+  (`src/components/MuseumWall.tsx`). Leur taille suit leurs dimensions
+  réelles ; un spot les éclaire, un cartel les nomme, un clic ouvre la fiche.
 - **Pages d'exposition** — dans l'ordre : le texte (emplacement réservé
   tant qu'il n'est pas écrit), le film YouTube, puis le vernissage une
   photo à la fois, flèches à gauche et à droite. La Jungle 1 n'a pas

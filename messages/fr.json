@@ -57,7 +57,7 @@
   },
   "expo": {
     "artworksTitle": "Les œuvres",
-    "artworksLead": "Cliquez sur une œuvre pour voir le détail.",
+    "artworksLead": "Descendez pour longer le mur ; cliquez sur une toile pour la voir en détail.",
     "filmTitle": "Le film de l'exposition",
     "vernissageTitle": "Le vernissage",
     "vernissageLead": "Images de l'exposition.",
@@ -99,7 +99,8 @@
       "status": "Disponible pour acquisition privée / exposition.",
       "certificateLabel": "Certificat",
       "certificate": "Œuvre originale accompagnée de son certificat d'authenticité signé par l'artiste."
-    }
+    },
+    "untitled": "Sans titre"
   },
   "media": {
     "watch": "Regarder",
