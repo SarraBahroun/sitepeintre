@@ -32,7 +32,8 @@ export default async function Footer({ locale }: { locale: Locale }) {
       heading: t("menu"),
       items: [
         { label: t("artist"), href: "/artiste" },
-        { label: t("divers"), href: "/divers" },
+        { label: t("books"), href: "/livres" },
+        { label: t("jewels"), href: "/bijoux" },
         ...(courses.enabled ? [{ label: t("courses"), href: "/cours" }] : []),
         { label: t("contact"), href: "/contact" },
       ],

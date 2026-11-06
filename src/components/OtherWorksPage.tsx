@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { routing, type Locale } from "@/i18n/routing";
+import type { Locale } from "@/i18n/routing";
 import { diversSections } from "@/data/site";
 import { t as tr, tRich } from "@/data/types";
 
@@ -14,32 +14,36 @@ import PhotoGallery from "@/components/PhotoGallery";
 import { Section, SectionHeading, Placeholder } from "@/components/ui";
 
 /* =============================================================================
-   Divers — illustration de livres, bijoux et autres explorations.
-   Chaque rubrique vient de src/data/site.ts → diversSections.
+   Gabarit des pages « hors toile » — Livres, Bijoux.
+   Chaque page reçoit les rubriques qu'elle montre ; leur contenu vient de
+   src/data/site.ts → diversSections.
    ========================================================================== */
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }));
-}
+export type OtherWorksKind = "books" | "jewels";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
+/** Quelles rubriques de diversSections chaque page rassemble. */
+const SECTIONS: Record<OtherWorksKind, string[]> = {
+  books: ["illustration", "direction-artistique"],
+  jewels: ["bijoux"],
+};
+
+export async function otherWorksMetadata(
+  locale: string,
+  kind: OtherWorksKind,
+): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t("divers") };
+  return { title: t(kind) };
 }
 
-export default async function DiversPage({
-  params,
+export default async function OtherWorksPage({
+  locale,
+  kind,
 }: {
-  params: Promise<{ locale: string }>;
+  locale: Locale;
+  kind: OtherWorksKind;
 }) {
-  const { locale: raw } = await params;
-  const locale = raw as Locale;
   setRequestLocale(locale);
+  const sections = diversSections.filter((s) => SECTIONS[kind].includes(s.id));
 
   const t = await getTranslations("home");
   const tn = await getTranslations("nav");
@@ -53,36 +57,38 @@ export default async function DiversPage({
       {/* ================================================================== */}
       <Section className="pt-40 pb-16 sm:pt-48">
         <Reveal>
-          <p className="eyebrow">{tn("divers")}</p>
+          <p className="eyebrow">{tn(kind)}</p>
           <h1 className="mt-6 font-display text-[clamp(2.6rem,7vw,5.5rem)] font-light leading-[1.02] text-ivory">
-            {t("diversTitle")}
+            {t(`${kind}Title`)}
           </h1>
           <div className="rule-glow mt-9 w-48" aria-hidden />
           <p className="mt-8 max-w-xl text-[1rem] leading-relaxed text-sage">
-            {t("diversLead")}
+            {t(`${kind}Lead`)}
           </p>
         </Reveal>
 
-        {/* Sommaire des rubriques */}
-        <Reveal delay={0.1}>
-          <nav className="mt-12 flex flex-wrap gap-3">
-            {diversSections.map((section) => (
-              <a
-                key={section.id}
-                href={`#${section.id}`}
-                className="rounded-full border border-gold/20 px-5 py-2.5 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-sage transition-all duration-400 hover:border-gold/55 hover:text-gold"
-              >
-                {tr(section.title, locale)}
-              </a>
-            ))}
-          </nav>
-        </Reveal>
+        {/* Sommaire des rubriques, s'il y en a plusieurs */}
+        {sections.length > 1 && (
+          <Reveal delay={0.1}>
+            <nav className="mt-12 flex flex-wrap gap-3">
+              {sections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#${section.id}`}
+                  className="rounded-full border border-gold/20 px-5 py-2.5 text-[0.72rem] font-medium uppercase tracking-[0.16em] text-sage transition-all duration-400 hover:border-gold/55 hover:text-gold"
+                >
+                  {tr(section.title, locale)}
+                </a>
+              ))}
+            </nav>
+          </Reveal>
+        )}
       </Section>
 
       {/* ================================================================== */}
       {/*  Les rubriques                                                      */}
       {/* ================================================================== */}
-      {diversSections.map((section, i) => {
+      {sections.map((section, i) => {
         const description = tRich(section.description, locale);
         const lead = tr(section.lead, locale);
         const isEmpty =
@@ -96,14 +102,21 @@ export default async function DiversPage({
           <Section
             key={section.id}
             id={section.id}
-            className="scroll-mt-28 py-20 sm:py-28"
+            className={
+              sections.length > 1
+                ? "scroll-mt-28 py-20 sm:py-28"
+                : "scroll-mt-28 pt-0 pb-20 sm:pb-28"
+            }
           >
             <Reveal>
-              <SectionHeading
-                eyebrow={`0${i + 1}`}
-                title={tr(section.title, locale)}
-                lead={lead || undefined}
-              />
+              {/* Seule sur sa page, la rubrique laisse l'en-tête parler pour elle. */}
+              {sections.length > 1 && (
+                <SectionHeading
+                  eyebrow={`0${i + 1}`}
+                  title={tr(section.title, locale)}
+                  lead={lead || undefined}
+                />
+              )}
             </Reveal>
 
             {description.length > 0 && (
@@ -144,10 +157,16 @@ export default async function DiversPage({
                           >
                             {book.title}
                           </p>
-                          <p dir="auto" className="mt-1.5 text-[0.85rem] text-sage">
+                          <p
+                            dir="auto"
+                            className="mt-1.5 text-[0.85rem] text-sage"
+                          >
                             {book.authors}
                           </p>
-                          <p dir="auto" className="mt-0.5 text-[0.78rem] text-sage/70">
+                          <p
+                            dir="auto"
+                            className="mt-0.5 text-[0.78rem] text-sage/70"
+                          >
                             {book.publisher}
                           </p>
                           {book.buy.length > 0 && (
@@ -161,7 +180,10 @@ export default async function DiversPage({
                                   className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-2 text-[0.76rem] text-ivory transition-all duration-400 hover:border-gold hover:text-gold"
                                 >
                                   {ta("buyBook")} · {link.label}
-                                  <span aria-hidden className="text-gold rtl:-scale-x-100">
+                                  <span
+                                    aria-hidden
+                                    className="text-gold rtl:-scale-x-100"
+                                  >
                                     ↗
                                   </span>
                                 </a>

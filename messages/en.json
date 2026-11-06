@@ -10,20 +10,19 @@
     "expositions": "Exhibitions",
     "jungle1": "La Jungle 1",
     "jungle2": "La Jungle 2",
-    "divers": "Other Works",
     "contact": "Contact",
     "menu": "Menu",
     "close": "Close",
     "language": "Language",
-    "courses": "Painting lessons"
+    "courses": "Painting lessons",
+    "books": "Books",
+    "jewels": "Jewellery"
   },
   "home": {
     "enter": "Enter the jungle",
     "scroll": "Scroll",
     "expositionsTitle": "The exhibitions",
     "expositionsLead": "Two chapters of the same forest.",
-    "diversTitle": "Other Works",
-    "diversLead": "Book illustration, jewellery design and other explorations.",
     "artistTitle": "The Artist",
     "artistLead": "Behind the light.",
     "discover": "Discover",
@@ -33,7 +32,13 @@
     "jungle2Lead": "The paintings of the second Jungle.",
     "seeExposition": "View the exhibition",
     "coursesTitle": "Painting lessons",
-    "coursesLead": "Learn to paint at the studio, from first strokes to finished canvas."
+    "coursesLead": "Learn to paint at the studio, from first strokes to finished canvas.",
+    "booksTitle": "Illustration and publishing",
+    "booksLead": "Hand-illustrated children’s books, and the art direction of the Diwaniyat Al-Rajhi Cultural Book.",
+    "jewelsTitle": "Jewellery",
+    "jewelsLead": "Handmade jewellery created under the brand Chic & Glamour.",
+    "otherTitle": "Books and jewellery",
+    "otherLead": "Beyond the canvas: illustrated books and handmade jewellery."
   },
   "artist": {
     "title": "The Artist",
@@ -146,7 +151,7 @@
     "schedule": "Schedule",
     "price": "Fee",
     "registerTitle": "Register",
-    "registerLead": "There are no fixed days or times. Register, and the artist will contact you to arrange them together.",
+    "registerLead": "The adult group meets on Thursdays, from 2 to 4 pm. For another time, register and the artist will contact you to arrange it together.",
     "formFormula": "Course of interest",
     "formFormulaAny": "Not sure yet",
     "formLevel": "Level",

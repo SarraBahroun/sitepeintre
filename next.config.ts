@@ -22,6 +22,17 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // L'ancienne page « Divers » est devenue Livres et Bijoux : les liens
+  // déjà partagés mènent aux livres.
+  async redirects() {
+    return [
+      {
+        source: "/:locale(fr|en|ar)/divers",
+        destination: "/:locale/livres",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     // 90 pour la toile d'ouverture, 75 partout ailleurs

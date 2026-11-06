@@ -23,7 +23,7 @@ Rien n'est en ligne pour l'instant.
    trois formulaires n'ont été testés qu'avec un envoi simulé.
 2. **Le téléphone** — parcourir le site sur un vrai téléphone. La fluidité n'a
    été vérifiée qu'en format téléphone dans le navigateur.
-3. **Les liens des livres** (Divers → Illustration) — les ouvrir à la main : ces
+3. **Les liens des livres** (page Livres, `/livres`) — les ouvrir à la main : ces
    sites refusent les robots, aucun n'a pu être lu. Seuls *La Maison de
    bambous* (Al Kitab) et *Le Petit Tracteur* (Nouvelle-Aquitaine) ont une
    page d'achat à eux ; les quatre autres livres attendent la leur
@@ -80,9 +80,9 @@ Vient ensuite le **texte de présentation de chaque exposition**
 | --- | --- |
 | Titres, symbolisme, descriptions, dimensions, prix | `src/data/expositions.ts` |
 | Le texte de présentation de chaque exposition | fait — fr, en, ar |
-| Les images de la rubrique Divers : Diwaniyat Al-Rajhi, bijoux (les six livres sont posés) | `src/data/site.ts` → `diversSections` |
+| La couverture de Diwaniyat Al-Rajhi (page Livres), les photos et textes des bijoux (page Bijoux). « Divers » n’existe plus : `/divers` mène à `/livres` | `src/data/site.ts` → `diversSections` |
 | Les vidéos et passages radio | `src/data/expositions.ts` → `media` |
-| Le tarif des cours, s'il doit s'afficher (pas d'horaires fixes : ils se conviennent après l'inscription) | `src/data/site.ts` → `courses.practical` |
+| Le tarif des cours, s'il doit s'afficher (groupe adultes le jeudi, 14 h – 16 h ; les autres créneaux se conviennent après l'inscription) | `src/data/site.ts` → `courses.practical` |
 
 **Après avoir déposé des images dans `public/images/`, lancer
 `npm run images`** : le relevé des proportions se refait, et c'est lui qui

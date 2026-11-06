@@ -15,7 +15,8 @@ const pages = [
   "",
   "/artiste",
   ...expositions.map((expo) => `/expositions/${expo.slug}`),
-  "/divers",
+  "/livres",
+  "/bijoux",
   ...(courses.enabled ? ["/cours"] : []),
   "/contact",
 ];

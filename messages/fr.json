@@ -10,20 +10,19 @@
     "expositions": "Expositions",
     "jungle1": "La Jungle 1",
     "jungle2": "La Jungle 2",
-    "divers": "Divers",
     "contact": "Contact",
     "menu": "Menu",
     "close": "Fermer",
     "language": "Langue",
-    "courses": "Cours de peinture"
+    "courses": "Cours de peinture",
+    "books": "Livres",
+    "jewels": "Bijoux"
   },
   "home": {
     "enter": "Entrer dans la jungle",
     "scroll": "Faites défiler",
     "expositionsTitle": "Les expositions",
     "expositionsLead": "Deux chapitres d'une même forêt.",
-    "diversTitle": "Divers",
-    "diversLead": "Illustrations de livres, création de bijoux et autres explorations.",
     "artistTitle": "L'artiste",
     "artistLead": "Derrière la lumière.",
     "discover": "Découvrir",
@@ -33,7 +32,13 @@
     "jungle2Lead": "Les toiles de la seconde Jungle.",
     "seeExposition": "Voir l'exposition",
     "coursesTitle": "Cours de peinture",
-    "coursesLead": "Apprendre à peindre à l'atelier, des premiers gestes à la toile achevée."
+    "coursesLead": "Apprendre à peindre à l'atelier, des premiers gestes à la toile achevée.",
+    "booksTitle": "Illustration et édition",
+    "booksLead": "Des albums pour enfants illustrés à la main, et la direction artistique du Diwaniyat Al-Rajhi Cultural Book.",
+    "jewelsTitle": "Bijoux",
+    "jewelsLead": "Des bijoux artisanaux créés sous la marque Chic & Glamour.",
+    "otherTitle": "Livres et bijoux",
+    "otherLead": "Au-delà de la toile : des livres illustrés et des bijoux faits main."
   },
   "artist": {
     "title": "L'artiste",
@@ -146,7 +151,7 @@
     "schedule": "Horaires",
     "price": "Tarif",
     "registerTitle": "S'inscrire",
-    "registerLead": "Il n'y a pas de jour ni d'horaire fixes. Inscrivez-vous : l'artiste vous contacte pour les convenir avec vous.",
+    "registerLead": "Le groupe adultes se retrouve le jeudi, de 14 h à 16 h. Pour un autre créneau, inscrivez-vous : l'artiste vous contacte pour le convenir avec vous.",
     "formFormula": "Formule souhaitée",
     "formFormulaAny": "Je ne sais pas encore",
     "formLevel": "Niveau",

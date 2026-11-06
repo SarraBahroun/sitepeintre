@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
 import { expositions } from "@/data/expositions";
-import { artist, courses, diversSections, heroPlates } from "@/data/site";
+import { artist, courses, heroPlates } from "@/data/site";
 import { t as tr } from "@/data/types";
 import { dimensions } from "@/data/dimensions";
 
@@ -109,7 +109,7 @@ export default async function HomePage({
       </Section>
 
       {/* ================================================================== */}
-      {/*  Divers                                                             */}
+      {/*  Livres et bijoux                                                   */}
       {/* ================================================================== */}
       <Section className="pb-24 sm:pb-32">
         <Reveal>
@@ -120,27 +120,16 @@ export default async function HomePage({
             />
             <div className="relative max-w-2xl">
               <SectionHeading
-                eyebrow={tn("divers")}
-                title={t("diversTitle")}
-                lead={t("diversLead")}
+                eyebrow={`${tn("books")} · ${tn("jewels")}`}
+                title={t("otherTitle")}
+                lead={t("otherLead")}
               />
-              <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-3">
-                {diversSections.map((section) => (
-                  <li
-                    key={section.id}
-                    className="flex items-center gap-2.5 text-sm text-sage"
-                  >
-                    <span
-                      aria-hidden
-                      className="h-1 w-1 rounded-full bg-gold"
-                    />
-                    {tr(section.title, locale)}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-10">
-                <ActionLink href="/divers" tone="gold">
-                  {t("seeAll")}
+              <div className="mt-10 flex flex-wrap gap-4">
+                <ActionLink href="/livres" tone="gold">
+                  {t("booksTitle")}
+                </ActionLink>
+                <ActionLink href="/bijoux" tone="gold">
+                  {t("jewelsTitle")}
                 </ActionLink>
               </div>
             </div>

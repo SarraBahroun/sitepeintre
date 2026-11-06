@@ -465,9 +465,9 @@ export const courses = {
       ar: "مرسم الفنانة، نابل",
     } as Localized,
     schedule: {
-      fr: "À convenir après l'inscription",
-      en: "Arranged after registration",
-      ar: "تُحدَّد بعد التسجيل",
+      fr: "Groupe adultes : le jeudi, de 14 h à 16 h. Les autres horaires se conviennent après l'inscription.",
+      en: "Adult group: Thursdays, 2 to 4 pm. Other times are arranged after registration.",
+      ar: "مجموعة الكبار: كل خميس، من الساعة 14:00 إلى 16:00. وتُحدَّد المواعيد الأخرى بعد التسجيل.",
     } as Localized,
     price: { fr: "", en: "", ar: "" } as Localized,
   },
