@@ -420,19 +420,19 @@ export const courses = {
   /** Texte de présentation — à compléter si besoin. */
   description: { fr: [], en: [], ar: [] } as LocalizedRich,
 
-  /** Les formules proposées. Laisser le tableau vide pour les masquer. */
+  /** Les techniques enseignées. Laisser le tableau vide pour les masquer. */
   formulas: [
     {
-      id: "debutant",
+      id: "acrylique",
       title: {
-        fr: "Initiation",
-        en: "Introduction",
-        ar: "مبادئ الرسم",
+        fr: "Peinture acrylique",
+        en: "Acrylic painting",
+        ar: "الرسم بالأكريليك",
       },
       description: {
-        fr: "Les bases du dessin et de la couleur, pas à pas.",
-        en: "The fundamentals of drawing and colour, step by step.",
-        ar: "أساسيات الرسم واللون، خطوة بخطوة.",
+        fr: "Une peinture à l'eau qui sèche vite : idéale pour oser, superposer et reprendre.",
+        en: "A water-based paint that dries fast: ideal for daring, layering and reworking.",
+        ar: "طلاء مائي سريع الجفاف: مثالي للجرأة وتراكب الطبقات وإعادة العمل.",
       },
       detail: { fr: "", en: "", ar: "" },
     },
@@ -451,16 +451,30 @@ export const courses = {
       detail: { fr: "", en: "", ar: "" },
     },
     {
-      id: "enfants",
+      id: "aquarelle",
       title: {
-        fr: "Atelier enfants",
-        en: "Children's workshop",
-        ar: "ورشة الأطفال",
+        fr: "Aquarelle",
+        en: "Watercolour",
+        ar: "الألوان المائية",
       },
       description: {
-        fr: "Un premier contact avec la peinture, par le jeu et l'observation.",
-        en: "A first encounter with painting, through play and observation.",
-        ar: "أول لقاء مع الرسم، عبر اللعب والملاحظة.",
+        fr: "L'eau et la transparence : apprendre à laisser la couleur respirer sur le papier.",
+        en: "Water and transparency: learning to let colour breathe on paper.",
+        ar: "الماء والشفافية: أن نتعلّم ترك اللون يتنفّس على الورق.",
+      },
+      detail: { fr: "", en: "", ar: "" },
+    },
+    {
+      id: "pastel",
+      title: {
+        fr: "Pastel",
+        en: "Pastel",
+        ar: "الباستيل",
+      },
+      description: {
+        fr: "La couleur pure, posée et estompée du bout des doigts.",
+        en: "Pure colour, laid down and blended with the fingertips.",
+        ar: "اللون الخالص، يُوضع ويُمزج بأطراف الأصابع.",
       },
       detail: { fr: "", en: "", ar: "" },
     },

@@ -88,7 +88,7 @@ export default async function CoursesPage({
             <SectionHeading title={t("formulasTitle")} />
           </Reveal>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
             {courses.formulas.map((formula, i) => (
               <Reveal key={formula.id} delay={i * 0.1}>
                 <article className="group h-full rounded-sm border border-glow/12 bg-night-2/40 p-8 transition-all duration-700 ease-[var(--ease-silk)] hover:border-glow/35 hover:bg-night-2/70">
