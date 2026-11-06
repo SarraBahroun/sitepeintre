@@ -563,8 +563,7 @@ const toutesLesExpositions: Exposition[] = [
       {
         // le poisson corail dans les herbes
         id: "good-vibes",
-        // photo à venir → "/images/jungle-1/tableau-18.jpeg"
-        image: "",
+        image: "/images/jungle-1/tableau-18.jpeg",
         title: {
           fr: "Good Vibes",
           en: "Good Vibes",
@@ -593,8 +592,7 @@ const toutesLesExpositions: Exposition[] = [
       {
         // les grues du Japon sous la neige
         id: "danse-des-grues",
-        // photo à venir → "/images/jungle-1/tableau-19.jpeg"
-        image: "",
+        image: "/images/jungle-1/tableau-19.jpeg",
         title: {
           fr: "La danse des grues",
           en: "Dance of the Crane",

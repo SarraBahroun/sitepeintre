@@ -30,7 +30,7 @@ Rien n'est en ligne pour l'instant.
 
 ## La prochaine chose à faire
 
-**Les textes des toiles sont écrits** — les 16 de La Jungle 1 et les 9 de La
+**Les textes des toiles sont écrits** — les 18 de La Jungle 1 et les 9 de La
 Jungle 2. Il reste :
 
 - **Yes, I am beautiful peacock** (La Jungle 1, le paon) — le texte sur le
@@ -39,10 +39,6 @@ Jungle 2. Il reste :
 - **Le mystère infini** (le tigre du Bengale) — le français suit la nouvelle
   fiche ; l’anglais et l’arabe sont encore ceux de l’ancienne, *The Infinite
   Mystery*. À aligner si l’artiste le souhaite.
-- **Good Vibes** et **La danse des grues** (La Jungle 1) — rédigées, mais
-  sans photo : la fiche reste cachée tant que `image` est vide. Déposer les
-  photos en `public/images/jungle-1/tableau-18.jpeg` et `tableau-19.jpeg`,
-  remettre ces chemins dans `image`, puis `npm run images`.
 - **Les prix** — aucune toile n’en a : toutes affichent « Prix sur demande ».
 - Les versions anglaise et arabe des deux expositions sont des traductions,
   à faire relire par l’artiste.
@@ -62,7 +58,7 @@ Vient ensuite le **texte de présentation de chaque exposition**
 - **Marque** — le monogramme HB, relevé de la signature des toiles, en
   nervure d'une plume de phénix. Trois états selon la taille, et l'onglet
   porte les lettres seules.
-- **Les toiles** — 16 pour La Jungle 1 (le tigre blanc était en double), 9 pour La Jungle 2, plus les 19
+- **Les toiles** — 18 pour La Jungle 1 (le tigre blanc était en double), 9 pour La Jungle 2, plus les 19
   photographies de vernissage.
 - **Aucun recadrage** — chaque œuvre garde sa proportion, partout.
 - **Pages d'exposition** — dans l'ordre : le texte (emplacement réservé
