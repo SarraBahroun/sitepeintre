@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 
+import { Link } from "@/i18n/navigation";
 import { site } from "@/data/site";
 import type { SendStatus } from "@/lib/useFormSender";
 
@@ -20,6 +21,7 @@ export default function FormStatus({
   sendLabel: string;
 }) {
   const t = useTranslations("contact");
+  const tp = useTranslations("privacy");
 
   return (
     <>
@@ -53,7 +55,17 @@ export default function FormStatus({
             </a>
           </>
         )}
-        {(status === "idle" || status === "sending") && t("formNote")}
+        {(status === "idle" || status === "sending") && (
+          <>
+            {t("formNote")}{" "}
+            <Link
+              href="/confidentialite"
+              className="underline decoration-sage-dim/50 underline-offset-4 transition-colors duration-300 hover:text-glow"
+            >
+              {tp("formNote")}
+            </Link>
+          </>
+        )}
       </p>
     </>
   );

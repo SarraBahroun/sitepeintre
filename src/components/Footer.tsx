@@ -101,8 +101,7 @@ export default async function Footer({ locale }: { locale: Locale }) {
                 rel="noopener noreferrer"
                 className="mt-3 flex items-center gap-2.5 text-sm text-sage transition-colors duration-300 hover:text-glow"
               >
-                <XIcon />
-                X
+                <XIcon />X
               </a>
             )}
 
@@ -161,6 +160,15 @@ export default async function Footer({ locale }: { locale: Locale }) {
         <div className="flex flex-col items-center justify-between gap-3 text-[0.72rem] tracking-[0.1em] text-sage-dim sm:flex-row">
           <p>
             © {year} {locale === "ar" ? site.nameAr : site.name}. {tf("rights")}
+            <span aria-hidden className="mx-2.5">
+              ·
+            </span>
+            <Link
+              href="/confidentialite"
+              className="transition-colors duration-300 hover:text-glow"
+            >
+              {t("privacy")}
+            </Link>
           </p>
           <p>
             {tr(site.city, locale)}, {tr(site.country, locale)}

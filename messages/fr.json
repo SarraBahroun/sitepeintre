@@ -16,7 +16,8 @@
     "language": "Langue",
     "courses": "Cours de peinture",
     "books": "Livres",
-    "jewels": "Bijoux"
+    "jewels": "Bijoux",
+    "privacy": "Confidentialité"
   },
   "home": {
     "enter": "Entrer dans la jungle",
@@ -200,5 +201,12 @@
     "sentBody": "Hana Bahroun vous appellera très vite pour la confirmer, convenir de la remise et du règlement.",
     "reference": "Référence de votre commande",
     "continue": "Retour à l'accueil"
+  },
+  "privacy": {
+    "title": "Confidentialité",
+    "lead": "Ce que ce site fait des informations que vous lui confiez — en peu de mots.",
+    "writeTo": "Pour toute question ou demande",
+    "updated": "Mis à jour le",
+    "formNote": "Vos informations ne servent qu'à vous répondre."
   }
 }

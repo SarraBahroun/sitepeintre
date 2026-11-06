@@ -16,7 +16,8 @@
     "language": "Language",
     "courses": "Painting lessons",
     "books": "Books",
-    "jewels": "Jewellery"
+    "jewels": "Jewellery",
+    "privacy": "Privacy"
   },
   "home": {
     "enter": "Enter the jungle",
@@ -200,5 +201,12 @@
     "sentBody": "Hana Bahroun will call you very soon to confirm it and arrange the handover and payment.",
     "reference": "Your order reference",
     "continue": "Back to home"
+  },
+  "privacy": {
+    "title": "Privacy",
+    "lead": "What this site does with the information you entrust to it — in a few words.",
+    "writeTo": "For any question or request",
+    "updated": "Last updated",
+    "formNote": "Your information is only used to reply to you."
   }
 }
