@@ -127,6 +127,8 @@ export type Book = {
   title: string;
   authors: string;
   publisher: string;
+  /** Autres mentions de l’ours, une par ligne (rédaction, direction…). */
+  credits?: string[];
   /** Pages où le livre s’achète directement ; vide si aucune n’est connue. */
   buy: { label: string; href: string }[];
 };

@@ -169,6 +169,15 @@ export default async function OtherWorksPage({
                           >
                             {book.publisher}
                           </p>
+                          {book.credits?.map((line) => (
+                            <p
+                              key={line}
+                              dir="auto"
+                              className="mt-0.5 text-[0.78rem] text-sage/70"
+                            >
+                              {line}
+                            </p>
+                          ))}
                           {book.buy.length > 0 && (
                             <div className="mt-4 flex flex-wrap gap-2.5">
                               {book.buy.map((link) => (
