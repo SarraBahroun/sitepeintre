@@ -1,6 +1,6 @@
 # Où nous en sommes
 
-Dernière séance : 2 novembre 2026.
+Dernière séance : 6 novembre 2026.
 `npm run dev`, puis http://localhost:3000 — la racine redirige vers `/fr`.
 Au téléphone, sur le même réseau : http://172.20.10.2:3000/fr — si
 l'adresse de l'ordinateur change, la mettre aussi dans `allowedDevOrigins`
@@ -27,27 +27,18 @@ Rien n'est en ligne pour l'instant.
 
 ## La prochaine chose à faire
 
-**Écrire les textes de La Jungle 1.** Les neuf toiles de La Jungle 2 sont
-écrites ; sur les dix-sept de La Jungle 1, seize attendent encore leur texte.
-Les versions anglaise et arabe de La Jungle 2 sont des traductions à faire
-relire par l'artiste. Chaque fiche porte en commentaire le
-sujet qu'elle montre — « la coccinelle sur le trèfle », « le phénix d'or » —
-de sorte qu'on sait de quelle toile il s'agit sans rouvrir les images.
+**Les textes des toiles sont écrits** — les 16 de La Jungle 1 et les 9 de La
+Jungle 2. Il reste :
 
-Pour chacune, dans `src/data/expositions.ts` :
-
-| Champ | Ce qu'il attend |
-| --- | --- |
-| `title` | le titre, dans les trois langues |
-| `symbolism` | ce que l'œuvre dit — affiché en exergue, filet doré |
-| `description` | ce que l'on voit, la facture, le format |
-| `dimensions` | `"140 × 110 cm"` |
-| `price` | un nombre ; retirer la ligne affiche « Prix sur demande » |
-| `status` | `available` · `sold` · `reserved` · `notForSale` |
-
-*The Infinite Mystery* (La Jungle 1, le tigre) est déjà écrite : elle sert de
-modèle. Le bloc « Détails d'acquisition » s'affiche seul sous chaque œuvre
-`available` : il vient de `messages/*.json`, pas de la fiche.
+- **Yes, I am beautiful peacock** (La Jungle 1, le paon) — le texte sur le
+  symbole du paon s’arrête net dans la fiche reçue (« … une profonde charge
+  symbolique : »). Le champ `symbolism` est vide en attendant la suite.
+- **Le mystère infini** (le tigre du Bengale) — le français suit la nouvelle
+  fiche ; l’anglais et l’arabe sont encore ceux de l’ancienne, *The Infinite
+  Mystery*. À aligner si l’artiste le souhaite.
+- **Les prix** — aucune toile n’en a : toutes affichent « Prix sur demande ».
+- Les versions anglaise et arabe des deux expositions sont des traductions,
+  à faire relire par l’artiste.
 
 Vient ensuite le **texte de présentation de chaque exposition**
 (`statement`) — c'est lui qui raconte avant que l'on regarde.
@@ -64,7 +55,7 @@ Vient ensuite le **texte de présentation de chaque exposition**
 - **Marque** — le monogramme HB, relevé de la signature des toiles, en
   nervure d'une plume de phénix. Trois états selon la taille, et l'onglet
   porte les lettres seules.
-- **Les toiles** — 17 pour La Jungle 1, 9 pour La Jungle 2, plus les 19
+- **Les toiles** — 16 pour La Jungle 1 (le tigre blanc était en double), 9 pour La Jungle 2, plus les 19
   photographies de vernissage.
 - **Aucun recadrage** — chaque œuvre garde sa proportion, partout.
 - **Pages d'exposition** — dans l'ordre : le texte (emplacement réservé
