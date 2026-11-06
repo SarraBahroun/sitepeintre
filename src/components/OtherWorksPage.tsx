@@ -163,12 +163,7 @@ export default async function OtherWorksPage({
                           >
                             {book.authors}
                           </p>
-                          <p
-                            dir="auto"
-                            className="mt-0.5 text-[0.78rem] text-sage/70"
-                          >
-                            {book.publisher}
-                          </p>
+                          {/* L'ours dans l'ordre du livre ; l'éditeur ou le rôle de l'artiste vient en dernier. */}
                           {book.credits?.map((line) => (
                             <p
                               key={line}
@@ -178,6 +173,13 @@ export default async function OtherWorksPage({
                               {line}
                             </p>
                           ))}
+
+                          <p
+                            dir="auto"
+                            className="mt-0.5 text-[0.78rem] text-sage/70"
+                          >
+                            {book.publisher}
+                          </p>
                           {book.buy.length > 0 && (
                             <div className="mt-4 flex flex-wrap gap-2.5">
                               {book.buy.map((link) => (
