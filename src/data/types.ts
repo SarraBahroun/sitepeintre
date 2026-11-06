@@ -87,6 +87,8 @@ export type Exposition = {
    * particulier n'engagerait qu'elle-même.
    */
   backdrop?: string;
+  /** Sa version en hauteur, pour les écrans en hauteur (téléphones). */
+  backdropPortrait?: string;
   /** Teinte dominante de l'exposition, pour les halos et les filets. */
   accent: "glow" | "gold" | "iris";
   artworks: Artwork[];
@@ -95,6 +97,11 @@ export type Exposition = {
    * ou « youtu.be/ » dans l'adresse. Affiché en grand sous le texte.
    */
   film?: string;
+  /**
+   * La plus grande vignette que YouTube ait pour ce film. Toutes les vidéos
+   * n'ont pas la « maxres » : la demander quand même coûte une erreur 404.
+   */
+  filmThumb?: "maxresdefault" | "sddefault" | "hqdefault";
   /** Le média qui l'a tourné, affiché au-dessus : « Mosaïque FM »… */
   filmOutlet?: string;
   /** Photographies du vernissage et de l'accrochage. */

@@ -17,14 +17,17 @@ export default function ExpoFilm({
   youtubeId,
   title,
   playLabel,
+  thumb: size = "maxresdefault",
 }: {
   youtubeId: string;
+  /** La taille de vignette que YouTube possède pour cette vidéo. */
+  thumb?: "maxresdefault" | "sddefault" | "hqdefault";
   title: string;
   playLabel: string;
 }) {
   const [playing, setPlaying] = useState(false);
   const [thumb, setThumb] = useState(
-    `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`,
+    `https://i.ytimg.com/vi/${youtubeId}/${size}.jpg`,
   );
 
   return (

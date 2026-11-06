@@ -39,15 +39,20 @@ Jungle 2. Il reste :
 - **Yes, I am beautiful peacock** (La Jungle 1, le paon) — le texte sur le
   symbole du paon s’arrête net dans la fiche reçue (« … une profonde charge
   symbolique : »). Le champ `symbolism` est vide en attendant la suite.
-- **Le mystère infini** (le tigre du Bengale) — le français suit la nouvelle
-  fiche ; l’anglais et l’arabe sont encore ceux de l’ancienne, *The Infinite
-  Mystery*. À aligner si l’artiste le souhaite.
-- **Les prix** — aucune toile n’en a : toutes affichent « Prix sur demande ».
-- Les versions anglaise et arabe des deux expositions sont des traductions,
-  à faire relire par l’artiste.
+- **Les prix et la disponibilité** — aucune toile n’a de prix : toutes
+  affichent « Prix sur demande ». Seule *Flame of Grace* est vendue. L’artiste
+  enverra prix et disponibilités.
+- **Les bijoux** — photos et textes à venir (page Bijoux).
+- Les traductions anglaise et arabe sont faites ici : l’artiste donne une
+  seule langue.
 
-Vient ensuite le **texte de présentation de chaque exposition**
-(`statement`) — c'est lui qui raconte avant que l'on regarde.
+Puis la **mise en ligne** : passer Next.js en 16.4.5 (alerte de sécurité du
+3 novembre 2026), rendre le site statique, le publier sur Cloudflare avec
+hanabahroun.com, déclarer le domaine dans Web3Forms, puis essayer les trois
+formulaires et la vidéo d’ouverture sur iPhone.
+
+Dernière vérification (6 novembre) : 9 pages × 3 langues × ordinateur et
+téléphone, sans erreur, sans débordement, sans image cassée.
 
 ---
 

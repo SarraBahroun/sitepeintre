@@ -19,6 +19,8 @@ import type { Exposition } from "./types";
 
 /** Le fond de nuit commun aux pages d'exposition. */
 const JUNGLE = "/images/oeuvres/animaux-hd.jpeg";
+/** La même jungle peinte en hauteur, comme en page d'accueil sur téléphone. */
+const JUNGLE_PORTRAIT = "/images/oeuvres/animaux-telephone.jpeg";
 
 /** Collection des toiles de La Jungle 1. */
 const jungle1 = {
@@ -88,6 +90,7 @@ const toutesLesExpositions: Exposition[] = [
     },
     cover: "/images/jungle-1/tableau-01.jpeg",
     backdrop: JUNGLE,
+    backdropPortrait: JUNGLE_PORTRAIT,
     accent: "gold",
     artworks: [
       {
@@ -102,13 +105,13 @@ const toutesLesExpositions: Exposition[] = [
         collection: jungle1,
         symbolism: {
           fr: "Incarnation par excellence de la puissance brute, du courage indomptable et de la souveraineté, le tigre du Bengale symbolise également la force vitale brute, l'instinct et la liberté farouche. En résonance avec le titre « Le mystère infini », il incarne la sagesse silencieuse des profondeurs sauvages, un gardien des secrets de la nature invitant à la contemplation et au voyage intérieur.",
-          en: "Part of « The Jungle Series », this magnificent piece embodies an emblem of ultimate royalty and mystery. Feared, deeply respected for its raw power, and exuding a quiet authority, the tiger stands as the regal and enigmatic guardian of the pristine forest.",
-          ar: "ضمن مجموعة «قصة الغابة»، تجسّد هذه اللوحة الاستثنائية رمزاً خالصاً للسيادة والملكية. إنه الحاكم الخفيّ للغابة؛ كائن غامض يُهاب ويُحترم لقوته الهادئة وهيبته الخالدة، ليقف كحارس ملكي يفرض حضوره بوقار وسكينة.",
+          en: "The ultimate embodiment of raw power, untameable courage and sovereignty, the Bengal tiger also symbolises raw life force, instinct and fierce freedom. Echoing the title « The Infinite Mystery », it embodies the silent wisdom of the wild depths: a guardian of nature’s secrets, inviting contemplation and an inner journey.",
+          ar: "النمر البنغالي هو التجسيد الأسمى للقوة الخام والشجاعة التي لا تُروَّض والسيادة، ويرمز أيضاً إلى القوة الحيوية الخام والغريزة والحرية الجامحة. وفي صدى لعنوان «The Infinite Mystery»، يجسّد الحكمة الصامتة لأعماق البرّية: حارسٌ لأسرار الطبيعة يدعو إلى التأمّل والرحلة الداخلية.",
         },
         description: {
           fr: "Cette huile sur toile saisissante met en scène un majestueux tigre du Bengale, fièrement dressé au cœur d'une jungle luxuriante. L'animal, représenté avec une minutie saisissante dans ses moindres détails et ses rayures caractéristiques, se détache sur un arrière-plan verdoyant composé de feuillages denses et de troncs d'arbres tropicaux. Son regard perçant et son allure souveraine renforcent l'atmosphère énigmatique et envoûtante de la scène.",
-          en: "« The Infinite Mystery » invites viewers into a serene yet commanding tropical sanctuary. Masterfully painted in rich oil on canvas, the artwork captures the majestic presence of the tiger amidst dense, atmospheric jungle foliage and deep green gradients. Measuring an impressive 140 × 110 cm, this creation is elegantly housed in a sophisticated matte gold frame, offering a refined touch of timeless elegance and a commanding focal point for private collections and art connoisseurs.",
-          ar: "تأخذنا لوحة «The Infinite Mystery» في رحلة بصرية عميقة إلى قلب الطبيعة الاستوائية الكثيفة. أُنجز العمل بألوان زيتية دقيقة ومتقنة تُبرز التفاصيل المعقّدة لفرو النمر وتدرّجات الخضرة الغنية بالعمق والجو الغامض. بحجمها الكبير وحضورها المهيب (140 × 110 سم)، وتكتمل فخامتها بإطار ذهبي مطفي راقٍ، لتشكّل قطعة فنية متحفية تُضفي هيبة وأناقة.",
+          en: "This striking oil on canvas portrays a majestic Bengal tiger standing proudly at the heart of a lush jungle. Rendered with striking precision down to its finest details and characteristic stripes, the animal stands out against a verdant background of dense foliage and tropical tree trunks. Its piercing gaze and sovereign bearing heighten the enigmatic, spellbinding atmosphere of the scene.",
+          ar: "تصوّر هذه اللوحة الزيتية الآسرة نمراً بنغالياً مهيباً ينتصب بشموخ في قلب غابة وارفة. وقد رُسم الحيوان بدقة لافتة في أدقّ تفاصيله وخطوطه المميّزة، فيبرز على خلفية خضراء من أوراق كثيفة وجذوع أشجار استوائية. وتعزّز نظرته الثاقبة وهيبته السيادية الجوّ الغامض الساحر للمشهد.",
         },
         technique: oilOnCanvas,
         framing: {
@@ -620,6 +623,7 @@ const toutesLesExpositions: Exposition[] = [
       },
     ],
     film: "RVRLLJYfi58",
+    filmThumb: "sddefault",
     filmOutlet: "Mosaïque FM",
     vernissage: [],
     media: [],
@@ -666,6 +670,7 @@ const toutesLesExpositions: Exposition[] = [
     },
     cover: "/images/jungle-2/tableau-d.jpeg",
     backdrop: JUNGLE,
+    backdropPortrait: JUNGLE_PORTRAIT,
     accent: "glow",
     artworks: [
       {

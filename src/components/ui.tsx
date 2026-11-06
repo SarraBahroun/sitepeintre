@@ -32,12 +32,15 @@ export function SectionHeading({
   lead,
   align = "start",
   className = "",
+  as: Heading = "h2",
 }: {
   eyebrow?: string;
   title: ReactNode;
   lead?: string;
   align?: "start" | "center";
   className?: string;
+  /** h1 quand le titre est celui de la page elle-même. */
+  as?: "h1" | "h2";
 }) {
   const centered = align === "center";
 
@@ -46,9 +49,9 @@ export function SectionHeading({
       className={`${centered ? "mx-auto max-w-2xl text-center" : "max-w-3xl"} ${className}`}
     >
       {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-      <h2 className="mt-4 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.12] tracking-[0.01em] text-ivory">
+      <Heading className="mt-4 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-light leading-[1.12] tracking-[0.01em] text-ivory">
         {title}
-      </h2>
+      </Heading>
       <div
         className={`rule-glow mt-6 w-24 ${centered ? "mx-auto" : ""}`}
         aria-hidden

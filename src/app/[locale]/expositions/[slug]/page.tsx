@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -89,14 +89,7 @@ export default async function ExpositionPage({
             {/* La jungle de nuit, commune aux deux expositions : elles
                 appartiennent à la même forêt. Elle dérive lentement, comme
                 en page d'accueil. */}
-            <Image
-              src={backdrop}
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="animate-canvas object-cover"
-            />
+            <Backdrop src={backdrop} portrait={expo.backdropPortrait} />
             {/*
               Un voile léger, et un seul. Trois couches sombres empilées
               rendaient l'en-tête presque noir : on ne voyait plus la forêt.
@@ -214,6 +207,7 @@ export default async function ExpositionPage({
             <div className="mx-auto mt-10 max-w-5xl">
               <ExpoFilm
                 youtubeId={expo.film}
+                thumb={expo.filmThumb}
                 title={tr(expo.title, locale)}
                 playLabel={tm("watch")}
               />
@@ -353,5 +347,26 @@ export default async function ExpositionPage({
         </div>
       </Section>
     </>
+  );
+}
+
+/**
+ * La jungle de l'en-tête ; sur un écran en hauteur, sa version peinte en
+ * hauteur — la même qu'en page d'accueil — plutôt qu'un recadrage serré.
+ */
+function Backdrop({ src, portrait }: { src: string; portrait?: string }) {
+  const common = { alt: "", fill: true, priority: true, sizes: "100vw" };
+  const {
+    props: { srcSet: portraitSrcSet },
+  } = getImageProps({ ...common, src: portrait ?? src });
+  const { props } = getImageProps({ ...common, src });
+
+  return (
+    <picture>
+      {portrait && (
+        <source media="(orientation: portrait)" srcSet={portraitSrcSet} />
+      )}
+      <img {...props} alt="" className="animate-canvas object-cover" />
+    </picture>
   );
 }

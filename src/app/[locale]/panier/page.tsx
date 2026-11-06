@@ -34,7 +34,7 @@ export default async function CartPage({
 
   return (
     <Section className="pt-40 pb-32 sm:pt-48">
-      <SectionHeading title={t("title")} lead={t("lead")} />
+      <SectionHeading as="h1" title={t("title")} lead={t("lead")} />
       <div className="mt-14">
         <CartView locale={locale} />
       </div>
