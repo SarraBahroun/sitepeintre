@@ -6,7 +6,9 @@ import { useEffect, useRef } from "react";
    Décor de fond — la jungle
    -----------------------------------------------------------------------------
    Trois plans superposés, fixes derrière le contenu :
-     1. une nappe de lumière végétale qui respire ;
+     1. une nappe de lumière végétale qui respire — des dégradés à paliers,
+        sans filtre de flou : un flou de 120 px recalculé à chaque image
+        suffisait à rendre tout le site lourd ;
      2. des frondes découpées, posées dans les angles, qui ondulent ;
      3. une poussière lumineuse (canvas) qui dérive lentement.
    Le tout s'efface si l'utilisateur demande moins d'animations.
@@ -48,8 +50,31 @@ function Motes() {
     // Deux teintes seulement : le turquoise des filaments, l'or des toiles.
     const hues = [168, 42];
 
+    // Le halo et le cœur de chaque teinte, dessinés une seule fois : à
+    // chaque image on ne fait plus que les poser, au lieu de recréer
+    // soixante-dix dégradés.
+    const SPRITE = 64;
+    const sprites = new Map<number, HTMLCanvasElement>();
+    for (const hue of hues) {
+      const c = document.createElement("canvas");
+      c.width = c.height = SPRITE;
+      const g = c.getContext("2d");
+      if (!g) return;
+      const mid = SPRITE / 2;
+      const halo = g.createRadialGradient(mid, mid, 0, mid, mid, mid);
+      halo.addColorStop(0, `hsla(${hue}, 82%, 72%, 1)`);
+      halo.addColorStop(1, `hsla(${hue}, 82%, 72%, 0)`);
+      g.fillStyle = halo;
+      g.fillRect(0, 0, SPRITE, SPRITE);
+      g.fillStyle = `hsla(${hue}, 90%, 88%, 1)`;
+      g.beginPath();
+      g.arc(mid, mid, mid * (0.52 / 7) + 0.6, 0, Math.PI * 2);
+      g.fill();
+      sprites.set(hue, c);
+    }
+
     const seed = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = width * dpr;
@@ -89,20 +114,17 @@ function Motes() {
         if (m.x > width + 12) m.x = -12;
 
         const alpha = 0.18 + (Math.sin(m.phase) + 1) * 0.21;
-        const halo = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r * 7);
-        halo.addColorStop(0, `hsla(${m.hue}, 82%, 72%, ${alpha})`);
-        halo.addColorStop(1, `hsla(${m.hue}, 82%, 72%, 0)`);
-
-        ctx.fillStyle = halo;
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, m.r * 7, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = `hsla(${m.hue}, 90%, 88%, ${alpha + 0.2})`;
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, m.r * 0.52, 0, Math.PI * 2);
-        ctx.fill();
+        const size = m.r * 14;
+        ctx.globalAlpha = alpha;
+        ctx.drawImage(
+          sprites.get(m.hue)!,
+          m.x - size / 2,
+          m.y - size / 2,
+          size,
+          size,
+        );
       }
+      ctx.globalAlpha = 1;
 
       frame = requestAnimationFrame(draw);
     };
@@ -249,26 +271,26 @@ export default function JungleBackdrop() {
       <div className="absolute inset-0 bg-night" />
 
       <div
-        className="animate-breathe absolute -top-[20%] left-[-10%] h-[70vmax] w-[70vmax] rounded-full blur-[110px]"
+        className="animate-breathe absolute -top-[20%] left-[-10%] h-[70vmax] w-[70vmax] will-change-[transform,opacity]"
         style={{
           background:
-            "radial-gradient(circle, color-mix(in oklab, var(--color-glow-deep) 34%, transparent) 0%, transparent 68%)",
+            "radial-gradient(circle closest-side, color-mix(in oklab, var(--color-glow-deep) 34%, transparent) 0%, color-mix(in oklab, var(--color-glow-deep) 21%, transparent) 30%, color-mix(in oklab, var(--color-glow-deep) 9%, transparent) 58%, color-mix(in oklab, var(--color-glow-deep) 2%, transparent) 80%, transparent 100%)",
         }}
       />
       <div
-        className="animate-breathe absolute right-[-18%] top-[22%] h-[60vmax] w-[60vmax] rounded-full blur-[120px]"
+        className="animate-breathe absolute right-[-18%] top-[22%] h-[60vmax] w-[60vmax] will-change-[transform,opacity]"
         style={{
           animationDelay: "-3.5s",
           background:
-            "radial-gradient(circle, color-mix(in oklab, var(--color-gold-deep) 22%, transparent) 0%, transparent 66%)",
+            "radial-gradient(circle closest-side, color-mix(in oklab, var(--color-gold-deep) 22%, transparent) 0%, color-mix(in oklab, var(--color-gold-deep) 14%, transparent) 30%, color-mix(in oklab, var(--color-gold-deep) 6%, transparent) 58%, color-mix(in oklab, var(--color-gold-deep) 2%, transparent) 80%, transparent 100%)",
         }}
       />
       <div
-        className="animate-breathe absolute bottom-[-25%] left-[25%] h-[62vmax] w-[62vmax] rounded-full blur-[130px]"
+        className="animate-breathe absolute bottom-[-25%] left-[25%] h-[62vmax] w-[62vmax] will-change-[transform,opacity]"
         style={{
           animationDelay: "-6s",
           background:
-            "radial-gradient(circle, color-mix(in oklab, var(--color-iris) 16%, transparent) 0%, transparent 70%)",
+            "radial-gradient(circle closest-side, color-mix(in oklab, var(--color-iris) 16%, transparent) 0%, color-mix(in oklab, var(--color-iris) 10%, transparent) 30%, color-mix(in oklab, var(--color-iris) 4%, transparent) 58%, color-mix(in oklab, var(--color-iris) 1%, transparent) 80%, transparent 100%)",
         }}
       />
 
