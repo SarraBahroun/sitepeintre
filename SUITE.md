@@ -21,7 +21,10 @@ Rien n'est en ligne pour l'instant.
 2. **Le téléphone** — parcourir le site sur un vrai téléphone. La fluidité n'a
    été vérifiée qu'en format téléphone dans le navigateur.
 3. **Les liens des livres** (Divers → Illustration) — les ouvrir à la main : ces
-   sites refusent les robots, aucun n'a pu être lu.
+   sites refusent les robots, aucun n'a pu être lu. Seuls *La Maison de
+   bambous* (Al Kitab) et *Le Petit Tracteur* (Nouvelle-Aquitaine) ont une
+   page d'achat à eux ; les quatre autres livres attendent la leur
+   (`books[].buy` dans `src/data/site.ts`).
 
 ---
 
