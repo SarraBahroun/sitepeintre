@@ -42,7 +42,17 @@ const END = 10.4; // le rideau se lève, juste avant la fin du second plan
 /** Sans geste, le carton finit par céder — mais alors en silence. */
 const PATIENCE = 9000;
 
-const SHOTS = ["/videos/phenix-1.mp4", "/videos/phenix-2.mp4"] as const;
+/*
+  Le second plan existe en deux tailles. L'original (1080p, 60 images/s)
+  et le premier plan se décodent ensemble pendant le fondu : un ordinateur
+  le fait sans peine, un téléphone hachait. Les petits écrans reçoivent une
+  version 720p à 30 images/s, à l'œil identique.
+*/
+const SHOTS: { src: string; phone?: string }[] = [
+  { src: "/videos/phenix-1.mp4" },
+  { src: "/videos/phenix-2.mp4", phone: "/videos/phenix-2-mobile.mp4" },
+];
+const PHONE = "(max-width: 900px), (pointer: coarse)";
 
 export default function Intro({ locale }: { locale: Locale }) {
   const t = useTranslations("intro");
@@ -55,8 +65,19 @@ export default function Intro({ locale }: { locale: Locale }) {
   const [second, setSecond] = useState(false); // le second plan tourne déjà
   const [glow, setGlow] = useState(false); // la braise du passage
 
+  const [cutDue, setCutDue] = useState(false); // l'heure du fondu est venue
+  const [secondPlaying, setSecondPlaying] = useState(false); // il tourne vraiment
+
   const videos = useRef<(HTMLVideoElement | null)[]>([null, null]);
   const started = useRef(false);
+  const prerolled = useRef(false); // le second plan a été lancé pour de bon
+  const cutDone = useRef(false);
+  /*
+    Le volume se règle-t-il ? Pas sur iPhone : il y reste toujours à fond.
+    Le son ne peut donc pas y glisser d'un plan à l'autre — le second plan
+    reste muet, et le premier garde la parole jusqu'au bout.
+  */
+  const canFade = useRef(true);
 
   /* --- Lever le rideau ------------------------------------------------- */
 
@@ -65,8 +86,11 @@ export default function Intro({ locale }: { locale: Locale }) {
     // de lecture pendant qu'on l'agrandit et l'efface coûte cher, et c'est
     // là que la transition hachait.
     videos.current.forEach((v) => {
-      v?.pause();
-      if (v) v.removeAttribute("src");
+      if (!v) return;
+      v.pause();
+      v.querySelectorAll("source").forEach((source) => source.remove());
+      v.removeAttribute("src");
+      v.load();
     });
     // Le site reprend ses esprits pendant que le rideau s'efface :
     // les deux mouvements se recouvrent.
@@ -99,6 +123,26 @@ export default function Intro({ locale }: { locale: Locale }) {
         void first.play().catch(() => {});
       });
     }
+
+    // Le second plan se prépare dans le même geste. Un téléphone ne charge
+    // pas d'avance une vidéo qu'on ne lit pas : sans cela, il commençait
+    // seulement à la télécharger au moment du fondu, et l'image se figeait.
+    const next = videos.current[1];
+    if (next) {
+      next.volume = 0.5;
+      canFade.current = Math.abs(next.volume - 0.5) < 0.01;
+      next.volume = 1;
+      next.muted = true;
+      void next
+        .play()
+        .then(() => {
+          if (prerolled.current) return;
+          next.pause();
+          next.currentTime = 0;
+        })
+        .catch(() => {});
+    }
+
     setRolling(true);
   }, []);
 
@@ -148,23 +192,32 @@ export default function Intro({ locale }: { locale: Locale }) {
     if (!rolling) return;
 
     const toSecond = window.setTimeout(() => setSecond(true), PREROLL * 1000);
-    const toCut = window.setTimeout(() => {
-      setShot(1);
-      setGlow(true);
-    }, CUT * 1000);
-    const toCalm = window.setTimeout(
-      () => setGlow(false),
-      (CUT + DISSOLVE) * 1000,
-    );
-    const toEnd = window.setTimeout(close, END * 1000);
+    const toCut = window.setTimeout(() => setCutDue(true), CUT * 1000);
+    // Filet : si le second plan ne vient jamais, le rideau se lève quand même.
+    const giveUp = window.setTimeout(close, (END + 3) * 1000);
 
     return () => {
       window.clearTimeout(toSecond);
       window.clearTimeout(toCut);
-      window.clearTimeout(toCalm);
-      window.clearTimeout(toEnd);
+      window.clearTimeout(giveUp);
     };
   }, [rolling, close]);
+
+  /* --- Le fondu attend que le second plan tourne vraiment --------------
+     Sur un réseau lent, il peut lui manquer une demi-seconde : mieux vaut
+     prolonger le premier plan que fondre vers une image arrêtée.
+     --------------------------------------------------------------------- */
+
+  useEffect(() => {
+    if (!cutDue || !secondPlaying || cutDone.current) return;
+    cutDone.current = true;
+    setShot(1);
+    setGlow(true);
+    // Volontairement sans nettoyage : ces deux minuteries doivent survivre
+    // au rendu que provoque le changement de plan.
+    window.setTimeout(() => setGlow(false), DISSOLVE * 1000);
+    window.setTimeout(close, (END - CUT) * 1000);
+  }, [cutDue, secondPlaying, close]);
 
   /* --- Le second plan se met en route en coulisse ----------------------- */
 
@@ -172,15 +225,24 @@ export default function Intro({ locale }: { locale: Locale }) {
     if (!second) return;
     const v = videos.current[1];
     if (!v) return;
-    v.volume = 0; // il entrera par le fondu
-    v.muted = videos.current[0]?.muted ?? true;
-    void v.play().catch(() => {});
+    prerolled.current = true;
+    if (canFade.current) {
+      v.volume = 0; // il entrera par le fondu
+      v.muted = videos.current[0]?.muted ?? true;
+    } else {
+      v.muted = true; // le premier plan garde le son
+    }
+    void v.play().catch(() => {
+      // Refusé : on le relance muet, l'image compte plus que le son
+      v.muted = true;
+      void v.play().catch(() => {});
+    });
   }, [second]);
 
   /* --- Le son suit l'image, et bascule à la même allure ----------------- */
 
   useEffect(() => {
-    if (!rolling) return;
+    if (!rolling || !canFade.current) return;
 
     const [a, b] = videos.current;
     const target = shot === 0 ? a : b;
@@ -244,9 +306,9 @@ export default function Intro({ locale }: { locale: Locale }) {
           {/* ============================================================ */}
           {/*  Le feu — il ne paraît qu'une fois le film lancé              */}
           {/* ============================================================ */}
-          {SHOTS.map((src, i) => (
+          {SHOTS.map((plan, i) => (
             <motion.div
-              key={src}
+              key={plan.src}
               initial={{ opacity: 0 }}
               animate={{ opacity: rolling && i === shot ? 1 : 0 }}
               transition={{
@@ -264,12 +326,19 @@ export default function Intro({ locale }: { locale: Locale }) {
                 ref={(el) => {
                   videos.current[i] = el;
                 }}
-                src={src}
                 muted
                 playsInline
                 preload="auto"
+                onPlaying={
+                  i === 1
+                    ? () => prerolled.current && setSecondPlaying(true)
+                    : undefined
+                }
                 className="absolute inset-0 h-full w-full object-cover"
-              />
+              >
+                {plan.phone && <source src={plan.phone} media={PHONE} />}
+                <source src={plan.src} />
+              </video>
             </motion.div>
           ))}
 

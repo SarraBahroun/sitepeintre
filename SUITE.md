@@ -112,6 +112,9 @@ Les bijoux pourront entrer dans le même panier (`kind: "jewel"`).
 rapide), sans perte visible (SSIM ≥ 0,987). Aller plus bas abîme l'image :
 les originaux sont déjà bien compressés. ffmpeg est installé (winget,
 Gyan.FFmpeg). Les originaux restent dans `_sources-originales/`.
+Les téléphones reçoivent une version 720p à 30 images/s du second plan
+(`phenix-2-mobile.mp4`, 2,2 Mo, SSIM 0,979) : l’original 1080p à 60 images/s,
+décodé en même temps que le premier pendant le fondu, les faisait hacher.
 
 **Les formulaires** (contact et cours) envoient par Web3Forms vers
 bahrounhana19@gmail.com — clé dans `src/data/site.ts`. Au moment de la mise
