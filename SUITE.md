@@ -1,7 +1,10 @@
 # Où nous en sommes
 
 Dernière séance : 6 novembre 2026.
-`npm run dev`, puis http://localhost:3000 — la racine redirige vers `/fr`.
+Pour **regarder** le site : `npm run build`, puis `npx next start -H 0.0.0.0`,
+puis http://localhost:3000 — la racine redirige vers `/fr`. Chaque page
+répond en 0,3 s. `npm run dev` sert à **modifier** : il recompile une page à
+sa première visite (5 à 8 s), d’où l’impression d’un site lourd.
 Au téléphone, sur le même réseau : http://172.20.10.2:3000/fr — si
 l'adresse de l'ordinateur change, la mettre aussi dans `allowedDevOrigins`
 (`next.config.ts`), sinon la page s'affiche mais ne réagit plus.
