@@ -22,21 +22,23 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  // L'ancienne page « Divers » est devenue Livres et Bijoux : les liens
-  // déjà partagés mènent aux livres.
-  async redirects() {
-    return [
-      {
-        source: "/:locale(fr|en|ar)/divers",
-        destination: "/:locale/livres",
-        permanent: true,
-      },
-    ];
-  },
+  /*
+    Le site est publié en fichiers statiques (dossier out/) : pas de serveur,
+    donc rien qui puisse tomber, ni faille de serveur à corriger. Ce qu'un
+    serveur faisait est fait autrement :
+      • la langue, à l'arrivée sur « / »      → public/index.html
+      • /divers → /livres                    → public/_redirects (Cloudflare)
+      • les images à la bonne taille          → scripts/variantes-images.mjs
+                                                 + src/lib/image-loader.ts
+  */
+  output: "export",
+
   images: {
-    formats: ["image/avif", "image/webp"],
-    // 90 pour la toile d'ouverture, 75 partout ailleurs
-    qualities: [75, 90],
+    loader: "custom",
+    loaderFile: "./src/lib/image-loader.ts",
+    // Les largeurs que scripts/variantes-images.mjs prépare (LARGEURS).
+    deviceSizes: [640, 828, 1080, 1440, 1920, 2400],
+    imageSizes: [320, 480],
   },
 };
 

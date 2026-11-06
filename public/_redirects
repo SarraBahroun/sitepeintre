@@ -1,0 +1,5 @@
+# Lu par Cloudflare Pages à la publication.
+# L'ancienne page « Divers » est devenue Livres et Bijoux : les liens déjà
+# partagés mènent aux livres.
+/divers        /fr/livres     301
+/:lang/divers  /:lang/livres  301

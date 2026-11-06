@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# variantes d'images, refaites à chaque construction
+/public/_img/
+
 # production
 /build
 

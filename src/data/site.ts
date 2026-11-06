@@ -37,6 +37,17 @@ export const site = {
 };
 
 /** Ouvre une conversation WhatsApp avec l'artiste, premier mot déjà écrit. */
+/**
+ * L'adresse du site, pour les liens absolus (partage, sitemap, robots).
+ * À la construction, hanabahroun.com ; NEXT_PUBLIC_SITE_URL la remplace si
+ * le site change d'adresse.
+ */
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.NODE_ENV === "production"
+    ? "https://hanabahroun.com"
+    : "http://localhost:3000");
+
 export function whatsappHref(message: string) {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
 }

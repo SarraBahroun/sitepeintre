@@ -2,14 +2,17 @@ import type { MetadataRoute } from "next";
 
 import { routing } from "@/i18n/routing";
 import { expositions } from "@/data/expositions";
-import { courses } from "@/data/site";
+import { courses, siteUrl } from "@/data/site";
 
 /* =============================================================================
    Plan du site pour les moteurs de recherche — chaque page dans ses trois
    langues, chacune pointant vers ses deux sœurs.
    ========================================================================== */
 
-const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+// Le site est statique : ce fichier est écrit une fois, à la construction.
+export const dynamic = "force-static";
+
+const base = siteUrl;
 
 const pages = [
   "",
@@ -19,6 +22,7 @@ const pages = [
   "/bijoux",
   ...(courses.enabled ? ["/cours"] : []),
   "/contact",
+  "/confidentialite",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Cormorant_Garamond, Inter, Amiri, Cairo } from "next/font/google";
 
 import { routing, type Locale } from "@/i18n/routing";
+import { siteUrl } from "@/data/site";
 import JungleBackdrop from "@/components/JungleBackdrop";
 import Intro from "@/components/Intro";
 import Nav from "@/components/Nav";
@@ -56,9 +57,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "meta" });
 
   return {
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-    ),
+    metadataBase: new URL(siteUrl),
     title: {
       default: `${t("siteName")} — ${t("tagline")}`,
       template: `%s · ${t("siteName")}`,

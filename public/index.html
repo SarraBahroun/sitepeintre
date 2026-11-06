@@ -1,0 +1,38 @@
+<!doctype html>
+<!--
+  L'arrivée sur « / ». Le site est statique : aucun serveur ne choisit la
+  langue. Cette page lit celle du navigateur — arabe, anglais, sinon
+  français — et y conduit aussitôt. Sans JavaScript, le français.
+-->
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hana Bahroun — Artiste peintre</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="/fr" />
+    <link rel="alternate" hreflang="fr" href="/fr" />
+    <link rel="alternate" hreflang="en" href="/en" />
+    <link rel="alternate" hreflang="ar" href="/ar" />
+    <link rel="alternate" hreflang="x-default" href="/fr" />
+    <script>
+      (function () {
+        var langs = navigator.languages || [navigator.language || "fr"];
+        var choix = "fr";
+        for (var i = 0; i < langs.length; i++) {
+          var l = String(langs[i]).slice(0, 2).toLowerCase();
+          if (l === "fr" || l === "en" || l === "ar") {
+            choix = l;
+            break;
+          }
+        }
+        location.replace("/" + choix + location.search + location.hash);
+      })();
+    </script>
+    <noscript><meta http-equiv="refresh" content="0; url=/fr" /></noscript>
+    <style>
+      html { background: #050b09; }
+    </style>
+  </head>
+  <body></body>
+</html>

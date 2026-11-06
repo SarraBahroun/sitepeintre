@@ -1,16 +1,31 @@
 # Où nous en sommes
 
 Dernière séance : 6 novembre 2026.
-Pour **regarder** le site : `npm run build`, puis `npx next start -H 0.0.0.0`,
-puis http://localhost:3000 — la racine redirige vers `/fr`. Chaque page
-répond en 0,3 s. `npm run dev` sert à **modifier** : il recompile une page à
-sa première visite (5 à 8 s), d’où l’impression d’un site lourd.
-Au téléphone, sur le même réseau : http://172.20.10.2:3000/fr — si
-l'adresse de l'ordinateur change, la mettre aussi dans `allowedDevOrigins`
-(`next.config.ts`), sinon la page s'affiche mais ne réagit plus.
-Une erreur 500 partout, ou un changement de `globals.css` qui ne s'affiche
-pas : arrêter le serveur,
-supprimer `.next/`, relancer.
+Le site est **statique** : `npm run build` écrit le site entier dans `out/`
+(pages, images redimensionnées, vidéos), sans serveur. C'est ce dossier que
+l'on publie.
+
+Pour **regarder** le site : `npm run build`, puis `npm run voir`
+→ http://localhost:3000 (le script affiche aussi l'adresse pour le
+téléphone, sur le même Wi-Fi). `npm run voir` sert `out/` comme le fera
+Cloudflare : redirections, pages 404, vidéos lues par morceaux.
+`npm run dev` sert à **modifier** : il recompile une page à sa première
+visite (5 à 8 s), d'où l'impression d'un site lourd. Au téléphone en mode
+dev, l'adresse de l'ordinateur doit figurer dans `allowedDevOrigins`
+(`next.config.ts`).
+Une erreur partout, ou un changement de `globals.css` qui ne s'affiche pas :
+arrêter, supprimer `.next/` et `out/`, reconstruire.
+
+**Ce que la construction fait en plus** (`package.json`) :
+- `prebuild` → `scripts/variantes-images.mjs` prépare chaque image en
+  8 largeurs WebP dans `public/_img/` (hors dépôt, refaites au besoin) ;
+  `src/lib/image-loader.ts` y conduit le navigateur.
+- `postbuild` → `scripts/apres-construction.mjs` pose les pages 404
+  traduites et répare les fichiers de préchargement que Next 16 range mal
+  sous Windows.
+- `public/index.html` choisit la langue à l'arrivée sur « / » ;
+  `public/_redirects` envoie /divers vers /livres (lu par Cloudflare).
+
 Rien n'est en ligne pour l'instant.
 
 ---
@@ -46,9 +61,8 @@ Jungle 2. Il reste :
 - Les traductions anglaise et arabe sont faites ici : l’artiste donne une
   seule langue.
 
-Puis la **mise en ligne** : passer Next.js en 16.4.5 (alerte de sécurité du
-3 novembre 2026), rendre le site statique, le publier sur Cloudflare avec
-hanabahroun.com, déclarer le domaine dans Web3Forms, puis essayer les trois
+Puis la **mise en ligne** (Next.js est déjà en 16.4.5 et le site statique) :
+le publier sur Cloudflare avec hanabahroun.com, déclarer le domaine dans Web3Forms, puis essayer les trois
 formulaires et la vidéo d’ouverture sur iPhone.
 
 Dernière vérification (6 novembre) : 9 pages × 3 langues × ordinateur et
