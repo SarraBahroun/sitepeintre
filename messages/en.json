@@ -46,7 +46,9 @@
     "saatchiCta": "Visit her Saatchi Art gallery",
     "findIt": "Where to find her creations",
     "pressTitle": "In the press",
-    "pressRead": "Read the article"
+    "pressRead": "Read the article",
+    "buyBook": "Buy",
+    "booksElsewhere": "Her books at the booksellers"
   },
   "expo": {
     "artworksTitle": "The works",

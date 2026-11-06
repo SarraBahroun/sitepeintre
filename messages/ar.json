@@ -46,7 +46,9 @@
     "saatchiCta": "زيارة معرضها على Saatchi Art",
     "findIt": "أين تجد إبداعاتها",
     "pressTitle": "في الصحافة",
-    "pressRead": "قراءة المقال"
+    "pressRead": "قراءة المقال",
+    "buyBook": "شراء",
+    "booksElsewhere": "كتبها لدى المكتبات"
   },
   "expo": {
     "artworksTitle": "الأعمال",

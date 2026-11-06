@@ -243,26 +243,75 @@ export const diversSections: DiversSection[] = [
     description: { fr: [], en: [], ar: [] },
     images: [],
     artworks: [],
+    books: [
+      {
+        id: "maison-de-bambous",
+        cover: "/images/divers/livre-maison-de-bambous.jpeg",
+        title: "La Maison de bambous",
+        authors: "Frédérique Lavaud-Khouja, Hana Bahroun",
+        publisher: "Céli Éditions — Minime",
+        buy: [
+          {
+            label: "Al Kitab",
+            href: "https://www.alkitab.tn/livre/9789938846362-la-maison-de-bambous-hana-bahroun-frederique-khouja/",
+          },
+        ],
+      },
+      {
+        id: "petit-tracteur",
+        cover: "/images/divers/livre-petit-tracteur.jpeg",
+        title: "Le Petit Tracteur",
+        authors: "Frédérique Lavaud-Khouja, Hana Bahroun",
+        publisher: "Céli Éditions — Minime",
+        buy: [
+          {
+            label: "Librairies indépendantes en Nouvelle-Aquitaine",
+            href: "https://www.librairies-nouvelleaquitaine.com/livre/9789938846355-le-petit-tracteur-hana-bahroun-frederique-khouja/",
+          },
+        ],
+      },
+      {
+        id: "petit-avion",
+        cover: "/images/divers/livre-petit-avion.jpeg",
+        title: "Le Petit Avion",
+        authors: "Frédérique Lavaud-Khouja, Hana Bahroun",
+        publisher: "Céli Éditions — Minime",
+        buy: [],
+      },
+      {
+        id: "petit-bateau",
+        cover: "/images/divers/livre-petit-bateau.jpeg",
+        title: "Le Petit Bateau",
+        authors: "Frédérique Lavaud-Khouja, Hana Bahroun",
+        publisher: "Céli Éditions — Minime",
+        buy: [],
+      },
+      {
+        id: "sanfour",
+        cover: "/images/divers/livre-sanfour.jpeg",
+        title: "Les Aventures de Sanfour — 3 histoires à découvrir",
+        authors: "Frédérique Lavaud-Khouja",
+        publisher: "Céli Éditions — Cadet",
+        buy: [],
+      },
+      {
+        id: "dostour",
+        cover: "/images/divers/livre-dostour.jpeg",
+        title: "أمّي... سأهديك الدستور",
+        authors: "عايدة العلاني، هناء بحرون",
+        publisher: "سالي للنشر",
+        buy: [],
+      },
+    ],
+    // Pages qui regroupent plusieurs livres : l’éditeur, les catalogues.
     links: [
       {
-        label: "Al Kitab",
-        href: "https://www.alkitab.tn/livre/9789938846362-la-maison-de-bambous-hana-bahroun-frederique-khouja/",
+        label: "Céli Éditions",
+        href: "https://celi-edition.net/product-category/romans-pour-ados-et-jeunes-adultes/?max_price=5&orderby=menu_order",
       },
       {
         label: "Fnac",
         href: "https://www.fnac.com/ia4922353/Hana-Bahroun",
-      },
-      {
-        label: "Librairies indépendantes en Nouvelle-Aquitaine",
-        href: "https://www.librairies-nouvelleaquitaine.com/livre/9789938846355-le-petit-tracteur-hana-bahroun-frederique-khouja/",
-      },
-      {
-        label: "Bibliothèque Nationale de Tunisie",
-        href: "https://www.bibliotheque.nat.tn/CATG/detailstatic.aspx?RSC_BASE=SYRACUSE&RSC_DOCID=1561428&TITLE=&_lg=en-US",
-      },
-      {
-        label: "Céli Éditions",
-        href: "https://celi-edition.net/product-category/romans-pour-ados-et-jeunes-adultes/?max_price=5&orderby=menu_order",
       },
       {
         label: "Le Bleuet",
@@ -271,6 +320,10 @@ export const diversSections: DiversSection[] = [
       {
         label: "Mots et Cie",
         href: "https://www.librairiemotsetcie.com/listeliv.php?form_recherche_avancee=ok&editeur=Celi&base=paper&shem=aimgspe,",
+      },
+      {
+        label: "Bibliothèque Nationale de Tunisie",
+        href: "https://www.bibliotheque.nat.tn/CATG/detailstatic.aspx?RSC_BASE=SYRACUSE&RSC_DOCID=1561428&TITLE=&_lg=en-US",
       },
     ],
   },

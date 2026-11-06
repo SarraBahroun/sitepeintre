@@ -112,8 +112,23 @@ export type DiversSection = {
   cover?: string;
   images: string[];
   artworks: Artwork[];
+  /** Les livres illustrés, chacun avec sa couverture et où l’acheter. */
+  books?: Book[];
   /** Où trouver ce travail ailleurs : boutiques, réseaux. */
   links?: { label: string; href: string }[];
+};
+
+/** Un livre illustré par l’artiste. */
+export type Book = {
+  id: string;
+  /** La couverture, dans public/images/divers. */
+  cover: string;
+  /** Le titre tel qu’imprimé sur la couverture. */
+  title: string;
+  authors: string;
+  publisher: string;
+  /** Pages où le livre s’achète directement ; vide si aucune n’est connue. */
+  buy: { label: string; href: string }[];
 };
 
 /* --------------------------------------------------------------------------

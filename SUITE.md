@@ -74,7 +74,7 @@ Vient ensuite le **texte de présentation de chaque exposition**
 | --- | --- |
 | Titres, symbolisme, descriptions, dimensions, prix | `src/data/expositions.ts` |
 | Le texte de présentation de chaque exposition | fait — fr, en, ar |
-| Les images de la rubrique Divers : couvertures des livres, Diwaniyat Al-Rajhi, bijoux | `src/data/site.ts` → `diversSections` |
+| Les images de la rubrique Divers : Diwaniyat Al-Rajhi, bijoux (les six livres sont posés) | `src/data/site.ts` → `diversSections` |
 | Les vidéos et passages radio | `src/data/expositions.ts` → `media` |
 | Le tarif des cours, s'il doit s'afficher (pas d'horaires fixes : ils se conviennent après l'inscription) | `src/data/site.ts` → `courses.practical` |
 

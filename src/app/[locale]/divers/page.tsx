@@ -5,6 +5,9 @@ import { routing, type Locale } from "@/i18n/routing";
 import { diversSections } from "@/data/site";
 import { t as tr, tRich } from "@/data/types";
 
+import Image from "next/image";
+
+import { dimensions } from "@/data/dimensions";
 import Reveal from "@/components/Reveal";
 import ArtworkGallery from "@/components/ArtworkGallery";
 import PhotoGallery from "@/components/PhotoGallery";
@@ -86,6 +89,7 @@ export default async function DiversPage({
           !section.artworks.length &&
           !section.images.length &&
           !section.links?.length &&
+          !section.books?.length &&
           !description.length;
 
         return (
@@ -117,10 +121,69 @@ export default async function DiversPage({
               </Reveal>
             )}
 
+            {section.books && section.books.length > 0 && (
+              <ul className="mt-12 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+                {section.books.map((book, k) => (
+                  <li key={book.id}>
+                    <Reveal delay={(k % 3) * 0.06}>
+                      <figure>
+                        {/* Cadre commun 4:3 — la couverture y tient entière, sans rognure. */}
+                        <div className="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-sm border border-gold/15 bg-night-2">
+                          <Image
+                            src={book.cover}
+                            alt={book.title}
+                            {...dimensions(book.cover)}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="h-full w-auto max-w-full object-contain"
+                          />
+                        </div>
+                        <figcaption className="mt-5">
+                          <p
+                            dir="auto"
+                            className="font-display text-[1.35rem] font-light leading-snug text-ivory"
+                          >
+                            {book.title}
+                          </p>
+                          <p dir="auto" className="mt-1.5 text-[0.85rem] text-sage">
+                            {book.authors}
+                          </p>
+                          <p dir="auto" className="mt-0.5 text-[0.78rem] text-sage/70">
+                            {book.publisher}
+                          </p>
+                          {book.buy.length > 0 && (
+                            <div className="mt-4 flex flex-wrap gap-2.5">
+                              {book.buy.map((link) => (
+                                <a
+                                  key={link.href}
+                                  href={link.href}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-4 py-2 text-[0.76rem] text-ivory transition-all duration-400 hover:border-gold hover:text-gold"
+                                >
+                                  {ta("buyBook")} · {link.label}
+                                  <span aria-hidden className="text-gold rtl:-scale-x-100">
+                                    ↗
+                                  </span>
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                        </figcaption>
+                      </figure>
+                    </Reveal>
+                  </li>
+                ))}
+              </ul>
+            )}
+
             {section.links && section.links.length > 0 && (
               <Reveal delay={0.1}>
-                <div className="mt-10">
-                  <p className="eyebrow">{ta("findIt")}</p>
+                <div className={section.books?.length ? "mt-16" : "mt-10"}>
+                  <p className="eyebrow">
+                    {section.books?.length
+                      ? ta("booksElsewhere")
+                      : ta("findIt")}
+                  </p>
                   <ul className="mt-5 flex flex-wrap gap-3">
                     {section.links.map((link) => (
                       <li key={link.href}>
