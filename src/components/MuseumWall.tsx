@@ -208,7 +208,13 @@ export default function MuseumWall({
                 <button
                   type="button"
                   onClick={() => onOpen(i)}
-                  onFocus={() => bringIntoView(i)}
+                  // Seulement au clavier : un clic donne aussi le focus, et
+                  // faire glisser le mur entre l'appui et le relâché
+                  // annulait le clic.
+                  onFocus={(e) => {
+                    if (e.currentTarget.matches(":focus-visible"))
+                      bringIntoView(i);
+                  }}
                   className="group relative block text-start outline-none"
                   style={{ width: cssWidth, maxWidth: "80vw" }}
                 >
