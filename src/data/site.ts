@@ -343,7 +343,17 @@ export const diversSections: DiversSection[] = [
       en: "Art direction for the Diwaniyat Al-Rajhi Cultural Book.",
       ar: "الإدارة الفنية لكتاب «ديوانية الراجحي الثقافية».",
     },
-    description: { fr: [], en: [], ar: [] },
+    description: {
+      fr: [
+        "Hana Bahroun a assuré la direction artistique du Diwaniyat Al-Rajhi Cultural Book, ouvrage culturel dont le troisième volume a paru sous sa direction. Elle y a porté le regard d’une peintre : donner au livre une identité visuelle cohérente, accorder l’image au texte, et faire de chaque page un espace où le contenu se lit autant qu’il se regarde.",
+      ],
+      en: [
+        "Hana Bahroun served as art director of the Diwaniyat Al-Rajhi Cultural Book, a cultural publication whose third volume was released under her direction. She brought a painter’s eye to the work: giving the book a coherent visual identity, matching image to text, and making each page a space where the content is looked at as much as it is read.",
+      ],
+      ar: [
+        "تولّت هناء بحرون الإدارة الفنية لكتاب «ديوانية الراجحي الثقافية»، وهو إصدار ثقافي صدر جزؤه الثالث بإدارتها الفنية. وقد حملت إليه عين الفنانة التشكيلية: منح الكتاب هوية بصرية متماسكة، والمواءمة بين الصورة والنص، وجعل كل صفحة فضاءً يُقرأ فيه المحتوى بقدر ما يُتأمَّل.",
+      ],
+    },
     images: [],
     artworks: [],
   },
