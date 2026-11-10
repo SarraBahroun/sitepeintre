@@ -495,8 +495,12 @@ const toutesLesExpositions: Exposition[] = [
           ar: "Yes, I am beautiful peacock",
         },
         collection: jungle1,
-        // le texte sur le symbole du paon s'arrête net dans la fiche reçue
-        symbolism: { fr: "", en: "", ar: "" },
+        // la fiche reçue s'arrêtait net ; phrase achevée ici, à la demande de l'artiste
+        symbolism: {
+          fr: "Le paon porte une profonde charge symbolique : beauté, fierté et confiance en soi, mais aussi renouveau et immortalité, ses plumes tombant chaque année pour renaître plus éclatantes. Le titre « Yes, I am beautiful peacock » en fait une affirmation joyeuse : s'accepter et oser se montrer tel que l'on est. Les magnolias blancs, symboles de pureté et de dignité, adoucissent cette assurance d'une grâce paisible.",
+          en: "The peacock carries a deep symbolic charge: beauty, pride and self-confidence, but also renewal and immortality, as its feathers fall each year only to grow back more brilliant. The title « Yes, I am beautiful peacock » turns it into a joyful affirmation: accepting oneself and daring to be seen as one is. The white magnolias, symbols of purity and dignity, soften this assurance with a peaceful grace.",
+          ar: "يحمل الطاووس دلالة رمزية عميقة: الجمال والاعتزاز والثقة بالنفس، وكذلك التجدّد والخلود، إذ يتساقط ريشه كل عام ليعود أبهى. ويجعل منه عنوان «Yes, I am beautiful peacock» تأكيداً مبهجاً: أن يتقبّل المرء ذاته ويجرؤ على الظهور كما هو. أما أزهار الماغنوليا البيضاء، رمز النقاء والكرامة، فتلطّف هذه الثقة بنعمة هادئة.",
+        },
         description: {
           fr: "Cette composition acrylique sur toile cartonnée met en scène un somptueux paon indien, aux nuances vibrantes de bleu saphir et de vert émeraude, majestueusement posé sur une branche noueuse. L'animal est entouré de délicates fleurs de magnolia blanc aux feuilles sombres, se détachant avec élégance sur un fond doux et lumineux.",
           en: "This acrylic composition on canvas board depicts a sumptuous Indian peacock in vibrant shades of sapphire blue and emerald green, majestically perched on a gnarled branch. The bird is surrounded by delicate white magnolia blossoms with dark leaves, standing out elegantly against a soft, luminous background.",

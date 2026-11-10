@@ -17,6 +17,7 @@ const primary =
 export default function AddToCart({ item }: { item: CartItem }) {
   const t = useTranslations("cart");
   const tc = useTranslations("artwork");
+  const tj = useTranslations("jewels");
   const { has, add } = useCart();
   const inCart = has(item.id);
 
@@ -54,7 +55,7 @@ export default function AddToCart({ item }: { item: CartItem }) {
         href="/contact"
         className="block text-center text-[0.72rem] uppercase tracking-[0.16em] text-sage-dim transition-colors hover:text-sage"
       >
-        {tc("inquire")}
+        {item.kind === "jewel" ? tj("inquire") : tc("inquire")}
       </Link>
     </div>
   );

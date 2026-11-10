@@ -58,17 +58,17 @@ const img = (...refs: number[]) =>
    -------------------------------------------------------------------------- */
 
 export const jewelCollections: JewelCollection[] = [
+  { id: "cristal", title: L("Strass & cristal", "Rhinestones & crystal", "الستراس والكريستال") },
+  { id: "cuivre", title: L("Cuivre plaqué or", "Gold-plated copper", "نحاس مطليّ بالذهب") },
   { id: "pierres", title: L("Pierres naturelles", "Natural stones", "الأحجار الطبيعية") },
+  { id: "corail", title: L("Corail", "Coral", "المرجان") },
   { id: "perles", title: L("Perles de culture", "Cultured pearls", "اللؤلؤ المستزرع") },
   { id: "energetiques", title: L("Pierres énergétiques", "Energy stones", "الأحجار الطاقية") },
-  { id: "cristal", title: L("Strass & cristal", "Rhinestones & crystal", "الستراس والكريستال") },
   { id: "fillettes", title: L("Bijoux fillettes", "Jewellery for girls", "حُليّ البنات") },
-  { id: "corail", title: L("Corail", "Coral", "المرجان") },
+  { id: "inox", title: L("Acier inoxydable", "Stainless steel", "الفولاذ المقاوم للصدأ") },
+  { id: "jouhar", title: L("Modèles en jouhar", "Jouhar pearl designs", "موديلات الجوهر") },
   { id: "boucles", title: L("Boucles d'oreilles", "Earrings", "الأقراط") },
   { id: "bracelets", title: L("Bracelets fins", "Fine bracelets", "أساور رقيقة") },
-  { id: "inox", title: L("Acier inoxydable", "Stainless steel", "الفولاذ المقاوم للصدأ") },
-  { id: "cuivre", title: L("Cuivre plaqué or", "Gold-plated copper", "نحاس مطليّ بالذهب") },
-  { id: "jouhar", title: L("Modèles en jouhar", "Jouhar pearl designs", "موديلات الجوهر") },
   { id: "homme", title: L("Bracelets homme", "Men's bracelets", "أساور رجالية") },
 ];
 

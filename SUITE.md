@@ -51,9 +51,12 @@ Rien n'est en ligne pour l'instant.
 **Les textes des toiles sont écrits** — les 18 de La Jungle 1 et les 9 de La
 Jungle 2. Il reste :
 
-- **Yes, I am beautiful peacock** (La Jungle 1, le paon) — le texte sur le
-  symbole du paon s’arrête net dans la fiche reçue (« … une profonde charge
-  symbolique : »). Le champ `symbolism` est vide en attendant la suite.
+- **Yes, I am beautiful peacock** (La Jungle 1, le paon) — la fiche reçue
+  s’arrêtait net ; l’artiste a demandé (10 novembre) que la phrase soit
+  achevée ici. C’est fait, dans les trois langues.
+- **Arrêté avec l’artiste le 10 novembre** : pas de photos de vernissage pour
+  La Jungle 1, pas d’autres médias ni liens de livres que ceux déjà en place,
+  pas de tarif affiché pour les cours.
 - **Les prix et la disponibilité** — reçus le 10 novembre : toutes les
   toiles ont un prix ou sont vendues (10 vendues sur 18 dans La Jungle 1,
   *Flame of Grace* dans La Jungle 2). Le tigre blanc (images 7 et 15

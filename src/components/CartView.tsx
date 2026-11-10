@@ -45,6 +45,7 @@ export default function CartView({ locale }: { locale: Locale }) {
   const t = useTranslations("cart");
   const tc = useTranslations("contact");
   const ta = useTranslations("artwork");
+  const tn = useTranslations("nav");
   const { items, remove, clear } = useCart();
   const { status, send } = useFormSender();
   const [done, setDone] = useState<{ reference: string } | null>(null);
@@ -59,7 +60,7 @@ export default function CartView({ locale }: { locale: Locale }) {
     const get = (key: string) => String(data.get(key) ?? "").trim();
 
     const reference = orderReference();
-    // Les œuvres, une par ligne, lisibles d'un coup d'œil dans Gmail
+    // Les pièces, une par ligne, lisibles d'un coup d'œil dans Gmail
     const lines = items.map((item, i) => {
       const price =
         formatPrice(item.price, item.currency, "fr") ?? "prix sur demande";
@@ -69,7 +70,7 @@ export default function CartView({ locale }: { locale: Locale }) {
     const totalLine = total.complete
       ? formatPrice(total.sum, total.currency, "fr")
       : total.sum > 0
-        ? `${formatPrice(total.sum, total.currency, "fr")} + œuvres sur demande`
+        ? `${formatPrice(total.sum, total.currency, "fr")} + pièces sur demande`
         : "à établir (prix sur demande)";
 
     const ok = await send({
@@ -158,6 +159,12 @@ export default function CartView({ locale }: { locale: Locale }) {
           >
             La Jungle 2
           </Link>
+          <Link
+            href="/bijoux"
+            className="rounded-full border border-gold/30 px-5 py-2.5 text-[0.74rem] uppercase tracking-[0.16em] text-gold transition-colors hover:border-gold/70"
+          >
+            {tn("jewels")}
+          </Link>
         </div>
       </div>
     );
@@ -166,7 +173,7 @@ export default function CartView({ locale }: { locale: Locale }) {
   /* --- Panier et formulaire ----------------------------------------------- */
   return (
     <div className="grid gap-14 lg:grid-cols-[1fr_1fr] lg:gap-20">
-      {/* Les œuvres choisies */}
+      {/* Les pièces choisies */}
       <div>
         <ul className="divide-y divide-glow/10 border-y border-glow/10">
           <AnimatePresence initial={false}>

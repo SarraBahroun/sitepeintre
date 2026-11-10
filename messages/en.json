@@ -172,20 +172,20 @@
   },
   "cart": {
     "title": "Cart",
-    "lead": "The works you have chosen. Send your order: the artist will call you to confirm it.",
+    "lead": "The pieces you have chosen — paintings or jewellery. Send your order: the artist will call you to confirm it.",
     "add": "Add to cart",
     "inCart": "In your cart",
     "view": "view",
     "remove": "Remove",
     "total": "Total",
-    "toConfirm": "works on request",
+    "toConfirm": "pieces on request",
     "onRequestTotal": "Price on request",
     "empty": "Your cart is empty.",
-    "emptyLead": "Browse the exhibitions and add the works that speak to you.",
+    "emptyLead": "Browse the exhibitions and the jewellery, and add what speaks to you.",
     "howTitle": "How it works",
     "how1": "You send your order — nothing is paid online.",
     "how2": "Hana Bahroun calls you to confirm it and arrange the handover.",
-    "how3": "Payment is made in cash or by cheque, when the work is handed over.",
+    "how3": "Payment is made in cash or by cheque, when the order is handed over.",
     "formTitle": "Your details",
     "city": "City",
     "address": "Address",
@@ -195,7 +195,7 @@
     "payment": "Payment",
     "cash": "Cash",
     "cheque": "Cheque",
-    "noOnlinePayment": "No online payment. Your order is a request: the work is reserved for you once the artist has confirmed it.",
+    "noOnlinePayment": "No online payment. Your order is a request: it is reserved for you once the artist has confirmed it.",
     "send": "Send my order",
     "sentTitle": "Thank you, your order has been sent",
     "sentBody": "Hana Bahroun will call you very soon to confirm it and arrange the handover and payment.",
@@ -231,6 +231,7 @@
     },
     "photo": "Photo {n}",
     "open": "View details",
-    "collections": "Collections"
+    "collections": "Collections",
+    "inquire": "Enquire about this piece"
   }
 }
