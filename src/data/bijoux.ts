@@ -719,6 +719,7 @@ export const jewels: Jewel[] = [
       ],
     ),
     pieces: ["necklace"],
+    price: 180,
     status: "available",
   },
 

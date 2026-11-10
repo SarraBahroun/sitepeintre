@@ -120,6 +120,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "140 × 110 cm",
+        price: 9500,
+        currency: "TND",
         status: "available",
         featured: true,
       },
@@ -150,7 +152,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي، مزيّن بزخارف رمزية تمثّل طائر الجنّة",
         },
         dimensions: "100 × 80 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // le cheval blanc sous le porche
@@ -179,6 +181,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "140 × 120 cm",
+        price: 18500,
+        currency: "TND",
         status: "available",
       },
       {
@@ -208,7 +212,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "100 × 80 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // le cheval bai
@@ -241,6 +245,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر مطعّم بالصدف",
         },
         dimensions: "150 × 95 cm",
+        price: 5200,
+        currency: "TND",
         status: "available",
       },
       {
@@ -270,6 +276,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "130 × 110 cm",
+        price: 18500,
+        currency: "TND",
         status: "available",
       },
       {
@@ -299,6 +307,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر باللون الأسود المطفي",
         },
         dimensions: "120 × 90 cm",
+        price: 4800,
+        currency: "TND",
         status: "available",
       },
       {
@@ -328,7 +338,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "100 × 80 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // la coccinelle sur le trèfle
@@ -357,7 +367,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "90 × 80 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // le lion de lumière
@@ -386,7 +396,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر باللون الأسود المطفي",
         },
         dimensions: "95 × 80 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // les colombes
@@ -415,7 +425,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر باللون الأسود المطفي",
         },
         dimensions: "100 × 80 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // le flamant rose
@@ -444,7 +454,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "100 × 80 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // le poisson doré
@@ -473,7 +483,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "100 × 80 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // le paon et les magnolias
@@ -503,7 +513,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بمظهر الخشب",
         },
         dimensions: "95 × 70 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // le monarque sur la fleur rouge
@@ -532,7 +542,7 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "100 × 80 cm",
-        status: "available",
+        status: "sold",
       },
       {
         // le léopard sur son rocher
@@ -561,6 +571,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار خشبي فاخر مطفي",
         },
         dimensions: "100 × 80 cm",
+        price: 5000,
+        currency: "TND",
         status: "available",
       },
       {
@@ -590,6 +602,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "90 × 80 cm",
+        price: 2950,
+        currency: "TND",
         status: "available",
       },
       {
@@ -619,6 +633,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر باللون الأسود",
         },
         dimensions: "95 × 95 cm",
+        price: 3200,
+        currency: "TND",
         status: "available",
       },
     ],
@@ -700,6 +716,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "115 × 140 cm",
+        price: 18700,
+        currency: "TND",
         status: "available",
       },
       {
@@ -729,6 +747,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "115 × 100 cm",
+        price: 7800,
+        currency: "TND",
         status: "available",
       },
       {
@@ -758,6 +778,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر باللون الأسود المطفي",
         },
         dimensions: "100 × 80 cm",
+        price: 9000,
+        currency: "TND",
         status: "available",
       },
       {
@@ -791,6 +813,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "100 × 100 cm",
+        price: 9500,
+        currency: "TND",
         status: "available",
         featured: true,
       },
@@ -846,6 +870,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "100 × 80 cm",
+        price: 3350,
+        currency: "TND",
         status: "available",
       },
       {
@@ -875,6 +901,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر باللون الأسود المطفي",
         },
         dimensions: "100 × 80 cm",
+        price: 3500,
+        currency: "TND",
         status: "available",
       },
       {
@@ -904,6 +932,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر بلون الذهب المطفي",
         },
         dimensions: "90 × 100 cm",
+        price: 4800,
+        currency: "TND",
         status: "available",
       },
       {
@@ -933,6 +963,8 @@ const toutesLesExpositions: Exposition[] = [
           ar: "إطار فاخر باللون الأسود المطفي",
         },
         dimensions: "80 × 60 cm",
+        price: 4800,
+        currency: "TND",
         status: "available",
       },
     ],

@@ -54,13 +54,13 @@ Jungle 2. Il reste :
 - **Yes, I am beautiful peacock** (La Jungle 1, le paon) — le texte sur le
   symbole du paon s’arrête net dans la fiche reçue (« … une profonde charge
   symbolique : »). Le champ `symbolism` est vide en attendant la suite.
-- **Les prix et la disponibilité** — aucune toile n’a de prix : toutes
-  affichent « Prix sur demande ». Seule *Flame of Grace* est vendue. L’artiste
-  enverra prix et disponibilités.
+- **Les prix et la disponibilité** — reçus le 10 novembre : toutes les
+  toiles ont un prix ou sont vendues (10 vendues sur 18 dans La Jungle 1,
+  *Flame of Grace* dans La Jungle 2). Le tigre blanc (images 7 et 15
+  d’origine, une seule toile) est à 4 800 TND.
 - **Les bijoux** — 73 pièces en 12 collections (`src/data/bijoux.ts`,
   photos `public/images/bijoux/article-NN.jpeg`, NN = numéro de l'artiste ;
-  la photo 84 remplace la 50). Reste le prix du collier « Clé de Cristal »
-  (article 6), en « Prix sur demande » pour l'instant.
+  la photo 84 remplace la 50). Tous les prix sont là.
 - Les traductions anglaise et arabe sont faites ici : l’artiste donne une
   seule langue.
 
