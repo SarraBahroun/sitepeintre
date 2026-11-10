@@ -94,6 +94,10 @@ téléphone, sans erreur, sans débordement, sans image cassée.
   (`src/components/MuseumWall.tsx`). Leur taille suit leurs dimensions
   réelles ; un spot les éclaire, un cartel les nomme, un clic ouvre la fiche.
   Deux flèches amènent la toile d’avant ou d’après au centre.
+- **La vitrine des bijoux** — chaque collection a sa rangée, le bijou de
+  face sous un spot, les voisins dans la pénombre ; on avance aux flèches ou
+  d'un glissé du doigt, la page descend librement d'une collection à
+  l'autre (`src/components/JewelStage.tsx`).
 - **Pages d'exposition** — dans l'ordre : le texte (emplacement réservé
   tant qu'il n'est pas écrit), le film YouTube, puis le vernissage une
   photo à la fois, flèches à gauche et à droite. La Jungle 1 n'a pas

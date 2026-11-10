@@ -7,18 +7,17 @@ import { useTranslations } from "next-intl";
 
 import type { Jewel, JewelCollection } from "@/data/bijoux";
 import { t as tr, tRich, formatPrice } from "@/data/types";
-import { dimensions } from "@/data/dimensions";
 import type { Locale } from "@/i18n/routing";
 import { MetaRow, StatusBadge } from "./ui";
 import AddToCart from "./AddToCart";
+import JewelStage from "./JewelStage";
 
 /* =============================================================================
    Les bijoux — collections, vitrine et fiche
    -----------------------------------------------------------------------------
-   Des pastilles choisissent la collection ; « Toutes » les montre l'une après
-   l'autre, chacune sous son titre. Les photos gardent leur proportion (aucun
-   recadrage) : la vitrine est en colonnes, comme un mur de photos.
-   Un clic ouvre la fiche : photos, texte, vertus, prix, panier.
+   Des pastilles mènent à chaque collection ; chacune a sa vitrine
+   (JewelStage), que l'on parcourt aux flèches sans faire défiler la page.
+   Un clic sur le bijou de face ouvre la fiche : photos, texte, vertus, prix, panier.
    ========================================================================== */
 
 type Props = {
@@ -27,12 +26,9 @@ type Props = {
   locale: Locale;
 };
 
-const ALL = "all";
-
 export default function JewelGallery({ jewels, collections, locale }: Props) {
   const t = useTranslations("jewels");
   const ta = useTranslations("artwork");
-  const [filter, setFilter] = useState<string>(ALL);
   const [openId, setOpenId] = useState<string | null>(null);
   const [photo, setPhoto] = useState(0);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -51,17 +47,13 @@ export default function JewelGallery({ jewels, collections, locale }: Props) {
     [collections, jewels],
   );
 
-  const shownGroups = useMemo(
-    () =>
-      filter === ALL
-        ? groups
-        : groups.filter((g) => g.collection.id === filter),
-    [groups, filter],
-  );
-  // L'ordre de circulation dans la fiche suit ce qui est affiché.
+  // Dans la fiche, on circule au sein de la collection du bijou ouvert.
+  const openCollection = openId
+    ? jewels.find((j) => j.id === openId)?.collection
+    : undefined;
   const shown = useMemo(
-    () => shownGroups.flatMap((g) => g.items),
-    [shownGroups],
+    () => jewels.filter((j) => j.collection === openCollection),
+    [jewels, openCollection],
   );
 
   const openIndex = openId ? shown.findIndex((j) => j.id === openId) : -1;
@@ -118,12 +110,8 @@ export default function JewelGallery({ jewels, collections, locale }: Props) {
   const price = (j: Jewel) =>
     formatPrice(j.price, "TND", locale) ?? t("onRequest");
 
-  const chip = (active: boolean) =>
-    `rounded-full border px-4 py-2 text-[0.7rem] font-medium uppercase tracking-[0.14em] transition-all duration-400 ${
-      active
-        ? "border-gold/70 bg-gold/10 text-gold"
-        : "border-gold/20 text-sage hover:border-gold/55 hover:text-gold"
-    }`;
+  const chip =
+    "rounded-full border border-gold/20 px-4 py-2 text-[0.7rem] font-medium uppercase tracking-[0.14em] text-sage transition-all duration-400 hover:border-gold/55 hover:text-gold";
 
   return (
     <>
@@ -131,38 +119,32 @@ export default function JewelGallery({ jewels, collections, locale }: Props) {
       {/*  Les collections                                                  */}
       {/* ---------------------------------------------------------------- */}
       <nav aria-label={t("collections")} className="flex flex-wrap gap-2.5">
-        <button
-          type="button"
-          onClick={() => setFilter(ALL)}
-          aria-pressed={filter === ALL}
-          className={chip(filter === ALL)}
-        >
-          {t("all")}
-          <span className="ms-2 text-sage-dim">{jewels.length}</span>
-        </button>
         {groups.map(({ collection, items }) => (
-          <button
+          <a
             key={collection.id}
-            type="button"
-            onClick={() => setFilter(collection.id)}
-            aria-pressed={filter === collection.id}
-            className={chip(filter === collection.id)}
+            href={`#c-${collection.id}`}
+            className={chip}
           >
             {tr(collection.title, locale)}
             <span className="ms-2 text-sage-dim">{items.length}</span>
-          </button>
+          </a>
         ))}
       </nav>
 
       {/* ---------------------------------------------------------------- */}
-      {/*  La vitrine                                                       */}
+      {/*  Une vitrine par collection                                       */}
       {/* ---------------------------------------------------------------- */}
-      <div className="mt-14 space-y-20">
-        {shownGroups.map(({ collection, items }) => (
-          <section key={collection.id} aria-labelledby={`c-${collection.id}`}>
+      <div className="mt-16 space-y-16 sm:space-y-24">
+        {groups.map(({ collection, items }) => (
+          <section
+            key={collection.id}
+            id={`c-${collection.id}`}
+            aria-labelledby={`t-${collection.id}`}
+            className="scroll-mt-24"
+          >
             <header className="flex items-baseline gap-4 border-b border-gold/15 pb-4">
               <h2
-                id={`c-${collection.id}`}
+                id={`t-${collection.id}`}
                 className="font-display text-[clamp(1.6rem,3vw,2.3rem)] font-light text-ivory"
               >
                 {tr(collection.title, locale)}
@@ -172,46 +154,9 @@ export default function JewelGallery({ jewels, collections, locale }: Props) {
               </span>
             </header>
 
-            <ul className="mt-8 columns-2 gap-4 sm:gap-6 md:columns-3 xl:columns-4">
-              {items.map((jewel) => (
-                <li key={jewel.id} className="mb-8 break-inside-avoid">
-                  <button
-                    type="button"
-                    onClick={() => open(jewel.id)}
-                    aria-label={`${tr(jewel.title, locale)} — ${t("open")}`}
-                    className="group block w-full text-start"
-                  >
-                    <div className="relative overflow-hidden rounded-sm border border-gold/15 bg-night-2 transition-colors duration-500 group-hover:border-gold/50">
-                      <Image
-                        src={jewel.images[0]}
-                        alt={tr(jewel.title, locale)}
-                        {...dimensions(jewel.images[0])}
-                        sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                        className={`h-auto w-full transition-transform duration-700 group-hover:scale-[1.03] ${
-                          jewel.status === "sold" ? "opacity-75" : ""
-                        }`}
-                      />
-                      {jewel.status === "sold" && (
-                        <span className="absolute start-2.5 top-2.5">
-                          <StatusBadge label={t("status.sold")} status="sold" />
-                        </span>
-                      )}
-                    </div>
-                    <p
-                      dir="auto"
-                      className="mt-3 font-display text-[1.08rem] font-light leading-snug text-ivory transition-colors group-hover:text-gold"
-                    >
-                      {tr(jewel.title, locale)}
-                    </p>
-                    {jewel.status !== "sold" && (
-                      <p className="mt-1 text-[0.82rem] text-gold/85">
-                        {price(jewel)}
-                      </p>
-                    )}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-4">
+              <JewelStage items={items} locale={locale} onOpen={open} />
+            </div>
           </section>
         ))}
       </div>
