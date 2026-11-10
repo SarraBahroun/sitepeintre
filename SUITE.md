@@ -48,6 +48,11 @@ Rien n'est en ligne pour l'instant.
 
 ## La prochaine chose à faire
 
+**La vidéo de la page Bijoux** — l'artiste la prépare (dit le 10 novembre) :
+elle viendra en fond de l'en-tête de `/bijoux`, comme la jungle de nuit en
+tête des expositions et de l'accueil. C'est le dernier contenu attendu ;
+après elle, le site est complet et part en ligne.
+
 **Les textes des toiles sont écrits** — les 18 de La Jungle 1 et les 9 de La
 Jungle 2. Il reste :
 
