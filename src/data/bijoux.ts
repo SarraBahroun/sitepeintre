@@ -1142,7 +1142,7 @@ export const jewels: Jewel[] = [
   {
     id: "cascade-corail",
     ref: 50,
-    images: img(50),
+    images: img(84),
     collection: "boucles",
     title: L("Boucles « Cascade de corail »", "“Coral cascade” earrings", "أقراط «شلّال المرجان»"),
     description: R(
@@ -1435,6 +1435,29 @@ export const jewels: Jewel[] = [
       ],
       [
         "طقم تقليدي يدوي يتكوّن من عقد وأقراط متناسقة، مصنوع بدقّة من كريستال منتقى بعناية يتميّز بانعكاسات زرقاء عميقة ومشرقة. يجمع الطقم بين الكريستال وهيكل فاخر من النحاس المغطّس في الذهب، بتصميم ينسجم فيه خطّ التعليقة المركزية ليمنح القطعة طابعاً راقياً وخالداً.",
+        "تجسيد مثالي للجمع بين مهارة الصنعة اليدوية والأناقة المعاصرة.",
+      ],
+    ),
+    pieces: ["necklace", "earrings"],
+    status: "sold",
+  },
+  {
+    id: "cristal-bleu-anneau",
+    ref: 80,
+    images: img(80, 81, 82, 83),
+    collection: "cuivre",
+    title: L("Parure cristal bleu à l'anneau doré", "Blue crystal set with gold ring", "طقم الكريستال الأزرق بالحلقة الذهبية"),
+    description: R(
+      [
+        "Une parure artisanale de facture traditionnelle, collier et boucles d'oreilles assortis, en cristaux soigneusement sélectionnés aux reflets bleus, profonds et éclatants. La brillance du cristal s'unit à une structure luxueuse en laiton plaqué or, sublimée par une pampille centrale au dessin harmonieux, pour un style raffiné et intemporel.",
+        "L'alliance parfaite du savoir-faire artisanal et de l'élégance contemporaine.",
+      ],
+      [
+        "A handmade set in the traditional manner — necklace and matching earrings — in carefully selected crystals with deep, brilliant blue glints. The sparkle of the crystal meets a luxurious gold-plated brass structure, crowned by a harmoniously designed central tassel pendant, for a refined, timeless style.",
+        "The perfect union of handcraft and contemporary elegance.",
+      ],
+      [
+        "طقم يدوي بصناعة تقليدية، يتكوّن من عقد وأقراط متناسقة، من بلّورات منتقاة بعناية بانعكاسات زرقاء عميقة ومتألّقة. يلتقي فيه بريق الكريستال بهيكل فاخر من النحاس الأصفر المطلي بالذهب، تتوّجه تعليقة مركزية بشرّابات متناسقة التصميم، فيمنحه طابعاً راقياً وخالداً.",
         "تجسيد مثالي للجمع بين مهارة الصنعة اليدوية والأناقة المعاصرة.",
       ],
     ),
