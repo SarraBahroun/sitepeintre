@@ -39,7 +39,11 @@
     "jewelsTitle": "المجوهرات",
     "jewelsLead": "مجوهرات يدوية تحت العلامة التجارية Chic & Glamour.",
     "otherTitle": "الكتب والمجوهرات",
-    "otherLead": "أبعد من اللوحة: كتب مصوّرة ومجوهرات مصنوعة يدوياً."
+    "otherLead": "أبعد من اللوحة: كتب مصوّرة ومجوهرات مصنوعة يدوياً.",
+    "seeBooks": "مشاهدة الكتب",
+    "seeJewels": "مشاهدة المجوهرات",
+    "moreBooks": "{count, plural, one {+ كتاب واحد} two {+ كتابان} few {+ # كتب} other {+ # كتاباً}}",
+    "moreJewels": "{count, plural, one {+ قطعة واحدة} two {+ قطعتان} few {+ # قطع} other {+ # قطعة}} في {collections} مجموعة"
   },
   "artist": {
     "title": "الفنانة",

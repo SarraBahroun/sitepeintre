@@ -39,7 +39,11 @@
     "jewelsTitle": "Bijoux",
     "jewelsLead": "Des bijoux artisanaux créés sous la marque Chic & Glamour.",
     "otherTitle": "Livres et bijoux",
-    "otherLead": "Au-delà de la toile : des livres illustrés et des bijoux faits main."
+    "otherLead": "Au-delà de la toile : des livres illustrés et des bijoux faits main.",
+    "seeBooks": "Voir les livres",
+    "seeJewels": "Voir les bijoux",
+    "moreBooks": "{count, plural, one {+ # livre} other {+ # livres}}",
+    "moreJewels": "{count, plural, one {+ # pièce} other {+ # pièces}} en {collections} collections"
   },
   "artist": {
     "title": "L'artiste",

@@ -3,14 +3,16 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
 import { expositions } from "@/data/expositions";
-import { artist, courses, heroPlates } from "@/data/site";
-import { t as tr } from "@/data/types";
+import { artist, courses, diversSections, heroPlates } from "@/data/site";
+import { jewels, jewelCollections } from "@/data/bijoux";
+import { t as tr, formatPrice } from "@/data/types";
 import { dimensions } from "@/data/dimensions";
 
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
 import ExpositionRow from "@/components/ExpositionRow";
 import TvFeature from "@/components/TvFeature";
+import PreviewRow from "@/components/PreviewRow";
 import { Section, SectionHeading, ActionLink } from "@/components/ui";
 
 export default async function HomePage({
@@ -25,6 +27,16 @@ export default async function HomePage({
   const t = await getTranslations("home");
   const tn = await getTranslations("nav");
   const firstExpo = expositions[0];
+
+  // Les livres illustrés et l'ouvrage dirigé, dans l'ordre de la page Livres.
+  const books = diversSections.flatMap((s) => s.books ?? []);
+  // Un bijou disponible par collection, des quatre premières collections.
+  const jewelPreview = jewelCollections
+    .map((c) =>
+      jewels.find((j) => j.collection === c.id && j.status === "available"),
+    )
+    .filter((j) => j !== undefined)
+    .slice(0, 4);
 
   return (
     <>
@@ -113,28 +125,52 @@ export default async function HomePage({
       {/* ================================================================== */}
       <Section className="pb-24 sm:pb-32">
         <Reveal>
-          <div className="relative overflow-hidden rounded-sm border border-gold/15 bg-gradient-to-br from-moss/60 via-night-2/70 to-night px-7 py-14 sm:px-14 sm:py-20">
-            <div
-              aria-hidden
-              className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-gold/10 blur-[90px]"
-            />
-            <div className="relative max-w-2xl">
-              <SectionHeading
-                eyebrow={`${tn("books")} · ${tn("jewels")}`}
-                title={t("otherTitle")}
-                lead={t("otherLead")}
-              />
-              <div className="mt-10 flex flex-wrap gap-4">
-                <ActionLink href="/livres" tone="gold">
-                  {t("booksTitle")}
-                </ActionLink>
-                <ActionLink href="/bijoux" tone="gold">
-                  {t("jewelsTitle")}
-                </ActionLink>
-              </div>
-            </div>
-          </div>
+          <SectionHeading
+            eyebrow={`${tn("books")} · ${tn("jewels")}`}
+            title={t("otherTitle")}
+            lead={t("otherLead")}
+          />
         </Reveal>
+
+        {/* Deux bandeaux, dessinés comme ceux des expositions */}
+        <div className="mt-10 divide-y divide-gold/10">
+          <PreviewRow
+            href="/livres"
+            eyebrow={tn("books")}
+            title={t("booksTitle")}
+            lead={t("booksLead")}
+            cta={t("seeBooks")}
+            items={books.slice(0, 4).map((book) => ({
+              key: book.id,
+              image: book.cover,
+              title: book.title,
+              detail: book.authors,
+            }))}
+            more={
+              books.length > 4
+                ? t("moreBooks", { count: books.length - 4 })
+                : undefined
+            }
+          />
+          <PreviewRow
+            href="/bijoux"
+            eyebrow="Chic & Glamour"
+            title={t("jewelsTitle")}
+            lead={t("jewelsLead")}
+            cta={t("seeJewels")}
+            items={jewelPreview.map((jewel) => ({
+              key: jewel.id,
+              image: jewel.images[0],
+              title: tr(jewel.title, locale),
+              detail: formatPrice(jewel.price, "TND", locale) ?? undefined,
+              href: `/bijoux#c-${jewel.collection}`,
+            }))}
+            more={t("moreJewels", {
+              count: jewels.length - jewelPreview.length,
+              collections: jewelCollections.length,
+            })}
+          />
+        </div>
       </Section>
 
       {/* ================================================================== */}

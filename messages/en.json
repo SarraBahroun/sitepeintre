@@ -39,7 +39,11 @@
     "jewelsTitle": "Jewellery",
     "jewelsLead": "Handmade jewellery created under the brand Chic & Glamour.",
     "otherTitle": "Books and jewellery",
-    "otherLead": "Beyond the canvas: illustrated books and handmade jewellery."
+    "otherLead": "Beyond the canvas: illustrated books and handmade jewellery.",
+    "seeBooks": "View the books",
+    "seeJewels": "View the jewellery",
+    "moreBooks": "{count, plural, one {+ # book} other {+ # books}}",
+    "moreJewels": "{count, plural, one {+ # piece} other {+ # pieces}} in {collections} collections"
   },
   "artist": {
     "title": "The Artist",
