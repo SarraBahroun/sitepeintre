@@ -208,5 +208,29 @@
     "writeTo": "لأيّ سؤال أو طلب",
     "updated": "آخر تحديث:",
     "formNote": "لا تُستعمل معلوماتك إلّا للردّ عليك."
+  },
+  "jewels": {
+    "all": "الكل",
+    "count": "{count, plural, one {قطعة واحدة} two {قطعتان} few {# قطع} many {# قطعة} other {# قطعة}}",
+    "pieces": "يتضمّن",
+    "length": "الطول",
+    "price": "السعر",
+    "onRequest": "السعر عند الطلب",
+    "virtues": "الفوائد",
+    "virtuesNote": "الفوائد المذكورة مستمدّة من تقاليد العلاج بالأحجار، وليست خصائص مثبتة طبياً.",
+    "status": {
+      "available": "متوفّر",
+      "sold": "بيع"
+    },
+    "piece": {
+      "necklace": "عقد",
+      "longNecklace": "عقد طويل",
+      "pendant": "تعليقة",
+      "bracelet": "سوار",
+      "earrings": "أقراط"
+    },
+    "photo": "الصورة {n}",
+    "open": "عرض التفاصيل",
+    "collections": "المجموعات"
   }
 }

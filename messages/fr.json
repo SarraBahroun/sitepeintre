@@ -208,5 +208,29 @@
     "writeTo": "Pour toute question ou demande",
     "updated": "Mis à jour le",
     "formNote": "Vos informations ne servent qu'à vous répondre."
+  },
+  "jewels": {
+    "all": "Toutes",
+    "count": "{count, plural, one {# pièce} other {# pièces}}",
+    "pieces": "Composition",
+    "length": "Longueur",
+    "price": "Prix",
+    "onRequest": "Prix sur demande",
+    "virtues": "Vertus",
+    "virtuesNote": "Les vertus citées relèvent de la tradition de la lithothérapie, non de propriétés médicalement démontrées.",
+    "status": {
+      "available": "Disponible",
+      "sold": "Vendu"
+    },
+    "piece": {
+      "necklace": "Collier",
+      "longNecklace": "Sautoir",
+      "pendant": "Pendentif",
+      "bracelet": "Bracelet",
+      "earrings": "Boucles d'oreilles"
+    },
+    "photo": "Photo {n}",
+    "open": "Voir la fiche",
+    "collections": "Collections"
   }
 }

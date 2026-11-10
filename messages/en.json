@@ -208,5 +208,29 @@
     "writeTo": "For any question or request",
     "updated": "Last updated",
     "formNote": "Your information is only used to reply to you."
+  },
+  "jewels": {
+    "all": "All",
+    "count": "{count, plural, one {# piece} other {# pieces}}",
+    "pieces": "Includes",
+    "length": "Length",
+    "price": "Price",
+    "onRequest": "Price on request",
+    "virtues": "Virtues",
+    "virtuesNote": "The virtues mentioned belong to the tradition of crystal healing, not to medically proven properties.",
+    "status": {
+      "available": "Available",
+      "sold": "Sold"
+    },
+    "piece": {
+      "necklace": "Necklace",
+      "longNecklace": "Long necklace",
+      "pendant": "Pendant",
+      "bracelet": "Bracelet",
+      "earrings": "Earrings"
+    },
+    "photo": "Photo {n}",
+    "open": "View details",
+    "collections": "Collections"
   }
 }

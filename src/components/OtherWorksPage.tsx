@@ -11,6 +11,8 @@ import { dimensions } from "@/data/dimensions";
 import Reveal from "@/components/Reveal";
 import ArtworkGallery from "@/components/ArtworkGallery";
 import PhotoGallery from "@/components/PhotoGallery";
+import JewelGallery from "@/components/JewelGallery";
+import { jewels, jewelCollections } from "@/data/bijoux";
 import { Section, SectionHeading, Placeholder } from "@/components/ui";
 
 /* =============================================================================
@@ -84,6 +86,19 @@ export default async function OtherWorksPage({
           </Reveal>
         )}
       </Section>
+
+      {/* ================================================================== */}
+      {/*  Les bijoux, par collection                                         */}
+      {/* ================================================================== */}
+      {kind === "jewels" && (
+        <Section className="pb-20 sm:pb-28">
+          <JewelGallery
+            jewels={jewels}
+            collections={jewelCollections}
+            locale={locale}
+          />
+        </Section>
+      )}
 
       {/* ================================================================== */}
       {/*  Les rubriques                                                      */}
