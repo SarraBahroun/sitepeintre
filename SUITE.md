@@ -57,10 +57,10 @@ Jungle 2. Il reste :
 - **Les prix et la disponibilité** — aucune toile n’a de prix : toutes
   affichent « Prix sur demande ». Seule *Flame of Grace* est vendue. L’artiste
   enverra prix et disponibilités.
-- **Les bijoux** — 71 pièces en 12 collections (`src/data/bijoux.ts`,
+- **Les bijoux** — 73 pièces en 12 collections (`src/data/bijoux.ts`,
   photos `public/images/bijoux/article-NN.jpeg`, NN = numéro de l'artiste ;
-  la photo 84 remplace la 50). Reste l'article 6 (collier cristal argenté
-  au cœur), écarté faute de texte et de prix.
+  la photo 84 remplace la 50). Reste le prix du collier « Clé de Cristal »
+  (article 6), en « Prix sur demande » pour l'instant.
 - Les traductions anglaise et arabe sont faites ici : l’artiste donne une
   seule langue.
 

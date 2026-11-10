@@ -698,6 +698,30 @@ export const jewels: Jewel[] = [
     status: "available",
   },
 
+  {
+    id: "cle-de-cristal",
+    ref: 6,
+    images: img(6),
+    collection: "pierres",
+    title: L("Collier « Clé de Cristal »", "“Crystal Key” necklace", "عقد «مفتاح الكريستال»"),
+    description: R(
+      [
+        "Une création lumineuse et poétique de Chic & Glamour. Des perles de cristal de roche aux reflets purs, rehaussées d'un délicat jeu de chaînes argentées, et un pendentif en forme de clé qui illumine ce bijou unique.",
+        "Un talisman d'élégance, à porter comme une seconde peau.",
+      ],
+      [
+        "A luminous, poetic piece by Chic & Glamour. Rock crystal beads with pure reflections, set off by a delicate play of silver chains, and a key-shaped pendant that lights up this one-of-a-kind piece.",
+        "A talisman of elegance, to wear like a second skin.",
+      ],
+      [
+        "قطعة مضيئة وشاعرية من Chic & Glamour: خرز من البلّور الصخري بانعكاسات صافية، تزيّنه لعبة رقيقة من السلاسل الفضية، وتعليقة على شكل مفتاح تضيء هذه القطعة الفريدة.",
+        "تميمة أناقة، تُلبس كأنها جلد ثانٍ.",
+      ],
+    ),
+    pieces: ["necklace"],
+    status: "available",
+  },
+
   /* ----------------------------------------------------------------- Perles */
   {
     id: "perles-infini",
@@ -1548,6 +1572,31 @@ export const jewels: Jewel[] = [
     ),
     pieces: ["necklace", "earrings"],
     price: 90,
+    status: "available",
+  },
+
+  {
+    id: "khamsa-perles",
+    ref: 85,
+    images: img(85, 86),
+    collection: "cuivre",
+    title: L("Parure khamsa et perles", "Khamsa & pearl set", "طقم الخمسة واللؤلؤ"),
+    description: R(
+      [
+        "Une parure de tradition qui unit l'éclat des perles d'imitation au charme de motifs ajourés plaqués or. Un collier, un bracelet assorti et des boucles d'oreilles ornés de délicats symboles traditionnels — la khamsa — en cuivre plaqué or, sertis de perles blanches.",
+        "Un ensemble complet, pour une touche d'authenticité et d'élégance.",
+      ],
+      [
+        "A heritage set uniting the sheen of imitation pearls with the charm of gold-plated openwork motifs. A necklace, matching bracelet and earrings adorned with delicate traditional symbols — the khamsa — in gold-plated copper, set with white pearls.",
+        "A complete set, for a touch of authenticity and elegance.",
+      ],
+      [
+        "طقم تراثي راقٍ يجمع بين بريق اللؤلؤ الصناعي وسحر التفاصيل المخرّمة المطلية بالذهب. يتكوّن من سلسال أنيق وسوار متناسق وأقراط مزيّنة برموز تقليدية دقيقة، مصنوعة من النحاس المغطّس في الذهب ومرصّعة باللؤلؤ الأبيض.",
+        "قطعة متكاملة تضفي لمسة من الأصالة والأناقة على إطلالاتك.",
+      ],
+    ),
+    pieces: ["necklace", "bracelet", "earrings"],
+    price: 160,
     status: "available",
   },
 
