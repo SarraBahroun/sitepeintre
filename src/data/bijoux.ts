@@ -1392,6 +1392,7 @@ export const jewels: Jewel[] = [
       ],
     ),
     pieces: ["necklace", "earrings"],
+    price: 65,
     status: "available",
   },
   {
@@ -1412,10 +1413,34 @@ export const jewels: Jewel[] = [
       ],
     ),
     pieces: ["necklace", "earrings"],
+    price: 75,
     status: "available",
   },
 
   /* ----------------------------------------------------------------- Cuivre */
+  {
+    id: "cristal-bleu",
+    ref: 6,
+    images: img(6),
+    collection: "cuivre",
+    title: L("Parure cristal aux reflets bleus", "Blue-glint crystal set", "طقم الكريستال بالانعكاسات الزرقاء"),
+    description: R(
+      [
+        "Une parure traditionnelle faite main, collier et boucles d'oreilles assortis, en cristal soigneusement choisi aux reflets bleus profonds et lumineux. Le cristal s'unit à une monture raffinée en cuivre plaqué or, et la ligne du pendentif central donne à la pièce un caractère élégant et intemporel.",
+        "L'alliance parfaite du savoir-faire artisanal et de l'élégance contemporaine.",
+      ],
+      [
+        "A handmade traditional set — necklace and matching earrings — in carefully chosen crystal with deep, bright blue glints. The crystal is joined to a fine gold-plated copper setting, and the line of the central pendant gives the piece an elegant, timeless character.",
+        "The perfect union of handcraft and contemporary elegance.",
+      ],
+      [
+        "طقم تقليدي يدوي يتكوّن من عقد وأقراط متناسقة، مصنوع بدقّة من كريستال منتقى بعناية يتميّز بانعكاسات زرقاء عميقة ومشرقة. يجمع الطقم بين الكريستال وهيكل فاخر من النحاس المغطّس في الذهب، بتصميم ينسجم فيه خطّ التعليقة المركزية ليمنح القطعة طابعاً راقياً وخالداً.",
+        "تجسيد مثالي للجمع بين مهارة الصنعة اليدوية والأناقة المعاصرة.",
+      ],
+    ),
+    pieces: ["necklace", "earrings"],
+    status: "sold",
+  },
   {
     id: "croissants",
     ref: 61,
@@ -1588,6 +1613,7 @@ export const jewels: Jewel[] = [
       ],
     ),
     pieces: ["necklace"],
+    price: 145,
     status: "available",
   },
   {
