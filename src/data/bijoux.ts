@@ -1420,8 +1420,8 @@ export const jewels: Jewel[] = [
   /* ----------------------------------------------------------------- Cuivre */
   {
     id: "cristal-bleu",
-    ref: 6,
-    images: img(6),
+    ref: 79,
+    images: img(79, 78, 77, 76),
     collection: "cuivre",
     title: L("Parure cristal aux reflets bleus", "Blue-glint crystal set", "طقم الكريستال بالانعكاسات الزرقاء"),
     description: R(

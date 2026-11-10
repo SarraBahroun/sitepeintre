@@ -59,8 +59,9 @@ Jungle 2. Il reste :
   enverra prix et disponibilités.
 - **Les bijoux** — 70 pièces en 12 collections (`src/data/bijoux.ts`,
   photos `public/images/bijoux/article-NN.jpeg`, NN = numéro de l'artiste).
-  Reste : la photo de l'article 50 (boucles « Cascade de corail »), que
-  l'artiste remplacera.
+  Restent : la photo de l'article 50 (boucles « Cascade de corail »), que
+  l'artiste remplacera, et l'article 6 (collier cristal argenté au cœur),
+  écarté faute de texte et de prix.
 - Les traductions anglaise et arabe sont faites ici : l’artiste donne une
   seule langue.
 
