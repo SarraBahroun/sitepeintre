@@ -11,17 +11,24 @@ import { useCart, type CartItem } from "@/lib/cart";
    une toile unique ne s'ajoute pas deux fois.
    ========================================================================== */
 
-const primary =
-  "inline-flex w-full items-center justify-center gap-2.5 rounded-sm border px-6 py-3.5 text-[0.76rem] font-medium uppercase tracking-[0.18em] transition-all duration-400";
+const base =
+  "inline-flex w-full items-center justify-center gap-2.5 rounded-sm border font-medium uppercase transition-all duration-400";
 
 export default function AddToCart({
   item,
   withInquire = true,
+  size = "md",
 }: {
   item: CartItem;
   /** Le lien « Demander… » vers le contact, sous le bouton. */
   withInquire?: boolean;
+  /** « sm » : le bouton plus discret, sous le cartel d'une toile du mur. */
+  size?: "sm" | "md";
 }) {
+  const primary =
+    size === "sm"
+      ? `${base} px-4 py-2.5 text-[0.66rem] tracking-[0.16em]`
+      : `${base} px-6 py-3.5 text-[0.76rem] tracking-[0.18em]`;
   const t = useTranslations("cart");
   const tc = useTranslations("artwork");
   const tj = useTranslations("jewels");

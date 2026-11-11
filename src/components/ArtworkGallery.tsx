@@ -106,6 +106,7 @@ export default function ArtworkGallery({
         locale={locale}
         onOpen={setOpenIndex}
         accent={accent}
+        origin={origin}
       />
 
       {/* ---------------------------------------------------------------- */}

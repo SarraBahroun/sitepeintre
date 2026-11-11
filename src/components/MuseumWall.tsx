@@ -9,6 +9,7 @@ import type { Artwork } from "@/data/types";
 import { t as tr, formatPrice } from "@/data/types";
 import { dimensions } from "@/data/dimensions";
 import type { Locale } from "@/i18n/routing";
+import AddToCart from "./AddToCart";
 
 /* =============================================================================
    Le mur du musée
@@ -64,6 +65,8 @@ type Props = {
   onOpen: (index: number) => void;
   /** Teinte d'accent de l'exposition : la barre de marche la reprend. */
   accent?: "glow" | "gold" | "iris";
+  /** D'où viennent les toiles, pour la commande : « La Jungle 2 ». */
+  origin?: string;
 };
 
 const accentBar: Record<string, string> = {
@@ -77,6 +80,7 @@ export default function MuseumWall({
   locale,
   onOpen,
   accent = "glow",
+  origin,
 }: Props) {
   const t = useTranslations("artwork");
   const rtl = locale === "ar";
@@ -273,6 +277,26 @@ export default function MuseumWall({
                     </span>
                   </span>
                 </button>
+
+                {/* Le panier, sous le cartel — hors du bouton de la toile :
+                    un bouton ne se pose pas dans un autre. */}
+                {artwork.status === "available" && (
+                  <div className="mt-4 max-w-[260px]">
+                    <AddToCart
+                      size="sm"
+                      withInquire={false}
+                      item={{
+                        id: artwork.id,
+                        kind: "artwork",
+                        title: artwork.title,
+                        image: artwork.image,
+                        price: artwork.price,
+                        currency: artwork.currency,
+                        origin,
+                      }}
+                    />
+                  </div>
+                )}
               </li>
             );
           })}
