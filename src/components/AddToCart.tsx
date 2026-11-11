@@ -14,7 +14,14 @@ import { useCart, type CartItem } from "@/lib/cart";
 const primary =
   "inline-flex w-full items-center justify-center gap-2.5 rounded-sm border px-6 py-3.5 text-[0.76rem] font-medium uppercase tracking-[0.18em] transition-all duration-400";
 
-export default function AddToCart({ item }: { item: CartItem }) {
+export default function AddToCart({
+  item,
+  withInquire = true,
+}: {
+  item: CartItem;
+  /** Le lien « Demander… » vers le contact, sous le bouton. */
+  withInquire?: boolean;
+}) {
   const t = useTranslations("cart");
   const tc = useTranslations("artwork");
   const tj = useTranslations("jewels");
@@ -51,12 +58,14 @@ export default function AddToCart({ item }: { item: CartItem }) {
         </button>
       )}
 
-      <Link
-        href="/contact"
-        className="block text-center text-[0.72rem] uppercase tracking-[0.16em] text-sage-dim transition-colors hover:text-sage"
-      >
-        {item.kind === "jewel" ? tj("inquire") : tc("inquire")}
-      </Link>
+      {withInquire && (
+        <Link
+          href="/contact"
+          className="block text-center text-[0.72rem] uppercase tracking-[0.16em] text-sage-dim transition-colors hover:text-sage"
+        >
+          {item.kind === "jewel" ? tj("inquire") : tc("inquire")}
+        </Link>
+      )}
     </div>
   );
 }
