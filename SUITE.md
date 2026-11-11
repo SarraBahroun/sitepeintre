@@ -1,6 +1,6 @@
 # Où nous en sommes
 
-Dernière séance : 6 novembre 2026.
+Dernière séance : 11 novembre 2026.
 Le site est **statique** : `npm run build` écrit le site entier dans `out/`
 (pages, images redimensionnées, vidéos), sans serveur. C'est ce dossier que
 l'on publie.
@@ -99,10 +99,15 @@ téléphone, sans erreur, sans débordement, sans image cassée.
   (`src/components/MuseumWall.tsx`). Leur taille suit leurs dimensions
   réelles ; un spot les éclaire, un cartel les nomme, un clic ouvre la fiche.
   Deux flèches amènent la toile d’avant ou d’après au centre.
-- **La vitrine des bijoux** — chaque collection a sa rangée, le bijou de
-  face sous un spot, les voisins dans la pénombre ; on avance aux flèches ou
-  d'un glissé du doigt, la page descend librement d'une collection à
-  l'autre (`src/components/JewelStage.tsx`).
+- **La vitrine des bijoux** — chaque collection a sa rangée : le bijou de
+  face en grand sous un spot, ses voisins en retrait, et dessous son nom,
+  son prix et « Ajouter au panier ». On avance aux flèches ou d'un glissé
+  du doigt ; la page descend librement d'une collection à l'autre
+  (`src/components/JewelStage.tsx`).
+- **Le panier partout** — sous chaque toile disponible du mur, sous chaque
+  bijou de face, et dans les fiches.
+- **L'accueil** — un bandeau Livres et un bandeau Bijoux, dessinés comme
+  ceux des expositions (`src/components/PreviewRow.tsx`).
 - **Pages d'exposition** — dans l'ordre : le texte (emplacement réservé
   tant qu'il n'est pas écrit), le film YouTube, puis le vernissage une
   photo à la fois, flèches à gauche et à droite. La Jungle 1 n'a pas
