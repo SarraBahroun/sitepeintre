@@ -5,7 +5,7 @@ import type { Locale } from "@/i18n/routing";
 import { expositions } from "@/data/expositions";
 import { artist, courses, diversSections, heroPlates } from "@/data/site";
 import { jewels, jewelCollections } from "@/data/bijoux";
-import { t as tr, formatPrice } from "@/data/types";
+import { t as tr, tRich, formatPrice } from "@/data/types";
 import { dimensions } from "@/data/dimensions";
 
 import Hero from "@/components/Hero";
@@ -26,7 +26,17 @@ export default async function HomePage({
 
   const t = await getTranslations("home");
   const tn = await getTranslations("nav");
+  const tc = await getTranslations("courses");
   const firstExpo = expositions[0];
+
+  // Les surtitres disent autre chose que le titre qu'ils coiffent :
+  // la casquette de l'artiste, les années des expositions, l'atelier.
+  const artistRole = tRich(artist.roles, locale)[0];
+  const expoYears = [...new Set(expositions.map((e) => e.year))].sort();
+  const expoSpan =
+    expoYears.length > 1
+      ? `${expoYears[0]} — ${expoYears[expoYears.length - 1]}`
+      : expoYears[0];
 
   // Les livres illustrés et l'ouvrage dirigé, dans l'ordre de la page Livres.
   const books = diversSections.flatMap((s) => s.books ?? []);
@@ -49,7 +59,7 @@ export default async function HomePage({
       {/* ================================================================== */}
       {/*  L'artiste                                                          */}
       {/* ================================================================== */}
-      <Section className="py-24 sm:py-32">
+      <Section className="pt-24 pb-6 sm:pt-32 sm:pb-10">
         <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1fr] lg:gap-20">
           <Reveal>
             <div className="relative mx-auto w-full max-w-sm">
@@ -73,7 +83,7 @@ export default async function HomePage({
 
           <Reveal delay={0.12}>
             <SectionHeading
-              eyebrow={tn("artist")}
+              eyebrow={artistRole}
               title={t("artistTitle")}
               lead={tr(artist.statement, locale) || t("artistLead")}
             />
@@ -92,10 +102,10 @@ export default async function HomePage({
       {/* ================================================================== */}
       {/*  Les expositions                                                    */}
       {/* ================================================================== */}
-      <Section id="expositions" className="py-24 sm:py-32">
+      <Section id="expositions" className="pt-10 pb-24 sm:pt-14 sm:pb-32">
         <Reveal>
           <SectionHeading
-            eyebrow={tn("expositions")}
+            eyebrow={expoSpan}
             title={t("expositionsTitle")}
             lead={t("expositionsLead")}
           />
@@ -125,11 +135,7 @@ export default async function HomePage({
       {/* ================================================================== */}
       <Section className="pb-24 sm:pb-32">
         <Reveal>
-          <SectionHeading
-            eyebrow={`${tn("books")} · ${tn("jewels")}`}
-            title={t("otherTitle")}
-            lead={t("otherLead")}
-          />
+          <SectionHeading title={t("otherTitle")} lead={t("otherLead")} />
         </Reveal>
 
         {/* Deux bandeaux, dessinés comme ceux des expositions */}
@@ -177,14 +183,14 @@ export default async function HomePage({
       {/*  Cours de peinture                                                  */}
       {/* ================================================================== */}
       {courses.enabled && (
-        <Section className="pb-28 sm:pb-36">
+        <Section className="pb-16 sm:pb-20">
           <Reveal>
             <div className="relative overflow-hidden rounded-sm border border-glow/15 px-7 py-14 text-center sm:px-14 sm:py-20">
               <div
                 aria-hidden
                 className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--color-glow-deep)_22%,transparent),transparent_70%)]"
               />
-              <p className="eyebrow">{tn("courses")}</p>
+              <p className="eyebrow">{tc("studio")}</p>
               <h2 className="mx-auto mt-4 max-w-2xl font-display text-[clamp(1.9rem,4vw,3rem)] font-light leading-tight text-ivory">
                 {t("coursesTitle")}
               </h2>

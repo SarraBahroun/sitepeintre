@@ -110,32 +110,36 @@ export default async function ExpositionRow({
 
       {/* --- Les toiles, côte à côte --- */}
       {preview.length > 0 ? (
-        <RevealGroup className="mt-10 grid grid-cols-2 items-start gap-5 sm:gap-7 lg:grid-cols-4">
+        <RevealGroup className="mt-10 grid grid-cols-2 items-stretch gap-x-5 gap-y-10 sm:gap-7 lg:grid-cols-4">
           {preview.map((artwork) => {
             const title = tr(artwork.title, locale);
             const price = formatPrice(artwork.price, artwork.currency, locale);
 
             return (
-              <RevealItem key={artwork.id}>
-                <Link href={href} className="group block">
-                  {/* La toile entière, jamais rognée : elle garde sa
+              <RevealItem key={artwork.id} className="h-full">
+                <Link href={href} className="group flex h-full flex-col">
+                  {/* Les pièces posées sur une même ligne, comme accrochées à
+                      la même hauteur : titres et prix s'alignent dessous. */}
+                  <div className="flex flex-1 items-end">
+                    {/* La toile entière, jamais rognée : elle garde sa
                       proportion et la vignette s'y plie. */}
-                  <div
-                    className={`relative overflow-hidden rounded-sm border border-glow/10 bg-night-2 transition-all duration-700 ease-[var(--ease-silk)] ${accentBorder}`}
-                  >
-                    <Image
-                      src={artwork.image}
-                      alt={title || tr(expo.title, locale)}
-                      {...dimensions(artwork.image)}
-                      sizes="(max-width: 640px) 50vw, 25vw"
-                      className="h-auto w-full transition-transform duration-[1.2s] ease-[var(--ease-silk)] group-hover:scale-[1.04]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-night/75 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-45" />
-                    <div className="absolute start-3 top-3">
-                      <StatusBadge
-                        label={ta(`status.${artwork.status}`)}
-                        status={artwork.status}
+                    <div
+                      className={`relative w-full overflow-hidden rounded-sm border border-glow/10 bg-night-2 transition-all duration-700 ease-[var(--ease-silk)] ${accentBorder}`}
+                    >
+                      <Image
+                        src={artwork.image}
+                        alt={title || tr(expo.title, locale)}
+                        {...dimensions(artwork.image)}
+                        sizes="(max-width: 640px) 50vw, 25vw"
+                        className="h-auto w-full transition-transform duration-[1.2s] ease-[var(--ease-silk)] group-hover:scale-[1.04]"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-night/75 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-45" />
+                      <div className="absolute start-3 top-3">
+                        <StatusBadge
+                          label={ta(`status.${artwork.status}`)}
+                          status={artwork.status}
+                        />
+                      </div>
                     </div>
                   </div>
 

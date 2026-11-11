@@ -123,10 +123,10 @@ export function StatusBadge({
   size?: "sm" | "md";
 }) {
   const tones: Record<typeof status, string> = {
-    available: "border-glow/35 text-glow bg-glow/10",
-    sold: "border-ember/40 text-ember bg-ember/10",
-    reserved: "border-gold/40 text-gold bg-gold/10",
-    notForSale: "border-sage/25 text-sage bg-sage/10",
+    available: "border-glow/40 text-glow bg-night/75",
+    sold: "border-ember/45 text-ember bg-night/75",
+    reserved: "border-gold/45 text-gold bg-night/75",
+    notForSale: "border-sage/30 text-sage bg-night/75",
   };
 
   return (

@@ -165,7 +165,8 @@
     "formLevelIntermediate": "Intermédiaire",
     "formLevelAdvanced": "Avancé",
     "formQuestion": "Votre question ou message",
-    "formSend": "Envoyer ma demande"
+    "formSend": "Envoyer ma demande",
+    "studio": "L'atelier"
   },
   "intro": {
     "title": "Ouverture",

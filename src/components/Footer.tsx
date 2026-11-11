@@ -41,7 +41,7 @@ export default async function Footer({ locale }: { locale: Locale }) {
   ];
 
   return (
-    <footer className="relative mt-32 border-t border-glow/10">
+    <footer className="relative mt-20 border-t border-glow/10">
       <div className="mx-auto max-w-[1400px] px-5 py-16 sm:px-8">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {/* Marque */}

@@ -60,9 +60,18 @@ export default function ExpoFilm({
               if (e.currentTarget.naturalWidth <= 120)
                 setThumb(`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`);
             }}
-            className="object-cover opacity-85 transition-all duration-[1.1s] ease-[var(--ease-silk)] group-hover:scale-[1.03] group-hover:opacity-100"
+            className="scale-[1.14] object-cover transition-transform duration-[1.1s] ease-[var(--ease-silk)] group-hover:scale-[1.17]"
           />
-          <span className="absolute inset-0 bg-night/35 transition-opacity duration-500 group-hover:opacity-10" />
+          {/* Un voile de nuit sur les bords plutôt qu'à plat : le décor du
+              plateau (fonds clairs, pastilles) se fond dans le site, le
+              centre de l'image garde ses couleurs. */}
+          <span
+            className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-70"
+            style={{
+              background:
+                "radial-gradient(ellipse 66% 64% at center, transparent 34%, color-mix(in oklab, var(--color-night) 45%, transparent) 62%, color-mix(in oklab, var(--color-night) 88%, transparent) 86%, var(--color-night) 100%)",
+            }}
+          />
           <span className="absolute inset-0 flex items-center justify-center">
             <span className="flex h-20 w-20 items-center justify-center rounded-full border border-glow/50 bg-night/55 backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:border-glow group-hover:bg-glow/15 sm:h-24 sm:w-24">
               <svg

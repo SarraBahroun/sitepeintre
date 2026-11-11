@@ -165,7 +165,8 @@
     "formLevelIntermediate": "Intermediate",
     "formLevelAdvanced": "Advanced",
     "formQuestion": "Your question or message",
-    "formSend": "Send my request"
+    "formSend": "Send my request",
+    "studio": "The studio"
   },
   "intro": {
     "title": "Opening",

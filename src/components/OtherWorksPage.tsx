@@ -59,7 +59,10 @@ export default async function OtherWorksPage({
       {/* ================================================================== */}
       <Section className="pt-40 pb-16 sm:pt-48">
         <Reveal>
-          <p className="eyebrow">{tn(kind)}</p>
+          {/* Le surtitre ne répète pas le titre : la marque pour les bijoux. */}
+          <p className="eyebrow">
+            {kind === "jewels" ? "Chic & Glamour" : tn(kind)}
+          </p>
           <h1 className="mt-6 font-display text-[clamp(2.6rem,7vw,5.5rem)] font-light leading-[1.02] text-ivory">
             {t(`${kind}Title`)}
           </h1>

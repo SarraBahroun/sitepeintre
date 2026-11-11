@@ -57,9 +57,7 @@ export default function PreviewRow({
             <h3 className="mt-3 font-display text-[clamp(2rem,4.6vw,3.4rem)] font-light leading-tight text-ivory transition-colors duration-500 group-hover:text-gold">
               {title}
             </h3>
-            {lead && (
-              <p className="mt-2 max-w-xl text-sm text-sage">{lead}</p>
-            )}
+            {lead && <p className="mt-2 max-w-xl text-sm text-sage">{lead}</p>}
           </div>
 
           <span className="flex items-center gap-4">
@@ -91,24 +89,31 @@ export default function PreviewRow({
       <div className="rule-glow mt-8" aria-hidden />
 
       {/* --- Les pièces, côte à côte --- */}
-      <RevealGroup className="mt-10 grid grid-cols-2 items-start gap-5 sm:gap-7 lg:grid-cols-4">
+      <RevealGroup className="mt-10 grid grid-cols-2 items-stretch gap-x-5 gap-y-10 sm:gap-7 lg:grid-cols-4">
         {items.map((item) => (
-          <RevealItem key={item.key}>
-            <Link href={item.href ?? href} className="group block">
-              <div className="relative overflow-hidden rounded-sm border border-gold/10 bg-night-2 transition-all duration-700 ease-[var(--ease-silk)] group-hover:border-gold/45">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  {...dimensions(item.image)}
-                  sizes="(max-width: 640px) 50vw, 25vw"
-                  className="h-auto w-full transition-transform duration-[1.2s] ease-[var(--ease-silk)] group-hover:scale-[1.04]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-night/60 via-transparent to-transparent opacity-70 transition-opacity duration-700 group-hover:opacity-35" />
-                {item.badge && (
-                  <span className="absolute start-3 top-3 rounded-full border border-ember/40 bg-night/70 px-2.5 py-1 text-[0.62rem] font-medium uppercase tracking-[0.14em] text-ember backdrop-blur-md">
-                    {item.badge}
-                  </span>
-                )}
+          <RevealItem key={item.key} className="h-full">
+            <Link
+              href={item.href ?? href}
+              className="group flex h-full flex-col"
+            >
+              {/* Les pièces posées sur une même ligne, comme accrochées à
+                      la même hauteur : titres et prix s'alignent dessous. */}
+              <div className="flex flex-1 items-end">
+                <div className="relative w-full overflow-hidden rounded-sm border border-gold/10 bg-night-2 transition-all duration-700 ease-[var(--ease-silk)] group-hover:border-gold/45">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    {...dimensions(item.image)}
+                    sizes="(max-width: 640px) 50vw, 25vw"
+                    className="h-auto w-full transition-transform duration-[1.2s] ease-[var(--ease-silk)] group-hover:scale-[1.04]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-night/60 via-transparent to-transparent opacity-70 transition-opacity duration-700 group-hover:opacity-35" />
+                  {item.badge && (
+                    <span className="absolute start-3 top-3 rounded-full border border-ember/40 bg-night/70 px-2.5 py-1 text-[0.62rem] font-medium uppercase tracking-[0.14em] text-ember backdrop-blur-md">
+                      {item.badge}
+                    </span>
+                  )}
+                </div>
               </div>
 
               <h4

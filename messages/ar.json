@@ -165,7 +165,8 @@
     "formLevelIntermediate": "متوسط",
     "formLevelAdvanced": "متقدّم",
     "formQuestion": "سؤالك أو رسالتك",
-    "formSend": "إرسال الطلب"
+    "formSend": "إرسال الطلب",
+    "studio": "المرسم"
   },
   "intro": {
     "title": "الافتتاح",
