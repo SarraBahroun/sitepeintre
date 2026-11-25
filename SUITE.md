@@ -1,6 +1,6 @@
 # Où nous en sommes
 
-Dernière séance : 11 novembre 2026.
+Dernière séance : 25 novembre 2026.
 Le site est **statique** : `npm run build` écrit le site entier dans `out/`
 (pages, images redimensionnées, vidéos), sans serveur. C'est ce dossier que
 l'on publie.
@@ -26,16 +26,36 @@ arrêter, supprimer `.next/` et `out/`, reconstruire.
 - `public/index.html` choisit la langue à l'arrivée sur « / » ;
   `public/_redirects` envoie /divers vers /livres (lu par Cloudflare).
 
-Rien n'est en ligne pour l'instant.
+**En ligne** depuis le 25 novembre 2026 : https://hanabahroun.pages.dev
+(Cloudflare Pages, projet `hanabahroun`, compte Cloudflare de Sarah).
+Relié au dépôt GitHub : chaque push sur `main` reconstruit et republie le
+site tout seul (~4 min). Réglages : build `npm run build`, sortie `out`,
+variable `NODE_VERSION=22`.
+
+## Il reste à faire
+
+1. **Acheter hanabahroun.com** — Cloudflare → Domains → Registrations,
+   11,17 $/an. Contact du titulaire déjà saisi au nom de Hana Bahroun
+   (adresse à Nabeul). Le premier paiement a été refusé (solde insuffisant).
+   Après l'achat : confirmer le mail de vérification envoyé à
+   hanabahroun19@gmail.com (sous 15 jours).
+2. **Relier le domaine** — projet Pages `hanabahroun` → Custom domains →
+   `hanabahroun.com` et `www.hanabahroun.com`.
+3. **Web3Forms** — dans les réglages du formulaire, remplacer `localhost`
+   par hanabahroun.com.
+4. **Google Search Console** — déclarer le site et envoyer
+   `/sitemap.xml`. Lier la fiche Google Business une fois vérifiée.
+5. **Mail de confirmation au client** après une commande, envoyé depuis
+   `commandes@hanabahroun.com` (Resend ou Cloudflare Email) — possible
+   seulement une fois le domaine acheté.
 
 ---
 
 ## À vérifier en reprenant
 
-1. **Le mail** — envoyer un message depuis `/fr/contact` dans un vrai
-   navigateur et voir s'il arrive à hanabahroun19@gmail.com (spam compris).
-   Jamais confirmé : le navigateur automatisé est bloqué par Web3Forms, et les
-   trois formulaires n'ont été testés qu'avec un envoi simulé.
+1. **Le mail** — vérifié le 25 novembre depuis le site en ligne : les
+   messages arrivent à hanabahroun19@gmail.com. Gmail les classait en spam ;
+   un filtre « De : web3forms.com → jamais en spam » est en place.
 2. **Le téléphone** — parcourir le site sur un vrai téléphone. La fluidité n'a
    été vérifiée qu'en format téléphone dans le navigateur.
 3. **Les liens des livres** (page Livres, `/livres`) — les ouvrir à la main : ces
