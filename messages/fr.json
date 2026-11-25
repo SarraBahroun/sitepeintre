@@ -2,7 +2,11 @@
   "meta": {
     "siteName": "Hana Bahroun",
     "tagline": "Artiste peintre",
-    "description": "Hana Bahroun, artiste peintre. Lumière, faune et végétal : les expositions La Jungle I et La Jungle II, illustrations et créations."
+    "seoTitle": "Hana Bahroun — Artiste peintre à Nabeul, Tunisie : tableaux, cours de peinture, bijoux",
+    "description": "Hana Bahroun, artiste peintre tunisienne à Nabeul. Tableaux à l'huile originaux à vendre, cours de peinture à l'atelier, bijoux faits main Chic & Glamour et livres illustrés.",
+    "seoCourses": "Cours de peinture à Nabeul, à l'atelier de l'artiste peintre Hana Bahroun : acrylique, huile, aquarelle, pastel. Pour débutants comme confirmés.",
+    "seoBooks": "Livres pour enfants illustrés par l'artiste peintre Hana Bahroun, et direction artistique du Diwaniyat Al-Rajhi Cultural Book.",
+    "seoJewels": "Bijoux artisanaux faits main par Hana Bahroun, artiste peintre à Nabeul, sous la marque Chic & Glamour : pièces uniques à commander en ligne."
   },
   "nav": {
     "home": "Accueil",
@@ -58,6 +62,7 @@
     "pressTitle": "Dans la presse",
     "pressRead": "Lire l'article",
     "buyBook": "Acheter",
+    "coverSoon": "Couverture à venir",
     "booksElsewhere": "Ses livres chez les libraires"
   },
   "expo": {

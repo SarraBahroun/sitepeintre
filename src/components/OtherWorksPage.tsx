@@ -34,7 +34,11 @@ export async function otherWorksMetadata(
   kind: OtherWorksKind,
 ): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "nav" });
-  return { title: t(kind) };
+  const tm = await getTranslations({ locale, namespace: "meta" });
+  return {
+    title: t(kind),
+    description: tm(kind === "books" ? "seoBooks" : "seoJewels"),
+  };
 }
 
 export default async function OtherWorksPage({
@@ -160,13 +164,28 @@ export default async function OtherWorksPage({
                       <figure>
                         {/* Cadre commun 4:3 — la couverture y tient entière, sans rognure. */}
                         <div className="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-sm border border-gold/15 bg-night-2">
-                          <Image
-                            src={book.cover}
-                            alt={book.title}
-                            {...dimensions(book.cover)}
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="h-full w-auto max-w-full object-contain"
-                          />
+                          {book.cover ? (
+                            <Image
+                              src={book.cover}
+                              alt={book.title}
+                              {...dimensions(book.cover)}
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                              className="h-full w-auto max-w-full object-contain"
+                            />
+                          ) : (
+                            // Pas encore de couverture : un livre esquissé au filet d'or.
+                            <div className="flex flex-col items-center gap-5 text-center">
+                              <div
+                                aria-hidden
+                                className="flex h-28 w-20 items-center justify-center rounded-[2px] border border-gold/35 bg-gradient-to-b from-gold/[0.07] to-transparent"
+                              >
+                                <span className="h-px w-8 bg-gold/40" />
+                              </div>
+                              <p className="text-[0.7rem] uppercase tracking-[0.28em] text-gold/80">
+                                {ta("coverSoon")}
+                              </p>
+                            </div>
+                          )}
                         </div>
                         <figcaption className="mt-5">
                           <p

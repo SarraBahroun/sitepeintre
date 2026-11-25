@@ -26,7 +26,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "courses" });
-  return { title: t("title") };
+  const tm = await getTranslations({ locale, namespace: "meta" });
+  return { title: t("title"), description: tm("seoCourses") };
 }
 
 export default async function CoursesPage({

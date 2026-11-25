@@ -128,8 +128,8 @@ export type DiversSection = {
 /** Un livre illustré par l’artiste. */
 export type Book = {
   id: string;
-  /** La couverture, dans public/images/divers. */
-  cover: string;
+  /** La couverture, dans public/images/divers. Absente : le cadre affiche « Couverture à venir ». */
+  cover?: string;
   /** Le titre tel qu’imprimé sur la couverture. */
   title: string;
   authors: string;

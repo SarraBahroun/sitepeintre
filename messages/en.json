@@ -2,7 +2,11 @@
   "meta": {
     "siteName": "Hana Bahroun",
     "tagline": "Painter",
-    "description": "Hana Bahroun, painter. Light, wildlife and foliage: the exhibitions The Jungle I and The Jungle II, illustrations and creations."
+    "seoTitle": "Hana Bahroun — Painter in Nabeul, Tunisia: paintings, painting classes, jewellery",
+    "description": "Hana Bahroun, Tunisian painter based in Nabeul. Original oil paintings for sale, painting classes in her studio, handmade Chic & Glamour jewellery and illustrated books.",
+    "seoCourses": "Painting classes in Nabeul, in the studio of painter Hana Bahroun: acrylic, oil, watercolour, pastel. For beginners and experienced painters alike.",
+    "seoBooks": "Children's books illustrated by painter Hana Bahroun, and art direction of the Diwaniyat Al-Rajhi Cultural Book.",
+    "seoJewels": "Handmade jewellery by Hana Bahroun, painter in Nabeul, under the Chic & Glamour brand: one-of-a-kind pieces to order online."
   },
   "nav": {
     "home": "Home",
@@ -58,6 +62,7 @@
     "pressTitle": "In the press",
     "pressRead": "Read the article",
     "buyBook": "Buy",
+    "coverSoon": "Cover coming soon",
     "booksElsewhere": "Her books at the booksellers"
   },
   "expo": {

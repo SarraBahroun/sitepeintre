@@ -3,7 +3,14 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
 import { expositions } from "@/data/expositions";
-import { artist, courses, diversSections, heroPlates } from "@/data/site";
+import {
+  artist,
+  courses,
+  diversSections,
+  heroPlates,
+  site,
+  siteUrl,
+} from "@/data/site";
 import { jewels, jewelCollections } from "@/data/bijoux";
 import { t as tr, tRich, formatPrice } from "@/data/types";
 import { dimensions } from "@/data/dimensions";
@@ -40,6 +47,8 @@ export default async function HomePage({
 
   // Les livres illustrés et l'ouvrage dirigé, dans l'ordre de la page Livres.
   const books = diversSections.flatMap((s) => s.books ?? []);
+  // Le bandeau ne montre que les livres qui ont déjà leur couverture.
+  const booksWithCover = books.filter((book) => book.cover);
   // Un bijou disponible par collection, des quatre premières collections.
   const jewelPreview = jewelCollections
     .map((c) =>
@@ -48,8 +57,33 @@ export default async function HomePage({
     .filter((j) => j !== undefined)
     .slice(0, 4);
 
+  // Fiche pour Google : qui est l'artiste, où, ce qu'elle propose.
+  const tm = await getTranslations("meta");
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: site.name,
+    alternateName: site.nameAr,
+    jobTitle: tm("tagline"),
+    description: tm("description"),
+    url: `${siteUrl}/${locale}`,
+    image: `${siteUrl}/images/jungle-2/tableau-d.jpeg`,
+    email: `mailto:${site.email}`,
+    telephone: site.phone,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: tr(site.city, locale),
+      addressCountry: "TN",
+    },
+    sameAs: [site.instagram, site.facebook, site.x, site.tiktok, site.saatchi],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Hero
         locale={locale}
         firstExpoSlug={firstExpo.slug}
@@ -146,15 +180,15 @@ export default async function HomePage({
             title={t("booksTitle")}
             lead={t("booksLead")}
             cta={t("seeBooks")}
-            items={books.slice(0, 4).map((book) => ({
+            items={booksWithCover.slice(0, 4).map((book) => ({
               key: book.id,
-              image: book.cover,
+              image: book.cover!,
               title: book.title,
               detail: book.authors,
             }))}
             more={
-              books.length > 4
-                ? t("moreBooks", { count: books.length - 4 })
+              booksWithCover.length > 4
+                ? t("moreBooks", { count: booksWithCover.length - 4 })
                 : undefined
             }
           />

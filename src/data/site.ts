@@ -370,7 +370,8 @@ export const diversSections: DiversSection[] = [
     books: [
       {
         id: "diwaniyat-al-rajhi-3",
-        cover: "/images/divers/livre-diwaniyat-al-rajhi.jpeg",
+        // Couverture retirée en attendant la bonne photo (25/11) : le cadre affiche « Couverture à venir ».
+        // Pour la remettre : cover: "/images/divers/livre-diwaniyat-al-rajhi.jpeg",
         title: "ديوانية الراجحي الثقافية — الجزء الثالث",
         authors: "إشراف: عبد الخالق الزهراني",
         publisher: "الإدارة الفنية: هناء بحرون",

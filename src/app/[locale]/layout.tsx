@@ -59,12 +59,12 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(siteUrl),
     title: {
-      default: `${t("siteName")} — ${t("tagline")}`,
+      default: t("seoTitle"),
       template: `%s · ${t("siteName")}`,
     },
     description: t("description"),
     openGraph: {
-      title: `${t("siteName")} — ${t("tagline")}`,
+      title: t("seoTitle"),
       description: t("description"),
       type: "website",
       locale,
