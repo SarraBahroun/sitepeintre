@@ -424,9 +424,9 @@ export const courses = {
   enabled: true,
 
   lead: {
-    fr: "Des cours de peinture à l'atelier, pour les débutants comme pour ceux qui souhaitent approfondir leur pratique.",
-    en: "Painting lessons at the studio, for beginners as well as those wishing to deepen their practice.",
-    ar: "دروس في الرسم بالمرسم، للمبتدئين ولمن يرغب في تطوير تجربته.",
+    fr: "Des cours de peinture à l'atelier, pour tous les niveaux, dans toutes les techniques.",
+    en: "Painting lessons at the studio, for all levels, in every technique.",
+    ar: "دروس في الرسم بالمرسم، لجميع المستويات وفي كل التقنيات.",
   } as Localized,
 
   /** Texte de présentation — à compléter si besoin. */
