@@ -10,7 +10,9 @@ import type { Locale } from "@/i18n/routing";
 import { t as tr, formatPrice } from "@/data/types";
 import { useCart, type CartItem } from "@/lib/cart";
 import { useFormSender } from "@/lib/useFormSender";
+import { site, whatsappHref } from "@/data/site";
 import FormStatus from "./FormStatus";
+import { WhatsAppIcon } from "./SocialIcons";
 
 /* =============================================================================
    Le panier et la commande
@@ -48,7 +50,11 @@ export default function CartView({ locale }: { locale: Locale }) {
   const tn = useTranslations("nav");
   const { items, remove, clear } = useCart();
   const { status, send } = useFormSender();
-  const [done, setDone] = useState<{ reference: string } | null>(null);
+  const [done, setDone] = useState<{
+    reference: string;
+    /** Le récapitulatif, dans la langue du visiteur, prêt pour WhatsApp. */
+    whatsapp: string;
+  } | null>(null);
 
   const untitled = locale === "ar" ? "بدون عنوان" : "Sans titre";
   const total = totalOf(items);
@@ -91,8 +97,27 @@ export default function CartView({ locale }: { locale: Locale }) {
       },
     });
     if (ok) {
+      // Le même récapitulatif pour le visiteur, dans sa langue : il le garde
+      // dans WhatsApp, et Hana le reçoit aussi par là.
+      const visitorLines = items.map((item, i) => {
+        const price =
+          formatPrice(item.price, item.currency, locale) ??
+          t("whatsappOnRequest");
+        return `${i + 1}. ${tr(item.title, locale) || untitled} — ${price}`;
+      });
+      const visitorTotal = total.sum > 0
+        ? `${t("whatsappTotal")} : ${formatPrice(total.sum, total.currency, locale)}`
+        : "";
+      const whatsapp = [
+        t("whatsappIntro", { reference }),
+        ...visitorLines,
+        visitorTotal,
+      ]
+        .filter(Boolean)
+        .join("\n");
+
       clear();
-      setDone({ reference });
+      setDone({ reference, whatsapp });
     }
   };
 
@@ -126,6 +151,22 @@ export default function CartView({ locale }: { locale: Locale }) {
         <p className="mt-2 font-display text-2xl text-gold">
           <bdi dir="ltr">{done.reference}</bdi>
         </p>
+        {site.whatsapp && (
+          <div className="mt-9">
+            <p className="text-[0.88rem] leading-relaxed text-sage">
+              {t("whatsappHint")}
+            </p>
+            <a
+              href={whatsappHref(done.whatsapp)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-3 rounded-full border border-glow/35 bg-glow/5 px-6 py-3.5 text-[0.76rem] font-medium uppercase tracking-[0.18em] text-glow transition-all duration-400 hover:border-glow/70 hover:bg-glow/15"
+            >
+              <WhatsAppIcon size={19} />
+              {t("whatsappKeep")}
+            </a>
+          </div>
+        )}
         <div className="mt-10">
           <Link
             href="/"

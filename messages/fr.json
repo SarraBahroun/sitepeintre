@@ -210,6 +210,11 @@
     "sentTitle": "Merci, votre commande est envoyée",
     "sentBody": "Hana Bahroun vous appellera très vite pour la confirmer, convenir de la remise et du règlement.",
     "reference": "Référence de votre commande",
+    "whatsappHint": "Gardez une trace de votre commande : envoyez-la aussi à Hana sur WhatsApp.",
+    "whatsappKeep": "Envoyer ma commande sur WhatsApp",
+    "whatsappIntro": "Bonjour Hana, voici ma commande {reference} :",
+    "whatsappTotal": "Total",
+    "whatsappOnRequest": "prix sur demande",
     "continue": "Retour à l'accueil"
   },
   "privacy": {
