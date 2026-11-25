@@ -33,7 +33,7 @@ Rien n'est en ligne pour l'instant.
 ## À vérifier en reprenant
 
 1. **Le mail** — envoyer un message depuis `/fr/contact` dans un vrai
-   navigateur et voir s'il arrive à bahrounhana19@gmail.com (spam compris).
+   navigateur et voir s'il arrive à hanabahroun19@gmail.com (spam compris).
    Jamais confirmé : le navigateur automatisé est bloqué par Web3Forms, et les
    trois formulaires n'ont été testés qu'avec un envoi simulé.
 2. **Le téléphone** — parcourir le site sur un vrai téléphone. La fluidité n'a
@@ -156,7 +156,7 @@ Les téléphones reçoivent une version 720p à 30 images/s du second plan
 décodé en même temps que le premier pendant le fondu, les faisait hacher.
 
 **Les formulaires** (contact et cours) envoient par Web3Forms vers
-bahrounhana19@gmail.com — clé dans `src/data/site.ts`. Au moment de la mise
+hanabahroun19@gmail.com — clé dans `src/data/site.ts`. Au moment de la mise
 en ligne, remplacer `localhost` par la vraie adresse du site dans les
 réglages du formulaire, sur web3forms.com.
 

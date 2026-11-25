@@ -13,7 +13,7 @@ export const site = {
   name: "Hana Bahroun",
   nameAr: "هناء بحرون",
   monogram: "HB",
-  email: "bahrounhana19@gmail.com",
+  email: "hanabahroun19@gmail.com",
   /**
    * Clé Web3Forms : les formulaires envoient vers `email` ci-dessus.
    * Publique par nature — elle ne sait écrire qu'à cette adresse.
