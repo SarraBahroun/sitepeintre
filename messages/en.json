@@ -210,11 +210,6 @@
     "sentTitle": "Thank you, your order has been sent",
     "sentBody": "Hana Bahroun will call you very soon to confirm it and arrange the handover and payment.",
     "reference": "Your order reference",
-    "whatsappHint": "Keep a record of your order: send it to Hana on WhatsApp as well.",
-    "whatsappKeep": "Send my order on WhatsApp",
-    "whatsappIntro": "Hello Hana, here is my order {reference}:",
-    "whatsappTotal": "Total",
-    "whatsappOnRequest": "price on request",
     "continue": "Back to home"
   },
   "privacy": {
