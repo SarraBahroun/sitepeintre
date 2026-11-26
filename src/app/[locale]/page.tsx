@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -14,6 +15,7 @@ import {
 import { jewels, jewelCollections } from "@/data/bijoux";
 import { t as tr, tRich, formatPrice } from "@/data/types";
 import { dimensions } from "@/data/dimensions";
+import { alternates } from "@/lib/seo";
 
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
@@ -21,6 +23,15 @@ import ExpositionRow from "@/components/ExpositionRow";
 import TvFeature from "@/components/TvFeature";
 import PreviewRow from "@/components/PreviewRow";
 import { Section, SectionHeading, ActionLink } from "@/components/ui";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return { alternates: alternates(locale, "") };
+}
 
 export default async function HomePage({
   params,

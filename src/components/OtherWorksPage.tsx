@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
 import { diversSections } from "@/data/site";
+import { alternates } from "@/lib/seo";
 import { t as tr, tRich } from "@/data/types";
 
 import Image from "next/image";
@@ -38,6 +39,7 @@ export async function otherWorksMetadata(
   return {
     title: t(kind),
     description: tm(kind === "books" ? "seoBooks" : "seoJewels"),
+    alternates: alternates(locale, kind === "books" ? "/livres" : "/bijoux"),
   };
 }
 

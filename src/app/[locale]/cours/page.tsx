@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { alternates } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -27,7 +28,11 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "courses" });
   const tm = await getTranslations({ locale, namespace: "meta" });
-  return { title: t("title"), description: tm("seoCourses") };
+  return {
+    title: t("title"),
+    description: tm("seoCourses"),
+    alternates: alternates(locale, "/cours"),
+  };
 }
 
 export default async function CoursesPage({

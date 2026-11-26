@@ -11,6 +11,7 @@ import {
   getSiblingExpositions,
 } from "@/data/expositions";
 import { t as tr, tRich } from "@/data/types";
+import { alternates } from "@/lib/seo";
 
 import Reveal from "@/components/Reveal";
 import ArtworkGallery from "@/components/ArtworkGallery";
@@ -47,6 +48,7 @@ export async function generateMetadata({
   return {
     title,
     description: tr(expo.subtitle, locale as Locale),
+    alternates: alternates(locale, `/expositions/${slug}`),
     openGraph: expo.cover ? { images: [expo.cover] } : undefined,
   };
 }
