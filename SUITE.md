@@ -68,10 +68,12 @@ variable `NODE_VERSION=22`.
 
 ## La prochaine chose à faire
 
-**La vidéo de la page Bijoux** — l'artiste la prépare (dit le 10 novembre) :
-elle viendra en fond de l'en-tête de `/bijoux`, comme la jungle de nuit en
-tête des expositions et de l'accueil. C'est le dernier contenu attendu ;
-après elle, le site est complet et part en ligne.
+**Le contenu est complet.** La vidéo un temps prévue pour la page Bijoux
+n'aura pas lieu (dit le 27 novembre) : `/bijoux` garde son en-tête actuel.
+Plus aucun contenu n'est attendu de l'artiste.
+
+**SEO** (27 novembre) — chaque page porte son adresse canonique et ses
+liens `hreflang` vers les deux autres langues (`src/lib/seo.ts`).
 
 **Les textes des toiles sont écrits** — les 18 de La Jungle 1 et les 9 de La
 Jungle 2. Il reste :
