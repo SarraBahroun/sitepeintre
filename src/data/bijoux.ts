@@ -63,7 +63,6 @@ export const jewelCollections: JewelCollection[] = [
   { id: "pierres", title: L("Pierres naturelles", "Natural stones", "الأحجار الطبيعية") },
   { id: "corail", title: L("Corail", "Coral", "المرجان") },
   { id: "perles", title: L("Perles de culture", "Cultured pearls", "اللؤلؤ المستزرع") },
-  { id: "energetiques", title: L("Pierres énergétiques", "Energy stones", "الأحجار الطاقية") },
   { id: "fillettes", title: L("Bijoux fillettes", "Jewellery for girls", "حُليّ البنات") },
   { id: "inox", title: L("Acier inoxydable", "Stainless steel", "الفولاذ المقاوم للصدأ") },
   { id: "jouhar", title: L("Modèles en jouhar", "Jouhar pearl designs", "موديلات الجوهر") },
@@ -794,12 +793,12 @@ export const jewels: Jewel[] = [
     status: "available",
   },
 
-  /* ------------------------------------------------------- Pierres énergétiques */
+  /* ------------------------------------- Pierres naturelles (suite : turquoise, lapis) */
   {
     id: "sautoir-turquoise",
     ref: 26,
     images: img(26),
-    collection: "energetiques",
+    collection: "pierres",
     title: L("Parure sautoir turquoise", "Turquoise long necklace set", "طقم العقد الطويل بالفيروز"),
     description: R(
       [
@@ -824,7 +823,7 @@ export const jewels: Jewel[] = [
     id: "sautoir-lapis",
     ref: 27,
     images: img(27),
-    collection: "energetiques",
+    collection: "pierres",
     title: L("Parure sautoir lapis-lazuli", "Lapis lazuli long necklace set", "طقم العقد الطويل باللازورد"),
     description: R(
       [
